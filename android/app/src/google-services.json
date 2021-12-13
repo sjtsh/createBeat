@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "290695632824",
+    "project_id": "fusers",
+    "storage_bucket": "fusers.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:290695632824:android:660ddeeb98dcefce5aa14d",
+        "android_client_info": {
+          "package_name": "com.fusers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "290695632824-2ufupmuavckb9hruho8up7s6efg65o4h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCc18p2-p5PQ_ZBhipxqJ0RjUKBeAu4VN4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "290695632824-2ufupmuavckb9hruho8up7s6efg65o4h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,55 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+import '../OutletEntity.dart';
+import 'Beat.dart';
+
+class OutletService {
+  Future<List<Outlet>> fetchOutlet(context, String beatsName,
+      String distributorName, String regionName) async {
+    int aStatusCode = 0;
+    while (aStatusCode != 200) {
+      try {
+        final response = await http.post(
+          Uri.parse(
+              "https://asia-south1-hilifedb.cloudfunctions.net/getOutlet"),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(
+            <String, String>{
+              "beatName": beatsName.toString(),
+              "distributorName": distributorName.toString(),
+              "regionName": regionName.toString(),
+            },
+          ),
+        );
+        if (response.statusCode == 200) {
+          List<dynamic> values = jsonDecode(response.body);
+          aStatusCode = 200;
+          List<Outlet> outlets = values.map((e) => Outlet.fromJson(e)).toList();
+          return outlets;
+        } else {
+          throw Exception("failed to load post");
+        }
+      } on SocketException {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text(
+          "No Internet Connection",
+          textAlign: TextAlign.center,
+        )));
+        throw Exception("failed to load post");
+      } on TimeoutException {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text("Sorry, Failed to Load Data",
+                textAlign: TextAlign.center)));
+        throw Exception("failed to load post");
+      }
+    }
+    return [];
+  }
+}
