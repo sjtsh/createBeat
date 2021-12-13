@@ -21,11 +21,13 @@ loadMarkerOutlets(
       List<Marker> markers = [];
       for (int i = 0; i < allOutlets.length; i++) {
         bool isNear = false;
-        for (var element in starvaCoordinates) {
-          if (Geolocator.distanceBetween(allOutlets[i].lat, allOutlets[i].lng,
-                  element.latitude, element.longitude) <
-              20) {
-            isNear = true;
+        for (var a in polylinesLocal) {
+          for (var element in a.points) {
+            if (Geolocator.distanceBetween(allOutlets[i].lat, allOutlets[i].lng,
+                    element.latitude, element.longitude) <
+                20) {
+              isNear = true;
+            }
           }
         }
         if (searchBarInput.toLowerCase() ==
@@ -67,7 +69,10 @@ loadMarkerOutlets(
                 icon: BitmapDescriptor.defaultMarkerWithHue(
                   BitmapDescriptor.hueBlue,
                 ),
-                position: LatLng(allOutlets[i].lat, allOutlets[i].lng,),
+                position: LatLng(
+                  allOutlets[i].lat,
+                  allOutlets[i].lng,
+                ),
                 onTap: () {
                   changeBeatName(allOutlets[i]);
                 },
@@ -75,7 +80,6 @@ loadMarkerOutlets(
             );
           }
         }
-
       }
       return [markers, nearestOutlets, value];
     } else {
@@ -85,11 +89,13 @@ loadMarkerOutlets(
 
         for (int i = 0; i < allOutlets.length; i++) {
           bool isNear = false;
-          for (var element in starvaCoordinates) {
-            if (Geolocator.distanceBetween(allOutlets[i].lat, allOutlets[i].lng,
-                    element.latitude, element.longitude) >
-                20) {
-              isNear = true;
+          for (var a in polylinesLocal) {
+            for (var element in a.points) {
+              if (Geolocator.distanceBetween(allOutlets[i].lat,
+                      allOutlets[i].lng, element.latitude, element.longitude) >
+                  20) {
+                isNear = true;
+              }
             }
           }
           double myLat = value.latitude;
@@ -151,11 +157,13 @@ loadMarkerOutlets(
         List<Marker> markers = [];
         for (int i = 0; i < allOutlets.length; i++) {
           bool isNear = false;
-          for (var element in starvaCoordinates) {
-            if (Geolocator.distanceBetween(allOutlets[i].lat, allOutlets[i].lng,
-                    element.latitude, element.longitude) <
-                20) {
-              isNear = true;
+          for (var a in polylinesLocal) {
+            for (var element in a.points) {
+              if (Geolocator.distanceBetween(allOutlets[i].lat,
+                      allOutlets[i].lng, element.latitude, element.longitude) <
+                  20) {
+                isNear = true;
+              }
             }
           }
           if (isAll || beatName == allOutlets[i].beatsName) {
@@ -209,4 +217,3 @@ loadMarkerOutlets(
     }
   });
 }
-

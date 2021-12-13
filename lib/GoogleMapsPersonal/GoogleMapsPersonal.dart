@@ -53,20 +53,7 @@ class GoogleMapsPersonal extends StatelessWidget {
             myLocationEnabled: true,
             myLocationButtonEnabled: true,
             // onTap: ,
-            polylines: {
-              Polyline(
-                  polylineId: PolylineId("1"),
-                  points: starvaCoordinates,
-                  visible: true,
-                  color: Colors.blue,
-                  width: 10),
-              Polyline(
-                  polylineId: PolylineId("1"),
-                  points: starvaCoordinates,
-                  visible: true,
-                  color: Colors.blue,
-                  width: 10),
-            },
+            polylines: polylinesLocal ,
           ),
         ),
         Positioned(
