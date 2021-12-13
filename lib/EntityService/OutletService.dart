@@ -9,8 +9,7 @@ import '../OutletEntity.dart';
 import 'Beat.dart';
 
 class OutletService {
-  Future<List<Outlet>> fetchOutlet(context, String beatsName,
-      String distributorName, String regionName) async {
+  Future<List<Outlet>> fetchOutlet(context, Map<String, String> forBody) async {
     int aStatusCode = 0;
     while (aStatusCode != 200) {
       try {
@@ -21,11 +20,7 @@ class OutletService {
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: jsonEncode(
-            <String, String>{
-              "beatName": beatsName.toString(),
-              "distributorName": distributorName.toString(),
-              "regionName": regionName.toString(),
-            },
+            forBody,
           ),
         );
         if (response.statusCode == 200) {

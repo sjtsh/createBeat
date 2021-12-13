@@ -22,7 +22,6 @@ class ChooseScreen extends StatefulWidget {
 class _ChooseScreenState extends State<ChooseScreen> {
   String currentExpanded = "";
   bool isDisabled = false;
-  double animatorWidth = 0;
 
   expand(String currentExpanded) {
     setState(() {
@@ -137,37 +136,26 @@ class _ChooseScreenState extends State<ChooseScreen> {
         ),
         GestureDetector(
           onTap: () {
+            //keep mine delete the other one in case of the merge conflict ~ dear sajat
             if (!isDisabled) {
               isDisabled = true;
               allOutlets = [];
-              List<bool> isDone =
-                  List.generate(selectedBeats.length, (index) => false);
+              Map<String, String> body = {};
               selectedBeats.asMap().entries.forEach((element) {
-                OutletService()
-                    .fetchOutlet(context, element.value.beat,
-                        element.value.distributor, element.value.region)
-                    .then((value) {
-                  int numberOfDone = 0;
-                  for (var element in isDone) {
-                    if (element) {
-                      numberOfDone++;
-                    }
-                  }
-                  setState(() {
-                    animatorWidth = numberOfDone / selectedBeats.length;
-                  });
-                  allOutlets.addAll(value);
-                  isDone[element.key] = true;
-                  if (!isDone.contains(false)) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) {
-                          return const MyHomePage();
-                        },
-                      ),
-                    );
-                  }
+                body[element.key.toString()] = element.value.beatERPID;
+              });
+              OutletService().fetchOutlet(context, body).then((value) {
+                allOutlets.addAll(value);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) {
+                      return const MyHomePage();
+                    },
+                  ),
+                );
+                setState(() {
+                  isDisabled = false;
                 });
               });
             }
@@ -175,30 +163,18 @@ class _ChooseScreenState extends State<ChooseScreen> {
           child: Container(
             height: 50,
             color: Colors.red,
-            child: Builder(builder: (context) {
-              double actualWidth = MediaQuery.of(context).size.width;
-              return Stack(
-                children: [
-                  AnimatedContainer(
-                    color: Colors.green,
-                    width: animatorWidth * actualWidth,
-                    duration: const Duration(milliseconds: 200),
+            child: isDisabled
+                ? const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                    ),
+                  )
+                : const Center(
+                    child: Text(
+                      "NEXT",
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
-                  isDisabled
-                      ? const Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                          ),
-                        )
-                      : const Center(
-                          child: Text(
-                            "NEXT",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                ],
-              );
-            }),
           ),
         )
       ],
