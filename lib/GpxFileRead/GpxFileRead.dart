@@ -16,7 +16,9 @@ class GpxFileRead extends StatefulWidget {
 }
 
 class _GpxFileReadState extends State<GpxFileRead> {
-  String filePath = "Path of file";
+  String filePath = "";
+  String fileName = "";
+  bool isFileLoaded = false;
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +28,11 @@ class _GpxFileReadState extends State<GpxFileRead> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-
             Spacer(),
             const Text(
-              "Lets Start",
+              "Let's Start",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
             ),
-
             const SizedBox(
               height: 20,
             ),
@@ -70,7 +70,6 @@ class _GpxFileReadState extends State<GpxFileRead> {
                     const SizedBox(
                       height: 10,
                     ),
-
                     Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: DottedBorder(
@@ -78,10 +77,9 @@ class _GpxFileReadState extends State<GpxFileRead> {
                           strokeWidth: 1, //thickness of dash/dots
                           dashPattern: [10, 6],
                           child: GestureDetector(
-                                   onTap: (){
-                                       pickFile();
-                                   },
-
+                            onTap: () {
+                              pickFile();
+                            },
                             child: Container(
                               height: 150,
                               width: double.infinity,
@@ -105,16 +103,50 @@ class _GpxFileReadState extends State<GpxFileRead> {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(12.0),
-                      child: Container(
-                          height: 60,
-                          width: double.infinity,
-                          color: Color(0xffA0C7F4).withOpacity(0.1),
-                          child: ListTile(
-                            leading: const Icon(
-                              Icons.file_copy_sharp,
-                            ),
-                            title: Text(filePath.split("/").last),
-                          )),
+                      child: isFileLoaded == true
+                          ? Container(
+                              height: 60,
+                              width: double.infinity,
+                              color: const Color(0xffA0C7F4).withOpacity(0.1),
+                              child: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    const Icon(
+                                      Icons.file_copy_sharp,
+                                    ),
+                                    const SizedBox(
+                                      width: 20,
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        fileName,
+                                        overflow: TextOverflow.ellipsis,
+                                        textDirection: TextDirection.ltr,
+                                        textAlign: TextAlign.justify,
+                                        maxLines: 2,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 20,
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          isFileLoaded = false;
+                                        });
+                                      },
+                                      icon: Icon(
+                                        Icons.remove_circle_outline,
+                                        color: Colors.red.withOpacity(0.6),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ))
+                          : Container(),
                     ),
                   ],
                 ),
@@ -125,18 +157,20 @@ class _GpxFileReadState extends State<GpxFileRead> {
               children: [
                 ElevatedButton(
                     onPressed: () {
-                      setState(() {
-                        filePath;
-                      });
-                      getFileData(filePath);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) {
-                            return const SelectionScreen();
-                          },
-                        ),
-                      );
+                      if (isFileLoaded == true) {
+                        getFileData(filePath);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) {
+                              return const SelectionScreen();
+                            },
+                          ),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("Please choose gpx file")));
+                      }
                     },
                     child: Container(
                         height: 50,
@@ -156,26 +190,39 @@ class _GpxFileReadState extends State<GpxFileRead> {
 
     if (result != null) {
       File file = File(result.files.single.path!);
-      setState(() {
-        filePath = (result.files.single.path!);
-      });
+      // if (filePath.split(".").last == "gpx") {
+      filePath = (result.files.single.path!);
+      fileName = filePath.split("/").last;
+
+      ///checking file type
+
+      if (fileName.split(".").last == "gpx") {
+        setState(() {
+          fileName;
+        });
+      } else {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text("File type is not gpx")));
+      }
     } else {
       // User canceled the picker
 
     }
+    isFileLoaded = true;
   }
 
   /// reading data from file picked
   getFileData(data) async {
     final value = await File(data).readAsString();
-    fileData(value).then((polylines) => polylinesLocal = [polylines].map(
+    fileData(value).then((polylines) => polylinesLocal = [polylines]
+        .map(
           (e) => Polyline(
-          polylineId: PolylineId(e.name),
-          points: e.LatLon,
-          visible: true,
-          color: colors[Random().nextInt(colors.length)],
-          width: 10),
-    )
+              polylineId: PolylineId(e.name),
+              points: e.LatLon,
+              visible: true,
+              color: colors[Random().nextInt(colors.length)],
+              width: 10),
+        )
         .toSet());
   }
 }
