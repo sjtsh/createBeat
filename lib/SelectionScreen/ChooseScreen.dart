@@ -22,7 +22,6 @@ class ChooseScreen extends StatefulWidget {
 class _ChooseScreenState extends State<ChooseScreen> {
   String currentExpanded = "";
   bool isDisabled = false;
-  double animatorWidth = 0;
 
   expand(String currentExpanded) {
     setState(() {
@@ -140,9 +139,9 @@ class _ChooseScreenState extends State<ChooseScreen> {
             if (!isDisabled) {
               isDisabled = true;
               allOutlets = [];
-              List<bool> isDone =
-                  List.generate(selectedBeats.length, (index) => false);
+              Map<String, String> body = {};
               selectedBeats.asMap().entries.forEach((element) {
+<<<<<<< HEAD
                 OutletService()
                     .fetchOutlet(context, element.value.beat,
                         element.value.distributor, element.value.region)
@@ -170,6 +169,22 @@ class _ChooseScreenState extends State<ChooseScreen> {
                       ),
                     );
                   }
+=======
+                body[element.key.toString()] = element.value.beatERPID;
+              });
+              OutletService().fetchOutlet(context, body).then((value) {
+                allOutlets.addAll(value);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) {
+                      return const MyHomePage();
+                    },
+                  ),
+                );
+                setState(() {
+                  isDisabled = false;
+>>>>>>> 49ed5a2fd664e801d5a1e2f0b4ee304aa3df3174
                 });
               });
             }
@@ -177,30 +192,18 @@ class _ChooseScreenState extends State<ChooseScreen> {
           child: Container(
             height: 50,
             color: Colors.red,
-            child: Builder(builder: (context) {
-              double actualWidth = MediaQuery.of(context).size.width;
-              return Stack(
-                children: [
-                  AnimatedContainer(
-                    color: Colors.green,
-                    width: animatorWidth * actualWidth,
-                    duration: const Duration(milliseconds: 200),
+            child: isDisabled
+                ? const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                    ),
+                  )
+                : const Center(
+                    child: Text(
+                      "NEXT",
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
-                  isDisabled
-                      ? const Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                          ),
-                        )
-                      : const Center(
-                          child: Text(
-                            "NEXT",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                ],
-              );
-            }),
           ),
         )
       ],

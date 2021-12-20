@@ -39,7 +39,14 @@ dependencies:
   sqflite: ^2.0.1
   google_directions_api: ^0.9.0
   expandable:
+<<<<<<< HEAD
   url_launcher: ^6.0.0-nullsafety
+=======
+  path_provider: ^2.0.8
+  file_picker: ^4.2.7
+  gpx: ^2.1.0
+  dotted_border: ^2.0.0+2
+>>>>>>> 49ed5a2fd664e801d5a1e2f0b4ee304aa3df3174
 
 dev_dependencies:
   flutter_test:
