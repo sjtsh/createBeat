@@ -5,6 +5,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:nearestbeats/HomePage.dart';
 import 'package:nearestbeats/SelectionScreen/SelectionScreen.dart';
 
 import '../data.dart';
@@ -163,7 +164,8 @@ class _GpxFileReadState extends State<GpxFileRead> {
                           context,
                           MaterialPageRoute(
                             builder: (_) {
-                              return const SelectionScreen();
+                              // return const SelectionScreen();
+                              return MyHomePage();
                             },
                           ),
                         );
