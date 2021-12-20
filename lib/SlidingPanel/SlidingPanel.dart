@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:nearestbeats/outletInfo/outletInfo.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../OutletEntity.dart';
 
@@ -96,18 +97,33 @@ class SlidingPanel extends StatelessWidget {
                                         const SizedBox(
                                           width: 12,
                                         ),
-                                        CircleAvatar(
-                                          backgroundColor: Colors.grey,
-                                          child: Center(
-                                              child: Text(
-                                            e.value.outletsName
-                                                .substring(0, 1)
-                                                .toUpperCase(),
-                                            style: const TextStyle(
-                                                fontSize: 16,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold),
-                                          )),
+                                        // CircleAvatar(
+                                        //   backgroundColor: Colors.grey,
+                                        //   child: Center(
+                                        //       child: Text(
+                                        //     e.value.outletsName
+                                        //         .substring(0, 1)
+                                        //         .toUpperCase(),
+                                        //     style: const TextStyle(
+                                        //         fontSize: 16,
+                                        //         color: Colors.black,
+                                        //         fontWeight: FontWeight.bold),
+                                        //   ),),
+                                        // ),
+                                        Container(
+                                          width: 120,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(12),
+                                              bottomLeft: Radius.circular(12),
+                                            ),
+                                            image: DecorationImage(
+                                              image: NetworkImage(
+                                                e.value.img,
+                                              ),
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
                                         ),
                                         const SizedBox(
                                           width: 12,
@@ -149,7 +165,42 @@ class SlidingPanel extends StatelessWidget {
                                             String toPrint = distance < 1000
                                                 ? "${distance.toStringAsFixed(0)}m"
                                                 : "${(distance / 1000).toStringAsFixed(1)}km";
-                                            return Text(toPrint);
+                                            return Container(
+                                              height: 40,
+                                              clipBehavior: Clip.hardEdge,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                              ),
+                                              child: Material(
+                                                color: Colors.white,
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            12),
+                                                    border: Border.all(
+                                                        color: Colors.blue),
+                                                  ),
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      launch(
+                                                          'https://www.google.com/maps/search/?api=1&query=${e.value.lat},${e.value.lng}');
+                                                    },
+                                                    child: Container(
+                                                      margin: EdgeInsets.only(
+                                                          top: 3,
+                                                          bottom: 3,
+                                                          right: 8,
+                                                          left: 8),
+                                                      child: Center(
+                                                        child: Text(toPrint),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            );
                                           },
                                         ),
                                         // "${GeolocatorPlatform.instance.distanceBetween(myLat, myLng, e.value.lat, e.value.lng).toStringAsFixed(0)}m"),

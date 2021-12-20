@@ -159,6 +159,8 @@ class _ChooseScreenState extends State<ChooseScreen> {
                   allOutlets.addAll(value);
                   isDone[element.key] = true;
                   if (!isDone.contains(false)) {
+                    animatorWidth = 0;
+                    isDisabled = false;
                     Navigator.push(
                       context,
                       MaterialPageRoute(

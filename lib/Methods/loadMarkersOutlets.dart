@@ -24,7 +24,7 @@ loadMarkerOutlets(
         for (var element in starvaCoordinates) {
           if (Geolocator.distanceBetween(allOutlets[i].lat, allOutlets[i].lng,
                   element.latitude, element.longitude) <
-              20) {
+              50) {
             isNear = true;
           }
         }
@@ -88,7 +88,7 @@ loadMarkerOutlets(
           for (var element in starvaCoordinates) {
             if (Geolocator.distanceBetween(allOutlets[i].lat, allOutlets[i].lng,
                     element.latitude, element.longitude) >
-                20) {
+                50) {
               isNear = true;
             }
           }
@@ -154,7 +154,7 @@ loadMarkerOutlets(
           for (var element in starvaCoordinates) {
             if (Geolocator.distanceBetween(allOutlets[i].lat, allOutlets[i].lng,
                     element.latitude, element.longitude) <
-                20) {
+                50) {
               isNear = true;
             }
           }
