@@ -136,7 +136,6 @@ class _ChooseScreenState extends State<ChooseScreen> {
         ),
         GestureDetector(
           onTap: () {
-            //keep mine delete the other one in case of the merge conflict ~ dear sajat
             if (!isDisabled) {
               isDisabled = true;
               allOutlets = [];

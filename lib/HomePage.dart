@@ -22,15 +22,10 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   double radius = 100;
-  final TextEditingController _textController = TextEditingController();
   GoogleMapController? _googleMapController;
-  String beatName = "";
-  String searchBarInput = "";
-  String distributorName = "";
-  bool isTopShown = false;
-  bool isAll = false;
-  double distanceTravelled = 0;
   final PanelController _panelController = PanelController();
+  Outlet? outlet;
+  bool isAdded = false;
 
   @override
   void dispose() {
@@ -52,15 +47,18 @@ class _MyHomePageState extends State<MyHomePage> {
     //   );
     // });
   }
-
+  void setAdded(bool newAdded){
+    setState(() {
+      isAdded = newAdded;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
         body: FutureBuilder(
-          future: loadMarkerOutlets(searchBarInput, beatName, changeBeatName,
-              distributorName, isAll, radius),
+          future: loadMarkerOutlets(radius, changeOutlet),
           builder: (context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
               List<Marker> markers = snapshot.data[0];
@@ -88,21 +86,48 @@ class _MyHomePageState extends State<MyHomePage> {
               );
               return SlidingUpPanel(
                 controller: _panelController,
+                maxHeight: 400,
+                minHeight: 50,
                 isDraggable: true,
+                panelSnapping: true,
+                parallaxEnabled: true,
                 color: Colors.transparent,
-                panel: SlidingPanel(beatName, outlets, myPosition,
-                    _textController, searchSubmitted, changeBeatName),
+                panel: SlidingPanel(
+                  Outlet(
+                      3,
+                      "zone",
+                      "region",
+                      "territory",
+                      "beatsName",
+                      "beatsERPID",
+                      "distributor",
+                      "outletERPID",
+                      "outletsName",
+                      27.650136,
+                      85.337996,
+                      "ownersName",
+                      "ownersNumber",
+                      "formattedAddress",
+                      "address",
+                      "subCity",
+                      "market",
+                      "city",
+                      "state",
+                      "img"),
+                  myPosition,
+                  isAdded,
+                  setAdded,
+                ),
                 body: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Header(radius, width, beatName, distributorName, outlets,
-                        changeRadius),
+                    Header(radius, width, outlets, changeRadius),
                     const SizedBox(
                       width: 50,
                     ),
                     Expanded(
-                        child: GoogleMapsPersonal(beatName, markers, isAll,
-                            _onMapCreated, removeBeat, changeAll, refresh)),
+                        child: GoogleMapsPersonal(
+                            _panelController, markers, _onMapCreated, refresh)),
                   ],
                 ),
               );
@@ -114,56 +139,25 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void changeBeatName(Outlet outlet) {
+  void changeOutlet(Outlet newOutlet) {
     setState(
       () {
-        beatName = outlet.beatsName;
-        distributorName = outlet.distributor;
-        searchBarInput = "";
+        outlet = newOutlet;
       },
     );
     _googleMapController?.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(
-          target: LatLng(outlet.lat, outlet.lng),
+          target: LatLng(newOutlet.lat, newOutlet.lng),
           zoom: 17,
           tilt: 50,
         ),
       ),
     );
-    _panelController.animatePanelToPosition(0.5,
+    _panelController.animatePanelToPosition(1,
         duration: const Duration(milliseconds: 200), curve: Curves.easeInOut);
-    _googleMapController?.showMarkerInfoWindow(MarkerId(outlet.id.toString()));
-  }
-
-  void removeBeat() {
-    setState(
-      () {
-        beatName = "";
-        distributorName = "";
-        searchBarInput = "";
-      },
-    );
-  }
-
-  changeAll(bool newIsAll) {
-    setState(
-      () {
-        isAll = newIsAll;
-      },
-    );
-    if (newIsAll) {
-      Geolocator.getCurrentPosition().then((value) {
-        _googleMapController?.animateCamera(CameraUpdate.newCameraPosition(
-          CameraPosition(
-            target: LatLng(27.650136, 85.337996, ),
-            // target: LatLng(value.latitude, value.longitude),
-            zoom: 10,
-            tilt: 50,
-          ),
-        ));
-      });
-    }
+    _googleMapController
+        ?.showMarkerInfoWindow(MarkerId(newOutlet.id.toString()));
   }
 
   void refresh() {
@@ -177,15 +171,5 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       radius = newRadius;
     });
-  }
-
-  void searchSubmitted() {
-    setState(() {
-      searchBarInput = _textController.text;
-      _textController.clear();
-    });
-
-    _panelController.animatePanelToPosition(0.5,
-        duration: const Duration(milliseconds: 200), curve: Curves.easeInOut);
   }
 }
