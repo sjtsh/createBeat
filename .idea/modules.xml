@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/nearestBeat.iml" filepath="$PROJECT_DIR$/.idea/nearestBeat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/createBeat.iml" filepath="$PROJECT_DIR$/.idea/createBeat.iml" />
     </modules>
   </component>
 </project>
