@@ -1,6 +1,6 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:nearestbeats/EntityService/Beat.dart';
+import 'package:nearestbeats/Backend/Entity/Beat.dart';
 
 import '../data.dart';
 import 'ExpandablePanel2.dart';

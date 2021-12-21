@@ -7,8 +7,6 @@ import 'package:nearestbeats/SelectionScreen/SelectionScreen.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'HomePage.dart';
-import 'Methods/getNearestLocations.dart';
-import 'Methods/multithreading.dart';
 import 'OutletEntity.dart';
 import 'data.dart';
 

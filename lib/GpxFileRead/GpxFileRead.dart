@@ -2,9 +2,11 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:dotted_border/dotted_border.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:nearestbeats/Data/Database.dart';
 import 'package:nearestbeats/HomePage.dart';
 import 'package:nearestbeats/SelectionScreen/SelectionScreen.dart';
 
@@ -20,6 +22,14 @@ class _GpxFileReadState extends State<GpxFileRead> {
   String filePath = "";
   String fileName = "";
   bool isFileLoaded = false;
+
+  String dropdownValue = '';
+
+  void _changedDropdown(String newValue) {
+    setState(() {
+      dropdownValue = newValue;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,15 +50,99 @@ class _GpxFileReadState extends State<GpxFileRead> {
             Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                        offset: Offset(0, 2),
-                        blurRadius: 3,
-                        spreadRadius: 3,
-                        color: Colors.black.withOpacity(0.1))
-                  ]),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                      offset: Offset(0, 2),
+                      blurRadius: 3,
+                      spreadRadius: 3,
+                      color: Colors.black.withOpacity(0.1)),
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Region"),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      height: 50,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                      ),
+                      child: DropdownSearch<String>(
+                        showClearButton: false,
+                        mode: Mode.MENU,
+                        showSelectedItems: true,
+                        items: ["Koshi", "Mechi", "Bagmati", "Mahakali"],
+                        hint: "Select Region ",
+                        dropdownSearchDecoration: InputDecoration(
+                            contentPadding: EdgeInsets.only(left: 12),
+                            filled: true,
+                            fillColor: Color(0xffA0C7F4).withOpacity(0.1),
+                            border: InputBorder.none),
+                        showSearchBox: false,
+                        popupItemDisabled: (String s) => s.startsWith('I'),
+                        onChanged: (input) {
+                          _changedDropdown(dropdownValue);
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text("Distributor"),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      height: 50,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                      ),
+                      child: DropdownSearch<String>(
+                        showClearButton: false,
+                        mode: Mode.MENU,
+                        showSelectedItems: true,
+                        items: ["AR Traders", "DS Trading"],
+                        hint: "Select Distributor",
+                        dropdownSearchDecoration: InputDecoration(
+                            contentPadding: EdgeInsets.only(left: 8),
+                            fillColor: Color(0xffA0C7F4).withOpacity(0.1),
+                            filled: true,
+                            border: InputBorder.none),
+                        showSearchBox: false,
+                        popupItemDisabled: (String s) => s.startsWith('I'),
+                        onChanged: (input) {
+                          _changedDropdown(dropdownValue);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    offset: Offset(0, 2),
+                    blurRadius: 3,
+                    spreadRadius: 3,
+                    color: Colors.black.withOpacity(0.1),
+                  ),
+                ],
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Column(
@@ -74,36 +168,38 @@ class _GpxFileReadState extends State<GpxFileRead> {
                     Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: DottedBorder(
-                          color: Color(0xffA0C7F4), //color of dotted/dash line
-                          strokeWidth: 1, //thickness of dash/dots
-                          dashPattern: [10, 6],
-                          child: GestureDetector(
-                            onTap: () {
-                              pickFile();
-                            },
-                            child: Container(
-                              height: 150,
-                              width: double.infinity,
-                              color: Color(0xffA0C7F4).withOpacity(0.2),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    "assets/file.png",
-                                    height: 60,
-                                    width: 80,
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  const Text("Choose file here ...")
-                                ],
-                              ),
+                        color: Color(0xffA0C7F4), //color of dotted/dash line
+                        strokeWidth: 1, //thickness of dash/dots
+                        dashPattern: [10, 6],
+                        child: GestureDetector(
+                          onTap: () {
+                            pickFile();
+                          },
+                          child: Container(
+                            height: 150,
+                            width: double.infinity,
+                            color: Color(0xffA0C7F4).withOpacity(0.2),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  "assets/file.png",
+                                  height: 60,
+                                  width: 80,
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                const Text("Choose file here ...")
+                              ],
                             ),
-                          )),
+                          ),
+                        ),
+                      ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(12.0),
+                      padding:
+                          const EdgeInsets.only(left: 12.0, right: 12, top: 12),
                       child: isFileLoaded == true
                           ? Container(
                               height: 60,
@@ -146,7 +242,8 @@ class _GpxFileReadState extends State<GpxFileRead> {
                                     ),
                                   ],
                                 ),
-                              ))
+                              ),
+                            )
                           : Container(),
                     ),
                   ],
@@ -157,29 +254,36 @@ class _GpxFileReadState extends State<GpxFileRead> {
             Column(
               children: [
                 ElevatedButton(
-                    onPressed: () {
-                      if (isFileLoaded == true) {
-                        getFileData(filePath);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) {
-                              // return const SelectionScreen();
-                              return MyHomePage();
-                            },
-                          ),
-                        );
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("Please choose gpx file")));
-                      }
-                    },
-                    child: Container(
-                        height: 50,
-                        width: double.infinity,
-                        child: Center(child: const Text("Start")))),
+                  onPressed: () {
+                    if (isFileLoaded == true) {
+                      getFileData(filePath);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) {
+                            // return const SelectionScreen();
+                            return MyHomePage();
+                          },
+                        ),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("Please choose gpx file")));
+                    }
+                  },
+                  child: Container(
+                    height: 50,
+                    width: double.infinity,
+                    child: Center(
+                      child: const Text(
+                        "START",
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                  ),
+                ),
               ],
-            )
+            ),
           ],
         ),
       ),

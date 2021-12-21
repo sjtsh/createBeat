@@ -7,10 +7,10 @@ import 'package:location/location.dart';
 import 'package:nearestbeats/GoogleMapsPersonal/GoogleMapsPersonal.dart';
 import 'package:nearestbeats/GoogleMapsPersonal/GoogleMapsSkeleton.dart';
 import 'package:nearestbeats/Header.dart';
-import 'package:nearestbeats/Methods/loadMarkersOutlets.dart';
 import 'package:nearestbeats/SlidingPanel/SlidingPanel.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
+import 'Backend/Methods/loadMarkersOutlets.dart';
 import 'OutletEntity.dart';
 
 class MyHomePage extends StatefulWidget {
