@@ -1,3 +1,15 @@
+<<<<<<< HEAD
+=======
+nearestbeats
+2.15
+<<<<<<< HEAD
+file:///C:/hilife/important%20work/createBeat/
+file:///C:/hilife/important%20work/createBeat/lib/
+=======
+file:///C:/Users/ACER/Desktop/createBeat/
+file:///C:/Users/ACER/Desktop/createBeat/lib/
+>>>>>>> 49ed5a2fd664e801d5a1e2f0b4ee304aa3df3174
+>>>>>>> ebe67aeb060498f643ed3e5c2f8d8ca26db90157
 async
 2.12
 file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/async-2.8.2/
@@ -274,6 +286,38 @@ typed_data
 2.12
 file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/typed_data-1.3.0/
 file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/typed_data-1.3.0/lib/
+url_launcher
+2.14
+file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher-6.0.17/
+file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher-6.0.17/lib/
+url_launcher_android
+2.14
+file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_android-6.0.13/
+file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_android-6.0.13/lib/
+url_launcher_ios
+2.14
+file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_ios-6.0.13/
+file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_ios-6.0.13/lib/
+url_launcher_linux
+2.12
+file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_linux-2.0.2/
+file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_linux-2.0.2/lib/
+url_launcher_macos
+2.12
+file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_macos-2.0.2/
+file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_macos-2.0.2/lib/
+url_launcher_platform_interface
+2.12
+file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_platform_interface-2.0.4/
+file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_platform_interface-2.0.4/lib/
+url_launcher_web
+2.12
+file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_web-2.0.5/
+file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_web-2.0.5/lib/
+url_launcher_windows
+2.12
+file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_windows-2.0.2/
+file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_windows-2.0.2/lib/
 vector_math
 2.14
 file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/vector_math-2.1.1/

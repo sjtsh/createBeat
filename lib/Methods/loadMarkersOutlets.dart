@@ -18,8 +18,8 @@ loadMarkerOutlets(double radius, Function changeOutlet) async {
       for (var a in polylinesLocal) {
         for (var element in a.points) {
           if (Geolocator.distanceBetween(allOutlets[i].lat, allOutlets[i].lng,
-                  element.latitude, element.longitude) >
-              20) {
+                  element.latitude, element.longitude) <
+              50) {
             isNear = true;
           }
         }
@@ -70,7 +70,7 @@ loadMarkerOutlets(double radius, Function changeOutlet) async {
             ),
           );
         }
-      }
+    }
 
       if (GeolocatorPlatform.instance.distanceBetween(
               myLat, myLng, allOutlets[i].lat, allOutlets[i].lng) <
