@@ -1,5 +1,4 @@
-import '../OutletEntity.dart';
-import '../data.dart';
+
 
 // class Argument {
 //   final int startPoint;

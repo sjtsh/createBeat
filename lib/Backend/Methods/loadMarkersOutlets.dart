@@ -1,8 +1,8 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import '../OutletEntity.dart';
-import '../data.dart';
+import '../../OutletEntity.dart';
+import '../../data.dart';
 
 var _markers;
 var nearestOutlets;
