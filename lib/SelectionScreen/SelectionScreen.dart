@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:nearestbeats/EntityService/Beat.dart';
-import 'package:nearestbeats/EntityService/BeatService.dart';
-import 'package:nearestbeats/EntityService/OutletService.dart';
+import 'package:nearestbeats/Backend/Entity/Beat.dart';
+import 'package:nearestbeats/Backend/Service/BeatService.dart';
 import 'package:nearestbeats/HomePage.dart';
 import 'package:nearestbeats/data.dart';
 

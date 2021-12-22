@@ -4,9 +4,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
-import '../OutletEntity.dart';
-import 'Beat.dart';
+import '../../OutletEntity.dart';
+import '../Entity/Beat.dart';
 
 class OutletService {
   Future<List<Outlet>> fetchOutlet(context, Map<String, String> forBody) async {
