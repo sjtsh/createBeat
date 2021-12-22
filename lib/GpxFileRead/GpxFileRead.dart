@@ -14,6 +14,7 @@ import 'package:nearestbeats/Backend/Service/OutletService.dart';
 import 'package:nearestbeats/Backend/Service/RegionService.dart';
 import 'package:nearestbeats/Data/Database.dart';
 import 'package:nearestbeats/Data/data.dart';
+import 'package:nearestbeats/Header.dart';
 
 import 'package:nearestbeats/HomePage.dart';
 import 'package:nearestbeats/SelectionScreen/ChooseScreen.dart';
@@ -406,7 +407,7 @@ class _GpxFileReadState extends State<GpxFileRead> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (_) {
-                                        return const MyHomePage();
+                                        return MyHomePage(files);
                                       },
                                     ),
                                   );
@@ -471,12 +472,13 @@ class _GpxFileReadState extends State<GpxFileRead> {
               );
               bools[data.key] = true;
               if (!bools.contains(false)) {
+                polylineSelected = polylinesLocal.toList()[0];
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (_) {
                       // return const SelectionScreen();
-                      return MyHomePage();
+                      return MyHomePage(files);
                     },
                   ),
                 );

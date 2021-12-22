@@ -44,3 +44,4 @@ Set<Polyline> polylinesLocal = <BeatsPolyline>[]
     )
     .toSet();
 List colors = [Colors.cyanAccent, Colors.red, Colors.blue, Colors.green, Colors.orange];
+Polyline? polylineSelected;

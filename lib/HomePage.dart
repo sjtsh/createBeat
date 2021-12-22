@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -14,7 +16,9 @@ import 'Backend/Methods/loadMarkersOutlets.dart';
 import 'OutletEntity.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+  final List<File> dropdownFiles;
+
+  MyHomePage(this.dropdownFiles);
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -47,11 +51,13 @@ class _MyHomePageState extends State<MyHomePage> {
     //   );
     // });
   }
-  void setAdded(bool newAdded){
+
+  void setAdded(bool newAdded) {
     setState(() {
       isAdded = newAdded;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -94,27 +100,29 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: Colors.transparent,
                 panel: SlidingPanel(
                   Outlet(
-                      3,
-                      "zone",
-                      "region",
-                      "territory",
-                      "beatsName",
-                      "beatsERPID",
-                      "distributor",
-                      "outletERPID",
-                      "outletsName",
-                      27.650136,
-                      85.337996,
-                      "ownersName",
-                      1,
-                      "type",
-                      "formattedAddress",
-                      "address",
-                      "subCity",
-                      "market",
-                      "city",
-                      "state",
-                      "img","",),
+                    3,
+                    "zone",
+                    "region",
+                    "territory",
+                    "beatsName",
+                    "beatsERPID",
+                    "distributor",
+                    "outletERPID",
+                    "outletsName",
+                    27.650136,
+                    85.337996,
+                    "ownersName",
+                    1,
+                    "type",
+                    "formattedAddress",
+                    "address",
+                    "subCity",
+                    "market",
+                    "city",
+                    "state",
+                    "img",
+                    "",
+                  ),
                   myPosition,
                   isAdded,
                   setAdded,
@@ -122,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 body: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Header(radius, width, outlets, changeRadius),
+                    Header(radius, width, outlets, changeRadius, widget.dropdownFiles),
                     const SizedBox(
                       width: 50,
                     ),
