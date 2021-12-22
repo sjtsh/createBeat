@@ -47,93 +47,72 @@ class _MyHomePageState extends State<MyHomePage> {
     //   );
     // });
   }
-  void setAdded(bool newAdded){
+
+  void setAdded(bool newAdded) {
     setState(() {
       isAdded = newAdded;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
-        body: FutureBuilder(
-          future: loadMarkerOutlets(radius, changeOutlet),
-          builder: (context, AsyncSnapshot snapshot) {
-            if (snapshot.hasData) {
-              List<Marker> markers = snapshot.data[0];
-              List<Outlet> outlets = snapshot.data[1];
-              Position myPosition = snapshot.data[2];
-              // double myLat = 27.725896;
-              // double myLng = 85.343256;
-              outlets.sort(
-                (a, b) => GeolocatorPlatform.instance
-                    .distanceBetween(
-                        myPosition.latitude, myPosition.longitude, a.lat, a.lng)
-                    // myLat,
-                    // myLng,
-                    // a.lat,
-                    // a.lng)
-                    .compareTo(
-                      GeolocatorPlatform.instance.distanceBetween(
-                          myPosition.latitude,
-                          myPosition.longitude,
-                          // myLat,
-                          // myLng,
-                          b.lat,
-                          b.lng),
-                    ),
-              );
-              return SlidingUpPanel(
-                controller: _panelController,
-                maxHeight: 400,
-                minHeight: 50,
-                isDraggable: true,
-                panelSnapping: true,
-                parallaxEnabled: true,
-                color: Colors.transparent,
-                panel: SlidingPanel(
-                  Outlet(
-                      3,
-                      "zone",
-                      "region",
-                      "territory",
-                      "beatsName",
-                      "beatsERPID",
-                      "distributor",
-                      "outletERPID",
-                      "outletsName",
-                      27.650136,
-                      85.337996,
-                      "ownersName",
-                      1,
-                      "type",
-                      "formattedAddress",
-                      "address",
-                      "subCity",
-                      "market",
-                      "city",
-                      "state",
-                      "img","",),
-                  myPosition,
-                  isAdded,
-                  setAdded,
+        body: Builder(
+          builder: (context) {
+            List snapshot = loadMarkerOutlets(radius, changeOutlet);
+            List<Marker> markers = snapshot[0];
+            List<Outlet> outlets = snapshot[1];
+            return SlidingUpPanel(
+              controller: _panelController,
+              maxHeight: 400,
+              minHeight: 50,
+              isDraggable: true,
+              panelSnapping: true,
+              parallaxEnabled: true,
+              color: Colors.transparent,
+              panel: SlidingPanel(
+                Outlet(
+                  3,
+                  "zone",
+                  "region",
+                  "territory",
+                  "beatsName",
+                  "beatsERPID",
+                  "distributor",
+                  "outletERPID",
+                  "outletsName",
+                  27.650136,
+                  85.337996,
+                  "ownersName",
+                  1,
+                  "type",
+                  "formattedAddress",
+                  "address",
+                  "subCity",
+                  "market",
+                  "city",
+                  "state",
+                  "img",
+                  "",
                 ),
-                body: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Header(radius, width, outlets, changeRadius),
-                    const SizedBox(
-                      width: 50,
-                    ),
-                    Expanded(
-                        child: GoogleMapsPersonal(
-                            _panelController, markers, _onMapCreated, refresh)),
-                  ],
-                ),
-              );
-            }
-            return const GoogleMapsSkeleton();
+                isAdded,
+                setAdded,
+              ),
+              body: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Header(radius, width, outlets, changeRadius),
+                  const SizedBox(
+                    width: 50,
+                  ),
+                  Expanded(
+                      child: GoogleMapsPersonal(
+                          _panelController, markers, _onMapCreated, refresh)),
+                ],
+              ),
+            );
           },
         ),
       ),

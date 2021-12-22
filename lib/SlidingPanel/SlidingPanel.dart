@@ -8,13 +8,11 @@ import '../OutletEntity.dart';
 
 class SlidingPanel extends StatelessWidget {
   final Outlet outlet;
-  final Position myPosition;
   final bool isAdded;
   final Function setAdded;
 
   SlidingPanel(
     this.outlet,
-    this.myPosition,
     this.isAdded,
     this.setAdded,
   );
