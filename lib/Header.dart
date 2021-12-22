@@ -55,6 +55,7 @@ class Header extends StatelessWidget {
             thumbColor: Colors.black,
             inactiveColor: Colors.black.withOpacity(0.1),
           ),
+
         ],
       ),
     );

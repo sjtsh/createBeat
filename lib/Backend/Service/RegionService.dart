@@ -14,7 +14,7 @@ class RegionService{
     List<Region> regions = [];
     while (aStatusCode != 200) {
       try {
-        final response = await http.get(Uri.parse("https://asia-south1-hilifedb.cloudfunctions.net/getRegions"));
+        final response = await http.get(Uri.parse("https://asia-south1-hilifedb.cloudfunctions.net/getBeats"));
         if (response.statusCode == 200) {
           List<dynamic> values = jsonDecode(response.body);
           List<Region> regions =

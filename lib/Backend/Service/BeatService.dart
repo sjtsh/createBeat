@@ -15,7 +15,7 @@ class BeatService{
     List<Beat> beats = [];
     while (aStatusCode != 200) {
       try {
-        final response = await http.get(Uri.parse("https://asia-south1-hilifedb.cloudfunctions.net/getBeats"));
+        final response = await http.get(Uri.parse("https://asia-south1-hilifedb.cloudfunctions.net/getUnManagedBeats"));
         if (response.statusCode == 200) {
           List<dynamic> values = jsonDecode(response.body);
           List<Beat> beats =

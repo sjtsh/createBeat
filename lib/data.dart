@@ -9,7 +9,7 @@ import 'OutletEntity.dart';
 List<Outlet> allOutlets = [];
 int threadCount = 10;
 
-List<Beat> selectedBeats = [];
+List<String> allRegions = [];
 
 List<String> headers = [
   "Zone",

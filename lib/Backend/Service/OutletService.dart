@@ -8,18 +8,20 @@ import '../../OutletEntity.dart';
 import '../Entity/Beat.dart';
 
 class OutletService {
-  Future<List<Outlet>> fetchOutlet(context, Map<String, String> forBody) async {
+  Future<List<Outlet>> fetchOutlet(context, String region) async {
     int aStatusCode = 0;
     while (aStatusCode != 200) {
       try {
         final response = await http.post(
           Uri.parse(
-              "https://asia-south1-hilifedb.cloudfunctions.net/getOutlet"),
+              "https://asia-south1-hilifedb.cloudfunctions.net/getUnManagedOutlets"),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: jsonEncode(
-            forBody,
+            <String, String>{
+              "region": region.toString(),
+            },
           ),
         );
         if (response.statusCode == 200) {
@@ -28,7 +30,7 @@ class OutletService {
           List<Outlet> outlets = values.map((e) => Outlet.fromJson(e)).toList();
           return outlets;
         } else {
-          throw Exception("failed to load post");
+          throw Exception("failed to load post, status code error");
         }
       } on SocketException {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

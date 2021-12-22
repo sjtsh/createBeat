@@ -8,6 +8,7 @@ import 'package:sqflite/sqflite.dart';
 
 import 'HomePage.dart';
 import 'OutletEntity.dart';
+import 'SelectionScreen/ChooseScreen.dart';
 import 'data.dart';
 
 void main() {
