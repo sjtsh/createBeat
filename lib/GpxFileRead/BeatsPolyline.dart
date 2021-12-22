@@ -8,7 +8,7 @@ class BeatsPolyline {
   BeatsPolyline(this.name);
 }
 
-/// Generating GPX Data from file
+/// Reading GPX Data from file
 
 Future<BeatsPolyline> fileData(String string) async {
   var xmlGpx = GpxReader().fromString(string);
