@@ -6,7 +6,11 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:nearestbeats/Backend/Entity/Beat.dart';
+import 'package:nearestbeats/Backend/Entity/Region.dart';
+import 'package:nearestbeats/Backend/Service/RegionService.dart';
 import 'package:nearestbeats/Data/Database.dart';
+import 'package:nearestbeats/Data/data.dart';
 import 'package:nearestbeats/HomePage.dart';
 import 'package:nearestbeats/SelectionScreen/SelectionScreen.dart';
 
@@ -25,10 +29,15 @@ class _GpxFileReadState extends State<GpxFileRead> {
 
   String dropdownValue = '';
 
-  void _changedDropdown(String newValue) {
-    setState(() {
-      dropdownValue = newValue;
-    });
+  int regionID = 0;
+
+  void _changedDropdown(input, e) {
+    if (e.key == "Region") {
+      regionID = allRegionLocal
+          .firstWhere(
+              (element) => element.regionID.toString() == input?.split("_")[1])
+          .regionID;
+    }
   }
 
   @override
@@ -65,32 +74,119 @@ class _GpxFileReadState extends State<GpxFileRead> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Region"),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        height: 50,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                        ),
-                        child: DropdownSearch<String>(
-                          showClearButton: false,
-                          mode: Mode.MENU,
-                          showSelectedItems: true,
-                          items: ["Koshi", "Mechi", "Bagmati", "Mahakali"],
-                          hint: "Select Region ",
-                          dropdownSearchDecoration: InputDecoration(
-                              contentPadding: EdgeInsets.only(left: 12),
-                              filled: true,
-                              fillColor: Color(0xffA0C7F4).withOpacity(0.1),
-                              border: InputBorder.none),
-                          showSearchBox: false,
-                          popupItemDisabled: (String s) => s.startsWith('I'),
-                          onChanged: (input) {
-                            _changedDropdown(dropdownValue);
-                          },
-                        ),
+                      // FutureBuilder(
+                      //     future: RegionService().fetchRegions(context),
+                      //     builder: (context, AsyncSnapshot snapshot) {
+                      //       if (snapshot.hasData) {
+                      //         List<String> myRegions = [];
+                      //         List<int> myRegionIDs = [];
+                      //         List<Region> regions = snapshot.data;
+                      //         regions.forEach((element) {
+                      //           if (!myRegions.contains(element.regionName)) {
+                      //             myRegions.add(element.regionName);
+                      //           } else if (!myRegionIDs
+                      //               .contains(element.regionID)) {
+                      //             myRegionIDs.add(element.regionID);
+                      //           }
+                      //         });
+                      //         return Column(
+                      //           children: gpxFileDropdown.entries.map((e) {
+                      //             List<String> myRegions = [];
+                      //             if (e.key == "Region") {
+                      //               (e.value[0] as List<Region>).forEach((e) =>
+                      //                   myRegions.add(e.regionName +
+                      //                       "_" +
+                      //                       e.regionID.toString()));
+                      //             }
+                      //             return Column(
+                      //               crossAxisAlignment:
+                      //                   CrossAxisAlignment.start,
+                      //               children: [
+                      //                 Text(e.key),
+                      //                 SizedBox(
+                      //                   height: 10,
+                      //                 ),
+                      //                 Container(
+                      //                   height: 50,
+                      //                   decoration: BoxDecoration(
+                      //                     border:
+                      //                         Border.all(color: Colors.grey),
+                      //                   ),
+                      //                   child: DropdownSearch<String>(
+                      //                     showClearButton: false,
+                      //                     mode: Mode.MENU,
+                      //                     showSelectedItems: true,
+                      //                     items: myRegions,
+                      //                     hint: "Select " + e.key,
+                      //                     dropdownSearchDecoration:
+                      //                         InputDecoration(
+                      //                             contentPadding:
+                      //                                 EdgeInsets.only(left: 12),
+                      //                             filled: true,
+                      //                             fillColor: Color(0xffA0C7F4)
+                      //                                 .withOpacity(0.1),
+                      //                             border: InputBorder.none),
+                      //                     showSearchBox: false,
+                      //                     popupItemDisabled: (String s) =>
+                      //                         s.startsWith('I'),
+                      //                     onChanged: (input) {
+                      //                       _changedDropdown(input, e);
+                      //                     },
+                      //                   ),
+                      //                 ),
+                      //               ],
+                      //             );
+                      //           }).toList(),
+                      //         );
+                      //       }
+                      //       return Center(
+                      //         child: Text("Blank"),
+                      //       );
+                      //     }),
+                      Column(
+                        children: gpxFileDropdown.entries.map((e) {
+                          List<String> names = [];
+                          if (e.key == "Region") {
+                            (e.value[0] as List<Region>).forEach((e) =>
+                                names.add(e.regionName +
+                                    "_" +
+                                    e.regionID.toString()));
+                          }
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(e.key),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey),
+                                ),
+                                child: DropdownSearch<String>(
+                                  showClearButton: false,
+                                  mode: Mode.MENU,
+                                  showSelectedItems: true,
+                                  items: names,
+                                  hint: "Select " + e.key,
+                                  dropdownSearchDecoration: InputDecoration(
+                                      contentPadding: EdgeInsets.only(left: 12),
+                                      filled: true,
+                                      fillColor:
+                                      Color(0xffA0C7F4).withOpacity(0.1),
+                                      border: InputBorder.none),
+                                  showSearchBox: false,
+                                  popupItemDisabled: (String s) =>
+                                      s.startsWith('I'),
+                                  onChanged: (input) {
+                                    _changedDropdown(input,e);
+                                  },
+                                ),
+                              ),
+                            ],
+                          );
+                        }).toList(),
                       ),
                       SizedBox(
                         height: 20,
@@ -117,9 +213,9 @@ class _GpxFileReadState extends State<GpxFileRead> {
                               border: InputBorder.none),
                           showSearchBox: false,
                           popupItemDisabled: (String s) => s.startsWith('I'),
-                          onChanged: (input) {
-                            _changedDropdown(dropdownValue);
-                          },
+                          // onChanged: (input) {
+                          //   _changedDropdown(dropdownValue);
+                          // },
                         ),
                       ),
                     ],
