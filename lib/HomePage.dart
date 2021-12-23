@@ -77,6 +77,25 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void changePolyline(String polylineID) {
+    for(Polyline i in widget.polylines){
+      if (polylineID == i.polylineId.value) {
+        setState(() {
+          polyline = i;
+        });
+        _googleMapController?.animateCamera(
+          CameraUpdate.newCameraPosition(
+            CameraPosition(
+              target: LatLng(i.points[0].latitude,
+                  i.points[0].longitude),
+              zoom: 17,
+            ),
+          ),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -96,33 +115,33 @@ class _MyHomePageState extends State<MyHomePage> {
               parallaxEnabled: true,
               color: Colors.transparent,
               panel: SlidingPanel(
-                Outlet(
-                  3,
-                  "zone",
-                  "region",
-                  "territory",
-                  "beatsName",
-                  "beatsERPID",
-                  "distributor",
-                  "outletERPID",
-                  "outletsName",
-                  27.650136,
-                  85.337996,
-                  "ownersName",
-                  1,
-                  "type",
-                  "formattedAddress",
-                  "address",
-                  "subCity",
-                  "market",
-                  "city",
-                  "state",
-                  "img",
-                  "",
-                ),
-                isAdded,
-                setAdded,
-              ),
+                  Outlet(
+                    3,
+                    "zone",
+                    "region",
+                    "territory",
+                    "beatsName",
+                    "beatsERPID",
+                    "distributor",
+                    "outletERPID",
+                    "outletsName",
+                    27.650136,
+                    85.337996,
+                    "ownersName",
+                    1,
+                    "type",
+                    "formattedAddress",
+                    "address",
+                    "subCity",
+                    "market",
+                    "city",
+                    "state",
+                    "img",
+                    "",
+                  ),
+                  isAdded,
+                  setAdded,
+                  _panelController),
               body: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -144,7 +163,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 bottomRight: Radius.circular(12)),
                           ),
                           child: Header(radius, outlets, changeRadius,
-                              widget.dropdownFiles, widget.polylines, polyline!, greenRadius, changeGreenRadius, googleMapController: _googleMapController),
+                              widget.dropdownFiles, widget.polylines, polyline!, greenRadius, changeGreenRadius, changePolyline, googleMapController: _googleMapController),
                         )
                       : Container(),
                   const SizedBox(
@@ -178,7 +197,6 @@ class _MyHomePageState extends State<MyHomePage> {
         CameraPosition(
           target: LatLng(newOutlet.lat, newOutlet.lng),
           zoom: 17,
-          tilt: 50,
         ),
       ),
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:nearestbeats/outletInfo/outletInfo.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../OutletEntity.dart';
@@ -10,11 +11,15 @@ class SlidingPanel extends StatelessWidget {
   final Outlet outlet;
   final bool isAdded;
   final Function setAdded;
+  PanelController  _panelController;
+
 
   SlidingPanel(
     this.outlet,
     this.isAdded,
     this.setAdded,
+      this._panelController
+
   );
 
   @override
@@ -38,6 +43,20 @@ class SlidingPanel extends StatelessWidget {
                   borderRadius: BorderRadius.circular(3),
                   color: Colors.black.withOpacity(0.1)),
             ),
+
+            Row(
+              children: [
+                Spacer(),
+                IconButton(icon: Icon(Icons.close, color: Colors.black,), onPressed: () {
+                 _panelController.close();
+
+                },
+
+                ),
+              ],
+            ),
+
+
             SizedBox(
               height: 40,
             ),
@@ -90,7 +109,7 @@ class SlidingPanel extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Material(
-                    color: isAdded ? Colors.red : Colors.green,
+                    color:  Colors.green,
                     child: InkWell(
                       onTap: () {
                         setAdded(!isAdded);
@@ -100,7 +119,31 @@ class SlidingPanel extends StatelessWidget {
                         width: double.infinity,
                         child: Center(
                           child: Text(
-                            isAdded ? "Remove from Beat" : "Add to Beat",
+                             "Add to Beat",
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  clipBehavior: Clip.hardEdge,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Material(
+                    color:  Colors.red,
+                    child: InkWell(
+                      onTap: () {
+                        setAdded(!isAdded);
+                      },
+                      child: Container(
+                        height: 60,
+                        width: double.infinity,
+                        child: Center(
+                          child: Text(
+                            "Remove from Beat",
                             style: TextStyle(color: Colors.white, fontSize: 20),
                           ),
                         ),

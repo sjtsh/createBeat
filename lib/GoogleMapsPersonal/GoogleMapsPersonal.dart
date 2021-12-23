@@ -33,37 +33,16 @@ class GoogleMapsPersonal extends StatelessWidget {
               ),
               // target: LatLng(myLat, myLng),
               zoom: 17,
-              tilt: 50,
+
             ),
             onMapCreated: (GoogleMapController _controller) {
               _onMapCreated(_controller);
             },
             markers: {
               ...markers,
-              Marker(
-                markerId: MarkerId("markerId"),
-                position: LatLng(
-                  27.650136,
-                  85.337996,
-                ),
-                onTap: () {
-                  _panelController.animatePanelToPosition(0.5);
-                },
-              ),
-              // ...markers.where((element) => Polyline(
-              //     polylineId: PolylineId("1"),
-              //     points: starvaCoordinates,
-              //     visible: true,
-              //     color: Colors.blue,width: 10).),
-              // Marker(
-              //     markerId: MarkerId("test"),
-              //     position: LatLng(myLat, myLng))
             },
-            // onLongPress: _addMarker,
-            // myLocationEnabled: true,
             myLocationEnabled: true,
             myLocationButtonEnabled: true,
-            // onTap: ,
             polylines: polylines,
           ),
         ),
