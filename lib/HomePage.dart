@@ -142,13 +142,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                 bottomLeft: Radius.circular(12),
                                 bottomRight: Radius.circular(12)),
                           ),
-                          child: Header(
-                              radius,
-                              outlets,
-                              changeRadius,
-                              widget.dropdownFiles,
-                              widget.polylines,
-                              polyline!),
+                          child: Header(radius, outlets, changeRadius,
+                              widget.dropdownFiles, widget.polylines, polyline!, googleMapController: _googleMapController),
                         )
                       : Container(),
                   const SizedBox(
