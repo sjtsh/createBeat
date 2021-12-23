@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:nearestbeats/outletInfo/outletInfo.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -11,10 +12,11 @@ class SlidingPanel extends StatelessWidget {
   final Outlet outlet;
   final bool isAdded;
   final Function setAdded;
+  final Polyline polyline;
   PanelController _panelController;
   final isPanelClosed = false;
 
-  SlidingPanel(this.outlet, this.isAdded, this.setAdded, this._panelController);
+  SlidingPanel(this.outlet, this.isAdded, this.setAdded, this.polyline, this._panelController);
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +66,8 @@ class SlidingPanel extends StatelessWidget {
                           children: [
                             Text(
                               outlet.outletsName,
-                              style: TextStyle(fontSize: 20, color: Colors.black),
+                              style: TextStyle(
+                                  fontSize: 20, color: Colors.black),
                             ),
                             Text(
                               outlet.beatsName,
@@ -86,7 +89,8 @@ class SlidingPanel extends StatelessWidget {
                   SizedBox(
                     height: 10,
                   ),
-                  Container(
+
+                  outlet.newBeat == null ? Container(
                     clipBehavior: Clip.hardEdge,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
@@ -95,23 +99,22 @@ class SlidingPanel extends StatelessWidget {
                       color: Colors.green,
                       child: InkWell(
                         onTap: () {
-                          setAdded(!isAdded);
+                          // setAdded(!isAdded);
                         },
                         child: Container(
                           height: 60,
                           width: double.infinity,
                           child: Center(
                             child: Text(
-                              "Add to Beat",
-                              style: TextStyle(color: Colors.white, fontSize: 20),
+                              "Update Beat",
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 20),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(height: 10,),
-                  Container(
+                  ) : outlet.newBeat == polyline.polylineId.value ?  Container(
                     clipBehavior: Clip.hardEdge,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
@@ -120,7 +123,7 @@ class SlidingPanel extends StatelessWidget {
                       color: Colors.red,
                       child: InkWell(
                         onTap: () {
-                          setAdded(!isAdded);
+                          // setAdded(!isAdded);
                         },
                         child: Container(
                           height: 60,
@@ -128,16 +131,41 @@ class SlidingPanel extends StatelessWidget {
                           child: Center(
                             child: Text(
                               "Remove from Beat",
-                              style: TextStyle(color: Colors.white, fontSize: 20),
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 20),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ) : Container(
+                    clipBehavior: Clip.hardEdge,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Material(
+                      color: Colors.red,
+                      child: InkWell(
+                        onTap: () {
+                          // setAdded(!isAdded);
+                        },
+                        child: Container(
+                          height: 60,
+                          width: double.infinity,
+                          child: Center(
+                            child: Text(
+                              "Add to Beat",
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 20),
                             ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                 SizedBox(height: 10,),
+                  SizedBox(height: 10,),
                   InkWell(
-                    onTap: (){
+                    onTap: () {
                       _panelController.close();
                     },
                     child: Container(
@@ -157,7 +185,7 @@ class SlidingPanel extends StatelessWidget {
                   ),
                   SizedBox(height: 10,),
                   InkWell(
-                    onTap: (){
+                    onTap: () {
                       _panelController.close();
                     },
                     child: Container(

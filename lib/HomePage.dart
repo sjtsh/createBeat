@@ -141,6 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   isAdded,
                   setAdded,
+                  polyline!,
                   _panelController),
               body: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
