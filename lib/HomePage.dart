@@ -115,7 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
               parallaxEnabled: true,
               color: Colors.transparent,
               panel: SlidingPanel(
-                  Outlet(
+                  outlet ?? Outlet(
                     3,
                     "zone",
                     "region",
@@ -171,7 +171,8 @@ class _MyHomePageState extends State<MyHomePage> {
                               greenRadius,
                               changeGreenRadius,
                               changePolyline,
-                              googleMapController: _googleMapController),
+                            outlet?.distributor,
+                              googleMapController: _googleMapController, ),
                         )
                       : Container(),
                   const SizedBox(

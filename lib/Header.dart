@@ -17,6 +17,7 @@ class Header extends StatefulWidget {
   final double greenRadius;
   final Function changeGreenRadius;
   final Function changePolyline;
+  final distributorName ;
 
   Header(
       this.radius,
@@ -27,6 +28,7 @@ class Header extends StatefulWidget {
       this.greenRadius,
       this.changeGreenRadius,
       this.changePolyline,
+      this.distributorName,
       {this.googleMapController});
 
   @override
@@ -39,12 +41,18 @@ class _HeaderState extends State<Header> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Expanded(
           child: Row(
+
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(child: Container()),
+              const SizedBox(
+                width: 12,
+              ),
+              Text(widget.distributorName),
+              Expanded(child: Container(),),
               Text("${outletsForBeat.length} Outlets"),
               const SizedBox(
                 width: 12,
@@ -52,6 +60,7 @@ class _HeaderState extends State<Header> {
             ],
           ),
         ),
+
         Slider(
           onChangeEnd: (double value) {
             widget.changeRadius(value * 3000);

@@ -50,13 +50,13 @@ class SlidingPanel extends StatelessWidget {
                       Expanded(
                         child: Container(
                           width: 100,
-                          height: 150,
+                          height: 100,
                           color: Colors.green,
-                          child: Image.network(outlet.img),
+                          child: Image.network(outlet.img, fit: BoxFit.cover,),
                         ),
                       ),
                       SizedBox(
-                        width: 12,
+                        width: 10,
                       ),
                       Expanded(
                         child: Column(
@@ -84,7 +84,7 @@ class SlidingPanel extends StatelessWidget {
                     ],
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
                   Container(
                     clipBehavior: Clip.hardEdge,
@@ -110,7 +110,7 @@ class SlidingPanel extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 12,),
+                  SizedBox(height: 10,),
                   Container(
                     clipBehavior: Clip.hardEdge,
                     decoration: BoxDecoration(
@@ -135,7 +135,27 @@ class SlidingPanel extends StatelessWidget {
                       ),
                     ),
                   ),
-                 SizedBox(height: 12,),
+                 SizedBox(height: 10,),
+                  InkWell(
+                    onTap: (){
+                      _panelController.close();
+                    },
+                    child: Container(
+                      height: 60,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.lightBlue,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "Confirm",
+                          style: TextStyle(fontSize: 20, color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10,),
                   InkWell(
                     onTap: (){
                       _panelController.close();
