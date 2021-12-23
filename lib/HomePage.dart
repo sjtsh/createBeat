@@ -145,46 +145,56 @@ class _MyHomePageState extends State<MyHomePage> {
               body: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  isHeader
-                      ? Container(
-                          height: isHeader ? 180 : 0,
-                          width: width,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(1),
-                                offset: Offset(0, -2),
-                                blurRadius: 3,
+                  Container(
+                    height: isHeader ? 180 : 40,
+                    width: width,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(1),
+                          offset: Offset(0, -2),
+                          blurRadius: 3,
+                        ),
+                      ],
+                      borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(12),
+                          bottomRight: Radius.circular(12)),
+                    ),
+                    child: isHeader
+                        ? Header(
+                            radius,
+                            changeRadius,
+                            widget.dropdownFiles,
+                            widget.polylines,
+                            polyline!,
+                            greenRadius,
+                            changeGreenRadius,
+                            changePolyline,
+                            googleMapController: _googleMapController)
+                        : Row(
+                            children: [
+                              Expanded(child: Container()),
+                              Text("${outletsForBeat.length} Outlets"),
+                              const SizedBox(
+                                width: 12,
                               ),
                             ],
-                            borderRadius: const BorderRadius.only(
-                                bottomLeft: Radius.circular(12),
-                                bottomRight: Radius.circular(12)),
                           ),
-                          child: Header(
-                              radius,
-                              changeRadius,
-                              widget.dropdownFiles,
-                              widget.polylines,
-                              polyline!,
-                              greenRadius,
-                              changeGreenRadius,
-                              changePolyline,
-                              googleMapController: _googleMapController),
-                        )
-                      : Container(),
+                  ),
                   const SizedBox(
                     width: 50,
                   ),
                   Expanded(
-                      child: GoogleMapsPersonal(
-                          _panelController,
-                          markers,
-                          _onMapCreated,
-                          widget.polylines,
-                          isHeader,
-                          setHeader)),
+                    child: GoogleMapsPersonal(
+                      _panelController,
+                      markers,
+                      _onMapCreated,
+                      widget.polylines,
+                      isHeader,
+                      setHeader,
+                    ),
+                  ),
                 ],
               ),
             );
