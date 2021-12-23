@@ -9,6 +9,7 @@ import 'package:location/location.dart';
 import 'package:nearestbeats/GoogleMapsPersonal/GoogleMapsPersonal.dart';
 import 'package:nearestbeats/GoogleMapsPersonal/GoogleMapsSkeleton.dart';
 import 'package:nearestbeats/Header.dart';
+import 'package:nearestbeats/SlidingPanel/MajorSlidingPanel.dart';
 import 'package:nearestbeats/SlidingPanel/SlidingPanel.dart';
 import 'package:nearestbeats/data.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -108,108 +109,26 @@ class _MyHomePageState extends State<MyHomePage> {
             List snapshot =
                 loadMarkerOutlets(radius, greenRadius, changeOutlet, polyline!);
             List<Marker> markers = snapshot[0];
-            return SlidingUpPanel(
-              controller: _panelController,
-              maxHeight: 450,
-              minHeight: 50,
-              isDraggable: false,
-              panelSnapping: true,
-              parallaxEnabled: true,
-              color: Colors.transparent,
-              panel: SlidingPanel(
-                  outlet ??
-                      Outlet(
-                        3,
-                        "zone",
-                        "region",
-                        "territory",
-                        "beatsName",
-                        "beatsERPID",
-                        "distributor",
-                        "outletERPID",
-                        "outletsName",
-                        27.650136,
-                        85.337996,
-                        "ownersName",
-                        1,
-                        "type",
-                        "formattedAddress",
-                        "address",
-                        "subCity",
-                        "market",
-                        "city",
-                        "state",
-                        "img",
-                        "",
-                      ),
-                  isAdded,
-                  setAdded,
-                  polyline!,
-                  _panelController),
-              body: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    height: isHeader ? 180 : 40,
-                    width: width,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(1),
-                          offset: Offset(0, -2),
-                          blurRadius: 3,
-                        ),
-                      ],
-                      borderRadius: const BorderRadius.only(
-                          bottomLeft: Radius.circular(12),
-                          bottomRight: Radius.circular(12)),
-                    ),
-                    child: isHeader
-                        ? Header(
-                            radius,
-                            changeRadius,
-                            widget.dropdownFiles,
-                            widget.polylines,
-                            polyline!,
-                            greenRadius,
-                            changeGreenRadius,
-                            changePolyline,
-                            widget.distributorName,
-                            googleMapController: _googleMapController)
-                        : Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const SizedBox(
-                                width: 12,
-                              ),
-                              Text(widget.distributorName),
-                              Expanded(
-                                child: Container(),
-                              ),
-                              Text("${outletsForBeat.length} Outlets"),
-                              const SizedBox(
-                                width: 12,
-                              ),
-                            ],
-                          ),
-                  ),
-                  const SizedBox(
-                    width: 50,
-                  ),
-                  Expanded(
-                    child: GoogleMapsPersonal(
-                      _panelController,
-                      markers,
-                      _onMapCreated,
-                      widget.polylines,
-                      isHeader,
-                      setHeader,
-                    ),
-                  ),
-                ],
-              ),
-            );
+            return MajorSlidingPanel(
+                _panelController,
+                outlet,
+                isAdded,
+                setAdded,
+                polyline!,
+                width,
+                isHeader,
+                markers,
+                _onMapCreated,
+                setHeader,
+                radius,
+                changeRadius,
+                widget.dropdownFiles,
+                widget.polylines,
+                _googleMapController,
+                greenRadius,
+                changeGreenRadius,
+                changePolyline,
+                widget.distributorName, changeOutlet);
           },
         ),
       ),

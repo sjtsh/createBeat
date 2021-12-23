@@ -7,6 +7,7 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../Backend/Entity/OutletEntity.dart';
+import '../data.dart';
 
 class SlidingPanel extends StatelessWidget {
   final Outlet outlet;
@@ -90,31 +91,7 @@ class SlidingPanel extends StatelessWidget {
                     height: 10,
                   ),
 
-                  outlet.newBeat == null ? Container(
-                    clipBehavior: Clip.hardEdge,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Material(
-                      color: Colors.green,
-                      child: InkWell(
-                        onTap: () {
-                          // setAdded(!isAdded);
-                        },
-                        child: Container(
-                          height: 60,
-                          width: double.infinity,
-                          child: Center(
-                            child: Text(
-                              "Update Beat",
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 20),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ) : outlet.newBeat == polyline.polylineId.value ?  Container(
+                  outletsForBeat.contains(outlet.id)? Container(
                     clipBehavior: Clip.hardEdge,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
@@ -138,13 +115,13 @@ class SlidingPanel extends StatelessWidget {
                         ),
                       ),
                     ),
-                  ) : Container(
+                  ) :  Container(
                     clipBehavior: Clip.hardEdge,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Material(
-                      color: Colors.red,
+                      color: Colors.green,
                       child: InkWell(
                         onTap: () {
                           // setAdded(!isAdded);
@@ -159,26 +136,6 @@ class SlidingPanel extends StatelessWidget {
                                   color: Colors.white, fontSize: 20),
                             ),
                           ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 10,),
-                  InkWell(
-                    onTap: () {
-                      _panelController.close();
-                    },
-                    child: Container(
-                      height: 60,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.lightBlue,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Center(
-                        child: Text(
-                          "Confirm",
-                          style: TextStyle(fontSize: 20, color: Colors.white),
                         ),
                       ),
                     ),

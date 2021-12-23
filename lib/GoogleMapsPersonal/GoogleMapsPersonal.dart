@@ -41,14 +41,15 @@ class GoogleMapsPersonal extends StatelessWidget {
             markers: {
               ...markers,
               Marker(
-                  markerId: MarkerId("markerId"),
-                  position: LatLng(
-                    27.650136,
-                    85.337996,
-                  ),
-                  onTap: () {
-                    _panelController.open();
-                  })
+                markerId: MarkerId("markerId"),
+                position: LatLng(
+                  27.650136,
+                  85.337996,
+                ),
+                onTap: () {
+                  _panelController.open();
+                },
+              )
             },
             myLocationEnabled: true,
             myLocationButtonEnabled: true,
@@ -95,9 +96,13 @@ class GoogleMapsPersonal extends StatelessWidget {
           top: 45,
           child: GestureDetector(
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-                return ConfirmScreen();
-              }));
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) {
+                    return ConfirmScreen();
+                  },
+                ),
+              );
             },
             child: Padding(
               padding: const EdgeInsets.all(12.0),
