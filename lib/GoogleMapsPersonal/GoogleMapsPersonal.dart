@@ -40,6 +40,15 @@ class GoogleMapsPersonal extends StatelessWidget {
             },
             markers: {
               ...markers,
+              Marker(
+                  markerId: MarkerId("markerId"),
+                  position: LatLng(
+                    27.650136,
+                    85.337996,
+                  ),
+                  onTap: () {
+                    _panelController.open();
+                  })
             },
             myLocationEnabled: true,
             myLocationButtonEnabled: true,
