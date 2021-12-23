@@ -5,7 +5,7 @@ import '../Entity/OutletEntity.dart';
 import '../../data.dart';
 
 
-loadMarkerOutlets(double radius, double greenRadius, Function changeOutlet,
+List<Marker> loadMarkerOutlets(double radius, double greenRadius, Function changeOutlet,
     Polyline polylineSelected) {
   outletsForBeat = [];
   List<Marker> markers = [];
@@ -90,5 +90,7 @@ loadMarkerOutlets(double radius, double greenRadius, Function changeOutlet,
       }
     }
   }
-  return [markers];
+  print("_____________________________________________");
+  print(markers.length);
+  return markers;
 }

@@ -81,7 +81,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void changePolyline(String polylineID) {
-    outletsForBeat = [];
     for (Polyline i in widget.polylines) {
       if (polylineID == i.polylineId.value) {
         setState(() {
@@ -106,9 +105,9 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Scaffold(
         body: Builder(
           builder: (context) {
-            List snapshot =
+            List<Marker> snapshot =
                 loadMarkerOutlets(radius, greenRadius, changeOutlet, polyline!);
-            List<Marker> markers = snapshot[0];
+            List<Marker> markers = snapshot;
             return MajorSlidingPanel(
                 _panelController,
                 outlet,

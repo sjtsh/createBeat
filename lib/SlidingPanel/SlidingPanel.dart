@@ -16,8 +16,11 @@ class SlidingPanel extends StatelessWidget {
   final Polyline polyline;
   PanelController _panelController;
   final isPanelClosed = false;
+  final Function setMarkerRed;
+  final Function setMarkerGreen;
 
-  SlidingPanel(this.outlet, this.isAdded, this.setAdded, this.polyline, this._panelController);
+  SlidingPanel(this.outlet, this.isAdded, this.setAdded, this.polyline,
+      this._panelController, this.setMarkerRed, this.setMarkerGreen);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +36,6 @@ class SlidingPanel extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
-
             Container(
               height: 4,
               width: 70,
@@ -55,7 +57,10 @@ class SlidingPanel extends StatelessWidget {
                           width: 100,
                           height: 100,
                           color: Colors.green,
-                          child: Image.network(outlet.img, fit: BoxFit.cover,),
+                          child: Image.network(
+                            outlet.img,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -67,8 +72,8 @@ class SlidingPanel extends StatelessWidget {
                           children: [
                             Text(
                               outlet.outletsName,
-                              style: TextStyle(
-                                  fontSize: 20, color: Colors.black),
+                              style:
+                                  TextStyle(fontSize: 20, color: Colors.black),
                             ),
                             Text(
                               outlet.beatsName,
@@ -90,57 +95,60 @@ class SlidingPanel extends StatelessWidget {
                   SizedBox(
                     height: 10,
                   ),
-
-                  outletsForBeat.contains(outlet.id)? Container(
-                    clipBehavior: Clip.hardEdge,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Material(
-                      color: Colors.red,
-                      child: InkWell(
-                        onTap: () {
-                          // setAdded(!isAdded);
-                        },
-                        child: Container(
-                          height: 60,
-                          width: double.infinity,
-                          child: Center(
-                            child: Text(
-                              "Remove from Beat",
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 20),
+                  outletsForBeat.contains(outlet.id)
+                      ? Container(
+                          clipBehavior: Clip.hardEdge,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Material(
+                            color: Colors.red,
+                            child: InkWell(
+                              onTap: () {
+                                setMarkerRed(outlet.id);
+                              },
+                              child: Container(
+                                height: 60,
+                                width: double.infinity,
+                                child: Center(
+                                  child: Text(
+                                    "Remove from Beat",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 20),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      : Container(
+                          clipBehavior: Clip.hardEdge,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Material(
+                            color: Colors.green,
+                            child: InkWell(
+                              onTap: () {
+                              setMarkerGreen(outlet.id);
+                              },
+                              child: Container(
+                                height: 60,
+                                width: double.infinity,
+                                child: Center(
+                                  child: Text(
+                                    "Add to Beat",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 20),
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ),
-                  ) :  Container(
-                    clipBehavior: Clip.hardEdge,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Material(
-                      color: Colors.green,
-                      child: InkWell(
-                        onTap: () {
-                          // setAdded(!isAdded);
-                        },
-                        child: Container(
-                          height: 60,
-                          width: double.infinity,
-                          child: Center(
-                            child: Text(
-                              "Add to Beat",
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 20),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                  SizedBox(
+                    height: 10,
                   ),
-                  SizedBox(height: 10,),
                   InkWell(
                     onTap: () {
                       _panelController.close();
@@ -160,7 +168,6 @@ class SlidingPanel extends StatelessWidget {
                       ),
                     ),
                   ),
-
                 ],
               ),
             ),
