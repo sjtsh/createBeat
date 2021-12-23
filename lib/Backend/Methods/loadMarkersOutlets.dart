@@ -7,6 +7,7 @@ import '../../data.dart';
 
 loadMarkerOutlets(
     double radius, double greenRadius, Function changeOutlet, Polyline polylineSelected) {
+  outletsForBeat = [];
   List<Marker> markers = [];
   for (int i = 0; i < allOutlets.length; i++) {
     bool radiiNear = false;

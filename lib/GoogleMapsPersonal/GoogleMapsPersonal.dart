@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:nearestbeats/ConfirmScreen/ConfirmScreen.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../data.dart';
@@ -33,7 +34,6 @@ class GoogleMapsPersonal extends StatelessWidget {
               ),
               // target: LatLng(myLat, myLng),
               zoom: 17,
-
             ),
             onMapCreated: (GoogleMapController _controller) {
               _onMapCreated(_controller);
@@ -85,6 +85,41 @@ class GoogleMapsPersonal extends StatelessWidget {
                       ? Icons.arrow_upward_rounded
                       : Icons.arrow_downward_rounded,
                   color: Colors.black,
+                ),
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+          right: 2,
+          top: 45,
+          child: GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                return ConfirmScreen();
+              }));
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Container(
+                height: 35,
+                width: 35,
+                decoration: BoxDecoration(
+                  color: Colors.green,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.5),
+                    )
+                  ],
+                  border: Border.all(
+                    color: Colors.black.withOpacity(0.3),
+                    width: 0.7,
+                  ),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  color: Colors.white,
                 ),
               ),
             ),

@@ -19,8 +19,9 @@ import 'Backend/Entity/OutletEntity.dart';
 class MyHomePage extends StatefulWidget {
   final List<File> dropdownFiles;
   final Set<Polyline> polylines;
+  final String distributorName;
 
-  MyHomePage(this.dropdownFiles, this.polylines);
+  MyHomePage(this.dropdownFiles, this.polylines, this.distributorName);
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -58,17 +59,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _onMapCreated(GoogleMapController controller) {
     _googleMapController = controller;
-    // Geolocator.getCurrentPosition().then((value) {
-    //   controller.animateCamera(
-    //     CameraUpdate.newCameraPosition(
-    //       CameraPosition(
-    //         target: LatLng(value.latitude, value.longitude),
-    //         zoom: 17,
-    //         tilt: 50,
-    //       ),
-    //     ),
-    //   );
-    // });
+    Geolocator.getCurrentPosition().then((value) {
+      controller.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: LatLng((polyline?.points[0].latitude) ?? value.latitude,
+                (polyline?.points[0].longitude) ?? value.longitude),
+            zoom: 17,
+            tilt: 50,
+          ),
+        ),
+      );
+    });
   }
 
   void setAdded(bool newAdded) {
@@ -115,30 +117,31 @@ class _MyHomePageState extends State<MyHomePage> {
               parallaxEnabled: true,
               color: Colors.transparent,
               panel: SlidingPanel(
-                  Outlet(
-                    3,
-                    "zone",
-                    "region",
-                    "territory",
-                    "beatsName",
-                    "beatsERPID",
-                    "distributor",
-                    "outletERPID",
-                    "outletsName",
-                    27.650136,
-                    85.337996,
-                    "ownersName",
-                    1,
-                    "type",
-                    "formattedAddress",
-                    "address",
-                    "subCity",
-                    "market",
-                    "city",
-                    "state",
-                    "img",
-                    "",
-                  ),
+                  outlet ??
+                      Outlet(
+                        3,
+                        "zone",
+                        "region",
+                        "territory",
+                        "beatsName",
+                        "beatsERPID",
+                        "distributor",
+                        "outletERPID",
+                        "outletsName",
+                        27.650136,
+                        85.337996,
+                        "ownersName",
+                        1,
+                        "type",
+                        "formattedAddress",
+                        "address",
+                        "subCity",
+                        "market",
+                        "city",
+                        "state",
+                        "img",
+                        "",
+                      ),
                   isAdded,
                   setAdded,
                   _panelController),
@@ -171,10 +174,18 @@ class _MyHomePageState extends State<MyHomePage> {
                             greenRadius,
                             changeGreenRadius,
                             changePolyline,
+                            widget.distributorName,
                             googleMapController: _googleMapController)
                         : Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Expanded(child: Container()),
+                              const SizedBox(
+                                width: 12,
+                              ),
+                              Text(widget.distributorName),
+                              Expanded(
+                                child: Container(),
+                              ),
                               Text("${outletsForBeat.length} Outlets"),
                               const SizedBox(
                                 width: 12,
