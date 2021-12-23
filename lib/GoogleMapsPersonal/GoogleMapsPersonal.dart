@@ -34,7 +34,7 @@ class GoogleMapsPersonal extends StatelessWidget {
               ),
               // target: LatLng(myLat, myLng),
               zoom: 17,
-              tilt: 50,
+
             ),
             onMapCreated: (GoogleMapController _controller) {
               _onMapCreated(_controller);
