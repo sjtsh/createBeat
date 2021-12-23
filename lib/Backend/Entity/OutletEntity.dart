@@ -25,6 +25,7 @@ class Outlet {
   String remarks;
   String? newBeat;
   bool? isAssigned;
+  String? newDistributor;
 
   Outlet(
       this.id,
@@ -49,8 +50,9 @@ class Outlet {
       this.state,
       this.img,
       this.remarks,
+
       {this.newBeat,
-      this.isAssigned});
+      this.isAssigned, this.newDistributor});
 
   factory Outlet.fromJson(Map<String, dynamic> json) {
     return Outlet(
@@ -77,6 +79,7 @@ class Outlet {
       json['20'],
       json['21'],
       newBeat: json['22'],
+      newDistributor: json['24'],
       isAssigned: json['23'] == null
           ? null
           : json['23'] == 0

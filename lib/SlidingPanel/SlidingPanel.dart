@@ -5,7 +5,7 @@ import 'package:nearestbeats/outletInfo/outletInfo.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../OutletEntity.dart';
+import '../Backend/Entity/OutletEntity.dart';
 
 class SlidingPanel extends StatelessWidget {
   final Outlet outlet;

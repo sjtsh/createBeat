@@ -7,7 +7,7 @@ import 'package:nearestbeats/SelectionScreen/SelectionScreen.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'HomePage.dart';
-import 'OutletEntity.dart';
+import 'Backend/Entity/OutletEntity.dart';
 import 'SelectionScreen/ChooseScreen.dart';
 import 'data.dart';
 

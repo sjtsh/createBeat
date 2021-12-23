@@ -1,6 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 
-import 'OutletEntity.dart';
+import 'Backend/Entity/OutletEntity.dart';
 
 class LocalDB {
   static var database;
