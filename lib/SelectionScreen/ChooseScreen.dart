@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:nearestbeats/Backend/Entity/Beat.dart';
-import 'package:nearestbeats/Backend/Service/OutletService.dart';
-import 'package:nearestbeats/HomePage.dart';
 import 'package:nearestbeats/data.dart';
 
 import 'ExpandablePanel.dart';

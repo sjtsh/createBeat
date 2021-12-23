@@ -33,16 +33,5 @@ List<String> headers = [
   "Image"
 ];
 
-// Set<Polyline> polylinesLocal = <BeatsPolyline>[]
-//     .map(
-//       (e) => Polyline(
-//           polylineId: PolylineId(e.name),
-//           points: e.LatLon,
-//           visible: true,
-//           color: colors[Random().nextInt(colors.length)],
-//           width: 10),
-//     )
-//     .toSet();
-
-// Polyline? polylineSelected;
+List<Outlet> outletsForBeat = [];
 List colors = [Colors.cyanAccent, Colors.red, Colors.blue, Colors.green, Colors.orange];

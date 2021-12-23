@@ -40,6 +40,7 @@ loadMarkerOutlets(double radius, Function changeOutlet, Polyline polylineSelecte
           },
         ),
       );
+      outletsForBeat.add(allOutlets[i]);
     } else {
       if (allOutlets[i].isAssigned ?? false) {
         markers.add(

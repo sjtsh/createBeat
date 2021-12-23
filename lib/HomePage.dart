@@ -32,8 +32,15 @@ class _MyHomePageState extends State<MyHomePage> {
   final PanelController _panelController = PanelController();
   Outlet? outlet;
   bool isAdded = false;
+  bool isHeader = true;
 
   Polyline? polyline;
+
+  setHeader(bool newValue) {
+    setState(() {
+      isHeader = newValue;
+    });
+  }
 
   @override
   void initState() {
@@ -118,14 +125,44 @@ class _MyHomePageState extends State<MyHomePage> {
               body: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Header(radius, width, outlets, changeRadius,
-                      widget.dropdownFiles, widget.polylines, polyline!),
+                  isHeader
+                      ? Container(
+                          height: isHeader ? 120 : 0,
+                          width: width,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(1),
+                                offset: Offset(0, -2),
+                                blurRadius: 3,
+                              ),
+                            ],
+                            borderRadius: const BorderRadius.only(
+                                bottomLeft: Radius.circular(12),
+                                bottomRight: Radius.circular(12)),
+                          ),
+                          child: Header(
+                              radius,
+                              outlets,
+                              changeRadius,
+                              widget.dropdownFiles,
+                              widget.polylines,
+                              polyline!),
+                        )
+                      : Container(),
                   const SizedBox(
                     width: 50,
                   ),
                   Expanded(
-                      child: GoogleMapsPersonal(_panelController, markers,
-                          _onMapCreated, refresh, widget.polylines)),
+                      child: GoogleMapsPersonal(
+                          _panelController,
+                          markers,
+                          _onMapCreated,
+                          refresh,
+                          widget.polylines,
+                          isHeader,
+                          setHeader)),
                 ],
               ),
             );

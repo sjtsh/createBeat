@@ -444,7 +444,7 @@ class _GpxFileReadState extends State<GpxFileRead> {
                         : multiFileColor[data.key] == "Blue"
                             ? Colors.blue
                             : Colors.green,
-                    width: 10),
+                    width: 5),
               );
               bools[data.key] = true;
               if (!bools.contains(false)) {
@@ -500,7 +500,7 @@ class _MyDialogBoxState extends State<MyDialogBox> {
         height: 200,
         width: 200,
         child: Column(
-          children: ["Red", "Blue", "Green"]
+          children: <String>["Red", "Blue", "Green"]
               .asMap()
               .entries
               .map((e) => InkWell(
