@@ -105,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
             List<Outlet> outlets = snapshot[1];
             return SlidingUpPanel(
               controller: _panelController,
-              maxHeight: 400,
+              maxHeight: 450,
               minHeight: 50,
               isDraggable: false,
               panelSnapping: true,
@@ -205,8 +205,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
     );
-    _panelController.animatePanelToPosition(1,
-        duration: const Duration(milliseconds: 200), curve: Curves.easeInOut);
+    _panelController.open();
     _googleMapController
         ?.showMarkerInfoWindow(MarkerId(newOutlet.id.toString()));
   }

@@ -48,7 +48,8 @@ class GoogleMapsPersonal extends StatelessWidget {
                     85.337996,
                   ),
                   onTap: () {
-                    _panelController.animatePanelToPosition(0.5);
+                    _panelController.open();
+                    refresh();
                   })
               // ...markers.where((element) => Polyline(
               //     polylineId: PolylineId("1"),

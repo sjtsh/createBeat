@@ -11,16 +11,10 @@ class SlidingPanel extends StatelessWidget {
   final Outlet outlet;
   final bool isAdded;
   final Function setAdded;
-  PanelController  _panelController;
+  PanelController _panelController;
+  final isPanelClosed = false;
 
-
-  SlidingPanel(
-    this.outlet,
-    this.isAdded,
-    this.setAdded,
-      this._panelController
-
-  );
+  SlidingPanel(this.outlet, this.isAdded, this.setAdded, this._panelController);
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +30,7 @@ class SlidingPanel extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
+
             Container(
               height: 4,
               width: 70,
@@ -43,115 +38,126 @@ class SlidingPanel extends StatelessWidget {
                   borderRadius: BorderRadius.circular(3),
                   color: Colors.black.withOpacity(0.1)),
             ),
-
-            Row(
-              children: [
-                Spacer(),
-                IconButton(icon: Icon(Icons.close, color: Colors.black,), onPressed: () {
-                 _panelController.close();
-
-                },
-
-                ),
-              ],
-            ),
-
-
             SizedBox(
-              height: 40,
+              height: 20,
             ),
-            Column(
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        width: 100,
-                        height: 150,
-                        color: Colors.green,
-                        child: Image.network(outlet.img),
+            Padding(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          width: 100,
+                          height: 150,
+                          color: Colors.green,
+                          child: Image.network(outlet.img),
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      width: 12,
-                    ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            outlet.outletsName,
-                            style: TextStyle(fontSize: 20, color: Colors.black),
-                          ),
-                          Text(
-                            outlet.beatsName,
-                            style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.black.withOpacity(0.5)),
-                          ),
-                          Text(
-                            outlet.distributor,
-                            style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.black.withOpacity(0.5)),
-                          ),
-                        ],
+                      SizedBox(
+                        width: 12,
                       ),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  clipBehavior: Clip.hardEdge,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              outlet.outletsName,
+                              style: TextStyle(fontSize: 20, color: Colors.black),
+                            ),
+                            Text(
+                              outlet.beatsName,
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black.withOpacity(0.5)),
+                            ),
+                            Text(
+                              outlet.distributor,
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black.withOpacity(0.5)),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
                   ),
-                  child: Material(
-                    color:  Colors.green,
-                    child: InkWell(
-                      onTap: () {
-                        setAdded(!isAdded);
-                      },
-                      child: Container(
-                        height: 60,
-                        width: double.infinity,
-                        child: Center(
-                          child: Text(
-                             "Add to Beat",
-                            style: TextStyle(color: Colors.white, fontSize: 20),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    clipBehavior: Clip.hardEdge,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Material(
+                      color: Colors.green,
+                      child: InkWell(
+                        onTap: () {
+                          setAdded(!isAdded);
+                        },
+                        child: Container(
+                          height: 60,
+                          width: double.infinity,
+                          child: Center(
+                            child: Text(
+                              "Add to Beat",
+                              style: TextStyle(color: Colors.white, fontSize: 20),
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                Container(
-                  clipBehavior: Clip.hardEdge,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Material(
-                    color:  Colors.red,
-                    child: InkWell(
-                      onTap: () {
-                        setAdded(!isAdded);
-                      },
-                      child: Container(
-                        height: 60,
-                        width: double.infinity,
-                        child: Center(
-                          child: Text(
-                            "Remove from Beat",
-                            style: TextStyle(color: Colors.white, fontSize: 20),
+                  SizedBox(height: 12,),
+                  Container(
+                    clipBehavior: Clip.hardEdge,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Material(
+                      color: Colors.red,
+                      child: InkWell(
+                        onTap: () {
+                          setAdded(!isAdded);
+                        },
+                        child: Container(
+                          height: 60,
+                          width: double.infinity,
+                          child: Center(
+                            child: Text(
+                              "Remove from Beat",
+                              style: TextStyle(color: Colors.white, fontSize: 20),
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                )
-              ],
+                 SizedBox(height: 10,),
+                  InkWell(
+                    onTap: (){
+                      _panelController.close();
+                    },
+                    child: Container(
+                      height: 60,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.blueGrey,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "Close",
+                          style: TextStyle(fontSize: 20, color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ),
+
+                ],
+              ),
             ),
           ],
         ),
