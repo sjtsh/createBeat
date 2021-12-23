@@ -33,5 +33,5 @@ List<String> headers = [
   "Image"
 ];
 
-List<Outlet> outletsForBeat = [];
+List<int> outletsForBeat = [];
 List colors = [Colors.cyanAccent, Colors.red, Colors.blue, Colors.green, Colors.orange];

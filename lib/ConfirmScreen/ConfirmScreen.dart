@@ -7,15 +7,15 @@ class ConfirmScreen extends StatelessWidget {
   TextEditingController distributor = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  confirmAction() {
-    Map aBody = {};
-    outletsForBeat.forEach((element) {
-      aBody[element.id] = {
-        "beat": beat.text,
-        "distributor": distributor.text,
-      };
-    });
-  }
+  // confirmAction() {
+  //   Map aBody = {};
+  //   outletsForBeat.forEach((element) {
+  //     aBody[element.id] = {
+  //       "beat": beat.text,
+  //       "distributor": distributor.text,
+  //     };
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
