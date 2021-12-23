@@ -1,5 +1,5 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:nearestbeats/OutletEntity.dart';
+import 'package:nearestbeats/Backend/Entity/OutletEntity.dart';
 import 'package:nearestbeats/data.dart';
 
 import 'multithreading.dart';

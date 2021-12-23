@@ -4,7 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import '../../OutletEntity.dart';
+import '../Entity/OutletEntity.dart';
 import '../Entity/Beat.dart';
 
 class OutletService {

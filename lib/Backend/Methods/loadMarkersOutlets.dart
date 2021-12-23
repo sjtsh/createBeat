@@ -1,18 +1,13 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import '../../OutletEntity.dart';
+import '../Entity/OutletEntity.dart';
 import '../../data.dart';
 
-var _markers;
-var nearestOutlets;
-var value;
 
 loadMarkerOutlets(
     double radius, double greenRadius, Function changeOutlet, Polyline polylineSelected) {
-  List<Outlet> nearestOutlets = [];
   List<Marker> markers = [];
-  outletsForBeat =[];
   for (int i = 0; i < allOutlets.length; i++) {
     bool radiiNear = false;
     for (var element in polylineSelected.points) {
@@ -94,6 +89,5 @@ loadMarkerOutlets(
       }
     }
   }
-  print(markers);
-  return [markers, nearestOutlets, value];
+  return [markers];
 }

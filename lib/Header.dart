@@ -4,12 +4,11 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import 'OutletEntity.dart';
+import 'Backend/Entity/OutletEntity.dart';
 import 'data.dart';
 
 class Header extends StatefulWidget {
   final double radius;
-  final List<Outlet> outlets;
   final Function changeRadius;
   final List<File> dropdownFiles;
   final Set polylines;
@@ -21,7 +20,6 @@ class Header extends StatefulWidget {
 
   Header(
       this.radius,
-      this.outlets,
       this.changeRadius,
       this.dropdownFiles,
       this.polylines,

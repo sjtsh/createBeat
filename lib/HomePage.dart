@@ -14,7 +14,7 @@ import 'package:nearestbeats/data.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import 'Backend/Methods/loadMarkersOutlets.dart';
-import 'OutletEntity.dart';
+import 'Backend/Entity/OutletEntity.dart';
 
 class MyHomePage extends StatefulWidget {
   final List<File> dropdownFiles;
@@ -78,7 +78,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void changePolyline(String polylineID) {
-    for(Polyline i in widget.polylines){
+    outletsForBeat = [];
+    for (Polyline i in widget.polylines) {
       if (polylineID == i.polylineId.value) {
         setState(() {
           polyline = i;
@@ -86,8 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
         _googleMapController?.animateCamera(
           CameraUpdate.newCameraPosition(
             CameraPosition(
-              target: LatLng(i.points[0].latitude,
-                  i.points[0].longitude),
+              target: LatLng(i.points[0].latitude, i.points[0].longitude),
               zoom: 17,
             ),
           ),
@@ -103,9 +103,9 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Scaffold(
         body: Builder(
           builder: (context) {
-            List snapshot = loadMarkerOutlets(radius, greenRadius, changeOutlet, polyline!);
+            List snapshot =
+                loadMarkerOutlets(radius, greenRadius, changeOutlet, polyline!);
             List<Marker> markers = snapshot[0];
-            List<Outlet> outlets = snapshot[1];
             return SlidingUpPanel(
               controller: _panelController,
               maxHeight: 450,
@@ -162,8 +162,16 @@ class _MyHomePageState extends State<MyHomePage> {
                                 bottomLeft: Radius.circular(12),
                                 bottomRight: Radius.circular(12)),
                           ),
-                          child: Header(radius, outlets, changeRadius,
-                              widget.dropdownFiles, widget.polylines, polyline!, greenRadius, changeGreenRadius, changePolyline, googleMapController: _googleMapController),
+                          child: Header(
+                              radius,
+                              changeRadius,
+                              widget.dropdownFiles,
+                              widget.polylines,
+                              polyline!,
+                              greenRadius,
+                              changeGreenRadius,
+                              changePolyline,
+                              googleMapController: _googleMapController),
                         )
                       : Container(),
                   const SizedBox(
@@ -211,9 +219,9 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void changeGreenRadius(newRadius){
-  setState(() {
-    greenRadius = newRadius;
-  });
+  void changeGreenRadius(newRadius) {
+    setState(() {
+      greenRadius = newRadius;
+    });
   }
 }
