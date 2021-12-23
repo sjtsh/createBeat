@@ -61,9 +61,7 @@ class MajorSlidingPanel extends StatefulWidget {
 class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
   List<Marker>? markers;
 
-
   setMarkerGreen(markerID) {
-
     for (int i = 0; i < markers!.length; i++) {
       if (markers![i].markerId == markerID) {
         Marker marker = Marker(
@@ -121,9 +119,7 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
 
   @override
   Widget build(BuildContext context) {
-    if((markers?.isEmpty)?? true){
-      markers = widget.markers;
-    }
+    markers = widget.markers;
     return SlidingUpPanel(
       controller: widget._panelController,
       maxHeight: 350,
@@ -161,7 +157,9 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
           widget.isAdded,
           widget.setAdded,
           widget.polyline,
-          widget._panelController, setMarkerRed, setMarkerGreen),
+          widget._panelController,
+          setMarkerRed,
+          setMarkerGreen),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

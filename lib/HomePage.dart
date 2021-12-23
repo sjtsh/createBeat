@@ -29,7 +29,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  double radius = 50;
+  double radius = 200;
   double greenRadius = 50;
   GoogleMapController? _googleMapController;
   final PanelController _panelController = PanelController();

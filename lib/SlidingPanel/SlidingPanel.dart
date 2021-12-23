@@ -14,13 +14,13 @@ class SlidingPanel extends StatelessWidget {
   final bool isAdded;
   final Function setAdded;
   final Polyline polyline;
-  PanelController _panelController;
+  final PanelController _panelController;
   final isPanelClosed = false;
   final Function setMarkerRed;
   final Function setMarkerGreen;
 
   SlidingPanel(this.outlet, this.isAdded, this.setAdded, this.polyline,
-      this._panelController, this.setMarkerRed, this.setMarkerGreen);
+      this._panelController, this.setMarkerRed, this.setMarkerGreen, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -35,3 +35,4 @@ List<String> headers = [
 
 List<int> outletsForBeat = [];
 List colors = [Colors.cyanAccent, Colors.red, Colors.blue, Colors.green, Colors.orange];
+List someMarkers = [];
