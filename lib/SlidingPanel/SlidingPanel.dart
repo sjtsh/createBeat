@@ -135,7 +135,7 @@ class SlidingPanel extends StatelessWidget {
                       ),
                     ),
                   ),
-                 SizedBox(height: 10,),
+                 SizedBox(height: 12,),
                   InkWell(
                     onTap: (){
                       _panelController.close();
