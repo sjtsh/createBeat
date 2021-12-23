@@ -119,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Header(radius, width, outlets, changeRadius,
-                      widget.dropdownFiles, widget.polylines, polyline!),
+                      widget.dropdownFiles, widget.polylines, polyline!, googleMapController: _googleMapController),
                   const SizedBox(
                     width: 50,
                   ),

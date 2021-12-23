@@ -15,15 +15,19 @@ class Header extends StatefulWidget {
   final List<File> dropdownFiles;
   final Set polylines;
   final Polyline polyline;
+  GoogleMapController? googleMapController;
+
 
   Header(this.radius, this.width, this.outlets, this.changeRadius,
-      this.dropdownFiles, this.polylines, this.polyline);
+      this.dropdownFiles, this.polylines, this.polyline,
+      {this.googleMapController});
 
   @override
   State<Header> createState() => _HeaderState();
 }
 
 class _HeaderState extends State<Header> {
+   String dropdownValue = "Select Distributor";
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +91,16 @@ class _HeaderState extends State<Header> {
               //   dropdownValue =
               //       input ?? "Select Distributor";
               // });
+              widget.googleMapController?.animateCamera(
+                CameraUpdate.newCameraPosition(
+                  CameraPosition(
+                    target: LatLng(widget.polyline.points[0].latitude, widget.polyline.points[0].longitude),
+                    zoom: 17,
+                    tilt: 50,
+                  ),
+                ),
+              );
+
             },
           ),
         ],
