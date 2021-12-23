@@ -14,11 +14,13 @@ class Header extends StatefulWidget {
   final List<File> dropdownFiles;
   final Set polylines;
   final Polyline polyline;
-  GoogleMapController? googleMapController;
+  final GoogleMapController? googleMapController;
+  final double greenRadius;
+  final Function changeGreenRadius;
 
 
   Header(this.radius, this.outlets, this.changeRadius,
-      this.dropdownFiles, this.polylines, this.polyline,
+      this.dropdownFiles, this.polylines, this.polyline,this.greenRadius, this.changeGreenRadius,
       {this.googleMapController});
 
   @override
@@ -37,7 +39,7 @@ class _HeaderState extends State<Header> {
             child: Row(
               children: [
                 Expanded(child: Container()),
-                Text("${widget.outlets.length} Outlets"),
+                Text("${outletsForBeat.length} Outlets"),
                 const SizedBox(
                   width: 12,
                 ),
@@ -46,14 +48,26 @@ class _HeaderState extends State<Header> {
           ),
           Slider(
             onChangeEnd: (double value) {
-              widget.changeRadius(value * 1000);
+              widget.changeRadius(value * 3000);
             },
-            value: widget.radius > 1000 ? 1 : (widget.radius / 1000),
+            value: widget.radius > 3000 ? 1 : (widget.radius / 3000),
+            onChanged: (double value) {},
+            divisions: 20,
+            activeColor: Colors.black.withOpacity(0.5),
+            thumbColor: Colors.red,
+            inactiveColor: Colors.red.withOpacity(0.1),
+          ),
+          Slider(
+            onChangeEnd: (double value) {
+              widget.changeGreenRadius(value * 1000);
+            },
+            value: widget.greenRadius > 1000 ? 1 : (widget.greenRadius / 1000),
             onChanged: (double value) {},
             divisions: 10,
+
             activeColor: Colors.black.withOpacity(0.5),
-            thumbColor: Colors.black,
-            inactiveColor: Colors.black.withOpacity(0.1),
+            thumbColor: Colors.green,
+            inactiveColor: Colors.green.withOpacity(0.1),
           ),
           DropdownSearch<String>(
             showClearButton: false,

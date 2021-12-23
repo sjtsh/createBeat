@@ -48,4 +48,40 @@ class OutletService {
     }
     return [];
   }
+
+  Future<bool> updateOutlet(context, Map<String, String> aBody) async {
+    int aStatusCode = 0;
+    while (aStatusCode != 200) {
+      try {
+        final response = await http.post(
+          Uri.parse(
+              "https://asia-south1-hilifedb.cloudfunctions.net/updateUnManagedOutlet"),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(
+              aBody
+          ),
+        );
+        if (response.statusCode == 200) {
+          return true;
+        } else {
+          throw Exception("failed to load post, status code error");
+        }
+      } on SocketException {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text(
+              "No Internet Connection",
+              textAlign: TextAlign.center,
+            )));
+        throw Exception("failed to load post");
+      } on TimeoutException {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text("Sorry, Failed to Load Data",
+                textAlign: TextAlign.center)));
+        throw Exception("failed to load post");
+      }
+    }
+    return false;
+  }
 }

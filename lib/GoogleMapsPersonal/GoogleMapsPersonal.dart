@@ -8,13 +8,12 @@ class GoogleMapsPersonal extends StatelessWidget {
   final PanelController _panelController;
   final List<Marker> markers;
   final Function _onMapCreated;
-  final Function refresh;
   final bool isHeader;
   final Function setHeader;
   final Set<Polyline> polylines;
 
-  GoogleMapsPersonal(
-      this._panelController, this.markers, this._onMapCreated, this.refresh, this.polylines, this.isHeader, this.setHeader);
+  GoogleMapsPersonal(this._panelController, this.markers, this._onMapCreated,
+      this.polylines, this.isHeader, this.setHeader);
 
   @override
   Widget build(BuildContext context) {
@@ -42,14 +41,15 @@ class GoogleMapsPersonal extends StatelessWidget {
             markers: {
               ...markers,
               Marker(
-                  markerId: MarkerId("markerId"),
-                  position: LatLng(
-                    27.650136,
-                    85.337996,
-                  ),
-                  onTap: () {
-                    _panelController.animatePanelToPosition(0.5);
-                  })
+                markerId: MarkerId("markerId"),
+                position: LatLng(
+                  27.650136,
+                  85.337996,
+                ),
+                onTap: () {
+                  _panelController.animatePanelToPosition(0.5);
+                },
+              ),
               // ...markers.where((element) => Polyline(
               //     polylineId: PolylineId("1"),
               //     points: starvaCoordinates,
@@ -72,7 +72,7 @@ class GoogleMapsPersonal extends StatelessWidget {
           top: 45,
           child: GestureDetector(
             onTap: () {
-            setHeader(!isHeader);
+              setHeader(!isHeader);
             },
             child: Padding(
               padding: const EdgeInsets.all(12.0),
@@ -93,7 +93,9 @@ class GoogleMapsPersonal extends StatelessWidget {
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
-                  isHeader ? Icons.arrow_upward_rounded:Icons.arrow_downward_rounded,
+                  isHeader
+                      ? Icons.arrow_upward_rounded
+                      : Icons.arrow_downward_rounded,
                   color: Colors.black,
                 ),
               ),

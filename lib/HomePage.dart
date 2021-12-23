@@ -27,7 +27,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  double radius = 100;
+  double radius = 50;
+  double greenRadius = 50;
   GoogleMapController? _googleMapController;
   final PanelController _panelController = PanelController();
   Outlet? outlet;
@@ -83,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Scaffold(
         body: Builder(
           builder: (context) {
-            List snapshot = loadMarkerOutlets(radius, changeOutlet, polyline!);
+            List snapshot = loadMarkerOutlets(radius, greenRadius, changeOutlet, polyline!);
             List<Marker> markers = snapshot[0];
             List<Outlet> outlets = snapshot[1];
             return SlidingUpPanel(
@@ -127,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   isHeader
                       ? Container(
-                          height: isHeader ? 120 : 0,
+                          height: isHeader ? 180 : 0,
                           width: width,
                           decoration: BoxDecoration(
                             color: Colors.white,
@@ -143,7 +144,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 bottomRight: Radius.circular(12)),
                           ),
                           child: Header(radius, outlets, changeRadius,
-                              widget.dropdownFiles, widget.polylines, polyline!, googleMapController: _googleMapController),
+                              widget.dropdownFiles, widget.polylines, polyline!, greenRadius, changeGreenRadius, googleMapController: _googleMapController),
                         )
                       : Container(),
                   const SizedBox(
@@ -154,7 +155,6 @@ class _MyHomePageState extends State<MyHomePage> {
                           _panelController,
                           markers,
                           _onMapCreated,
-                          refresh,
                           widget.polylines,
                           isHeader,
                           setHeader)),
@@ -188,16 +188,15 @@ class _MyHomePageState extends State<MyHomePage> {
         ?.showMarkerInfoWindow(MarkerId(newOutlet.id.toString()));
   }
 
-  void refresh() {
-    setState(() {
-      radius += 1;
-      radius -= 1;
-    });
-  }
-
   void changeRadius(newRadius) {
     setState(() {
       radius = newRadius;
     });
+  }
+
+  void changeGreenRadius(newRadius){
+  setState(() {
+    greenRadius = newRadius;
+  });
   }
 }
