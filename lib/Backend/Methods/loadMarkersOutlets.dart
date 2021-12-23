@@ -8,13 +8,13 @@ var _markers;
 var nearestOutlets;
 var value;
 
-loadMarkerOutlets(double radius, Function changeOutlet) async {
+loadMarkerOutlets(double radius, Function changeOutlet, Polyline polylineSelected) {
   List<Outlet> nearestOutlets = [];
   List<Marker> markers = [];
 
   for (int i = 0; i < allOutlets.length; i++) {
     bool isNear = false;
-    for (var element in polylineSelected!.points) {
+    for (var element in polylineSelected.points) {
       if (Geolocator.distanceBetween(allOutlets[i].lat, allOutlets[i].lng,
               element.latitude, element.longitude) <
           radius) {

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -8,13 +10,17 @@ import 'package:nearestbeats/GoogleMapsPersonal/GoogleMapsPersonal.dart';
 import 'package:nearestbeats/GoogleMapsPersonal/GoogleMapsSkeleton.dart';
 import 'package:nearestbeats/Header.dart';
 import 'package:nearestbeats/SlidingPanel/SlidingPanel.dart';
+import 'package:nearestbeats/data.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import 'Backend/Methods/loadMarkersOutlets.dart';
 import 'OutletEntity.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+  final List<File> dropdownFiles;
+  final Set<Polyline> polylines;
+
+  MyHomePage(this.dropdownFiles, this.polylines);
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -26,6 +32,15 @@ class _MyHomePageState extends State<MyHomePage> {
   final PanelController _panelController = PanelController();
   Outlet? outlet;
   bool isAdded = false;
+
+  Polyline? polyline;
+
+  @override
+  void initState() {
+    polyline = widget.polylines.toList()[0];
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -61,14 +76,14 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Scaffold(
         body: Builder(
           builder: (context) {
-            List snapshot = loadMarkerOutlets(radius, changeOutlet);
+            List snapshot = loadMarkerOutlets(radius, changeOutlet, polyline!);
             List<Marker> markers = snapshot[0];
             List<Outlet> outlets = snapshot[1];
             return SlidingUpPanel(
               controller: _panelController,
               maxHeight: 400,
               minHeight: 50,
-              isDraggable: true,
+              isDraggable: false,
               panelSnapping: true,
               parallaxEnabled: true,
               color: Colors.transparent,
@@ -103,13 +118,14 @@ class _MyHomePageState extends State<MyHomePage> {
               body: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Header(radius, width, outlets, changeRadius),
+                  Header(radius, width, outlets, changeRadius,
+                      widget.dropdownFiles, widget.polylines, polyline!),
                   const SizedBox(
                     width: 50,
                   ),
                   Expanded(
-                      child: GoogleMapsPersonal(
-                          _panelController, markers, _onMapCreated, refresh)),
+                      child: GoogleMapsPersonal(_panelController, markers,
+                          _onMapCreated, refresh, widget.polylines)),
                 ],
               ),
             );

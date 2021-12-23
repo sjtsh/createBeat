@@ -14,6 +14,7 @@ import 'package:nearestbeats/Backend/Service/OutletService.dart';
 import 'package:nearestbeats/Backend/Service/RegionService.dart';
 import 'package:nearestbeats/Data/Database.dart';
 import 'package:nearestbeats/Data/data.dart';
+import 'package:nearestbeats/Header.dart';
 
 import 'package:nearestbeats/HomePage.dart';
 import 'package:nearestbeats/SelectionScreen/ChooseScreen.dart';
@@ -387,35 +388,11 @@ class _GpxFileReadState extends State<GpxFileRead> {
                     if (files.isNotEmpty) {
                       if (dropdownValue != "Select Distributor") {
                         if (allRegions.isNotEmpty) {
-                          getFileData(files, multiFileColor, context);
                           if (!isDisabled) {
                             setState(() {
                               isDisabled = true;
                             });
-                            List<bool> bools = List.generate(
-                                allRegions.length, (index) => false);
-                            for (int i = 0; i < allRegions.length; i++) {
-                              print(allRegions[i]);
-                              OutletService()
-                                  .fetchOutlet(context, allRegions[i])
-                                  .then((value) {
-                                allOutlets.addAll(value);
-                                bools[i] = true;
-                                if (!bools.contains(false)) {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) {
-                                        return const MyHomePage();
-                                      },
-                                    ),
-                                  );
-                                  setState(() {
-                                    isDisabled = false;
-                                  });
-                                }
-                              });
-                            }
+                            getFileData(files, multiFileColor, context);
                           }
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -453,11 +430,11 @@ class _GpxFileReadState extends State<GpxFileRead> {
   /// reading data from file picked
   getFileData(List<File> datas, List<String> multiFileColor, context) async {
     List<bool> bools = List.generate(datas.length, (index) => false);
-    polylinesLocal = {};
+    Set<Polyline> polylines = {};
     datas.asMap().entries.forEach((data) {
       data.value.readAsString().then(
             (file) => fileData(file).then((value) {
-              polylinesLocal.add(
+              polylines.add(
                 Polyline(
                     polylineId: PolylineId(value.name),
                     points: value.LatLon,
@@ -471,16 +448,30 @@ class _GpxFileReadState extends State<GpxFileRead> {
               );
               bools[data.key] = true;
               if (!bools.contains(false)) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) {
-                      // return const SelectionScreen();
-                      return MyHomePage();
-                    },
-                  ),
-                );
-                return true;
+                List<bool> bool1s =
+                    List.generate(allRegions.length, (index) => false);
+                for (int i = 0; i < allRegions.length; i++) {
+                  print(allRegions[i]);
+                  OutletService()
+                      .fetchOutlet(context, allRegions[i])
+                      .then((value) {
+                    allOutlets.addAll(value);
+                    bool1s[i] = true;
+                    if (!bool1s.contains(false)) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) {
+                            return MyHomePage(files, polylines);
+                          },
+                        ),
+                      );
+                      setState(() {
+                        isDisabled = false;
+                      });
+                    }
+                  });
+                }
               }
             }),
           );

@@ -10,11 +10,10 @@ class GoogleMapsPersonal extends StatelessWidget {
   final Function _onMapCreated;
   final Function refresh;
 
+  final Set<Polyline> polylines;
+
   GoogleMapsPersonal(
-      this._panelController,
-      this.markers,
-      this._onMapCreated,
-      this.refresh);
+      this._panelController, this.markers, this._onMapCreated, this.refresh, this.polylines);
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +48,6 @@ class GoogleMapsPersonal extends StatelessWidget {
                   ),
                   onTap: () {
                     _panelController.animatePanelToPosition(0.5);
-
                   })
               // ...markers.where((element) => Polyline(
               //     polylineId: PolylineId("1"),
@@ -65,7 +63,7 @@ class GoogleMapsPersonal extends StatelessWidget {
             myLocationEnabled: true,
             myLocationButtonEnabled: true,
             // onTap: ,
-            polylines: polylinesLocal,
+            polylines: polylines,
           ),
         ),
         Positioned(
