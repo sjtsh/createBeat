@@ -63,9 +63,9 @@ class _HeaderState extends State<Header> {
 
         Slider(
           onChangeEnd: (double value) {
-            widget.changeRadius(value * 3000);
+            widget.changeRadius(value * 2000);
           },
-          value: widget.radius > 3000 ? 1 : (widget.radius / 3000),
+          value: widget.radius > 2000 ? 1 : (widget.radius / 2000),
           onChanged: (double value) {},
           divisions: 20,
           label: widget.radius.toString(),
@@ -75,11 +75,11 @@ class _HeaderState extends State<Header> {
         ),
         Slider(
           onChangeEnd: (double value) {
-            widget.changeGreenRadius(value * 1000);
+            widget.changeGreenRadius(value * 200);
           },
-          value: widget.greenRadius > 1000 ? 1 : (widget.greenRadius / 1000),
+          value: widget.greenRadius > 200 ? 1 : (widget.greenRadius / 200),
           onChanged: (double value) {},
-          divisions: 10,
+          divisions: 20,
           label: widget.greenRadius.toString(),
           activeColor: Colors.green.withOpacity(0.5),
           thumbColor: Colors.green,

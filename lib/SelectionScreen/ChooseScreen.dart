@@ -30,10 +30,6 @@ class _ChooseScreenState extends State<ChooseScreen> {
     });
   }
 
-  refresh() {
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -60,7 +56,7 @@ class _ChooseScreenState extends State<ChooseScreen> {
                           child: InkWell(
                             onTap: () {
                               allRegions.remove(e);
-                              refresh();
+                              widget.refresh();
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -103,7 +99,7 @@ class _ChooseScreenState extends State<ChooseScreen> {
               children: widget.regions
                   .map(
                     (e) => ExpandablePanel1(
-                        e, expand, currentExpanded, widget.beats, refresh),
+                        e, expand, currentExpanded, widget.beats, widget.refresh),
                   )
                   .toList(),
             ),

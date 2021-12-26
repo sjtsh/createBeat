@@ -20,7 +20,9 @@ class SlidingPanel extends StatelessWidget {
   final Function setMarkerGreen;
 
   SlidingPanel(this.outlet, this.isAdded, this.setAdded, this.polyline,
-      this._panelController, this.setMarkerRed, this.setMarkerGreen, {Key? key}) : super(key: key);
+      this._panelController, this.setMarkerRed, this.setMarkerGreen,
+      {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +58,6 @@ class SlidingPanel extends StatelessWidget {
                         child: Container(
                           width: 100,
                           height: 100,
-                          color: Colors.green,
                           child: Image.network(
                             outlet.img,
                             fit: BoxFit.cover,
@@ -93,81 +94,96 @@ class SlidingPanel extends StatelessWidget {
                     ],
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 12,
                   ),
-                  outletsForBeat.contains(outlet.id)
-                      ? Container(
-                          clipBehavior: Clip.hardEdge,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Material(
-                            color: Colors.red,
-                            child: InkWell(
-                              onTap: () {
-                                setMarkerRed(outlet.id);
-                              },
+                  Row(
+                    children: [
+                      Expanded(
+                        child: outletsForBeat.contains(outlet.id)
+                            ? Padding(
+                              padding: const EdgeInsets.all(8.0),
                               child: Container(
-                                height: 60,
-                                width: double.infinity,
-                                child: Center(
-                                  child: Text(
-                                    "Remove from Beat",
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 20),
+                                  clipBehavior: Clip.hardEdge,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Material(
+                                    color: Colors.red,
+                                    child: InkWell(
+                                      onTap: () {
+                                        setMarkerRed(outlet.id);
+                                      },
+                                      child: Container(
+                                        height: 60,
+                                        child: Center(
+                                          child: Text(
+                                            "Remove from Beat",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 14),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ),
-                          ),
-                        )
-                      : Container(
-                          clipBehavior: Clip.hardEdge,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Material(
-                            color: Colors.green,
-                            child: InkWell(
-                              onTap: () {
-                              setMarkerGreen(outlet.id);
-                              },
+                            )
+                            : Padding(
+                              padding: const EdgeInsets.all(8.0),
                               child: Container(
-                                height: 60,
-                                width: double.infinity,
-                                child: Center(
-                                  child: Text(
-                                    "Add to Beat",
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 20),
+                                  clipBehavior: Clip.hardEdge,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
                                   ),
+                                  child: Material(
+                                    color: Colors.green,
+                                    child: InkWell(
+                                      onTap: () {
+                                        setMarkerGreen(outlet.id);
+                                      },
+                                      child: Container(
+                                        height: 60,
+                                        width: double.infinity,
+                                        child: Center(
+                                          child: Text(
+                                            "Add to Beat",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 14),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                            ),
+                      ),
+                      Expanded(
+                        child: InkWell(
+                          onTap: () {
+                            _panelController.close();
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              height: 60,
+                              decoration: BoxDecoration(
+                                color: Colors.blueGrey,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  "Close",
+                                  style: TextStyle(
+                                      fontSize: 20, color: Colors.white),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      _panelController.close();
-                    },
-                    child: Container(
-                      height: 60,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.blueGrey,
-                        borderRadius: BorderRadius.circular(12),
                       ),
-                      child: Center(
-                        child: Text(
-                          "Close",
-                          style: TextStyle(fontSize: 20, color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  ),
+                    ],
+                  )
                 ],
               ),
             ),

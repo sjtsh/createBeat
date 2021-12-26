@@ -42,7 +42,7 @@ List<Marker> loadMarkerOutlets(double radius, double greenRadius, Function chang
               onTap: () {
                 print("$i has been tapped");
 
-                changeOutlet(allOutlets[i]);
+                changeOutlet(allOutlets[i],  LatLng(allOutlets[i].lat, allOutlets[i].lng));
               },
             ),
         );
@@ -63,7 +63,7 @@ List<Marker> loadMarkerOutlets(double radius, double greenRadius, Function chang
               onTap: () {
                 print("$i has been tapped");
 
-                changeOutlet(allOutlets[i]);
+                changeOutlet(allOutlets[i],  LatLng(allOutlets[i].lat, allOutlets[i].lng));
               },
             ),
           );
@@ -82,7 +82,7 @@ List<Marker> loadMarkerOutlets(double radius, double greenRadius, Function chang
               onTap: () {
                 print("$i has been tapped");
 
-                changeOutlet(allOutlets[i]);
+                changeOutlet(allOutlets[i],  LatLng(allOutlets[i].lat, allOutlets[i].lng));
               },
             ),
           );
@@ -90,7 +90,5 @@ List<Marker> loadMarkerOutlets(double radius, double greenRadius, Function chang
       }
     }
   }
-  print("_____________________________________________");
-  print(markers.length);
   return markers;
 }

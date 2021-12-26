@@ -46,7 +46,9 @@ class _GpxFileReadState extends State<GpxFileRead> {
   }
 
   refresh() {
-    setState(() {});
+    setState(() {
+      dropdownValue = "Select Distributor";
+    });
   }
 
   setColor(int index, String color) {
@@ -66,9 +68,7 @@ class _GpxFileReadState extends State<GpxFileRead> {
         body: Padding(
           padding: const EdgeInsets.all(12),
           child: FutureBuilder(
-            future: BeatService()
-                .fetchBeats(context)
-                .then((value) {
+            future: BeatService().fetchBeats(context).then((value) {
               return value;
             }),
             builder: (context, AsyncSnapshot snapshot) {
@@ -85,9 +85,8 @@ class _GpxFileReadState extends State<GpxFileRead> {
                   children: [
                     const Text(
                       "Let's Start",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
                     ),
                     const SizedBox(
                       height: 20,
@@ -100,42 +99,42 @@ class _GpxFileReadState extends State<GpxFileRead> {
                     SizedBox(
                       height: 10,
                     ),
-                    Container(
-                      height: 50,
-                      decoration: BoxDecoration(
-                        border:
-                            Border.all(color: Colors.grey),
-                      ),
-                      child: DropdownSearch<String>(
-                        showClearButton: false,
-                        mode: Mode.MENU,
-                        selectedItem: dropdownValue,
-                        showSelectedItems: true,
-                        items: List.generate(
-                                beats.length,
-                                (index) =>
-                                    beats[index].distributor)
-                            .toSet()
-                            .toList(),
-                        hint: "Select Distributor",
-                        dropdownSearchDecoration:
-                            InputDecoration(
-                                contentPadding:
-                                    EdgeInsets.only(left: 8),
-                                fillColor: Color(0xffA0C7F4)
-                                    .withOpacity(0.1),
+                    Builder(
+                      builder: (context) {
+                      List<Beat> myList = beats
+                          .where((element) =>
+                          allRegions.contains(element.region)).toList();
+                        return Container(
+                          height: 50,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                          ),
+                          child: DropdownSearch<String>(
+                            showClearButton: false,
+                            mode: Mode.MENU,
+                            selectedItem: dropdownValue,
+                            showSelectedItems: true,
+                            items: List.generate(
+                                myList.length,
+                                    (index) => myList[index].distributor)
+                                .toSet()
+                                .toList(),
+                            hint: "Select Distributor",
+                            dropdownSearchDecoration: InputDecoration(
+                                contentPadding: EdgeInsets.only(left: 8),
+                                fillColor: Color(0xffA0C7F4).withOpacity(0.1),
                                 filled: true,
                                 border: InputBorder.none),
-                        showSearchBox: true,
-                        popupItemDisabled: (String s) =>
-                            s.startsWith('I'),
-                        onChanged: (input) {
-                          setState(() {
-                            dropdownValue =
-                                input ?? "Select Distributor";
-                          });
-                        },
-                      ),
+                            showSearchBox: true,
+                            popupItemDisabled: (String s) => s.startsWith('I'),
+                            onChanged: (input) {
+                              setState(() {
+                                dropdownValue = input ?? "Select Distributor";
+                              });
+                            },
+                          ),
+                        );
+                      }
                     ),
                     Padding(
                       padding: const EdgeInsets.all(12.0),
@@ -154,8 +153,8 @@ class _GpxFileReadState extends State<GpxFileRead> {
                           ),
                           Text(
                             "Please select .gpx file.",
-                            style: TextStyle(
-                                color: Colors.black.withOpacity(0.4)),
+                            style:
+                                TextStyle(color: Colors.black.withOpacity(0.4)),
                           ),
                           const SizedBox(
                             height: 10,
@@ -173,20 +172,20 @@ class _GpxFileReadState extends State<GpxFileRead> {
                                     FilePicker.platform
                                         .pickFiles(allowMultiple: true)
                                         .then((result) => setState(() {
-                                      multiFileColor = List.generate(
-                                          result!.paths.length,
-                                              (index) => "Red");
-                                      files = result.paths
-                                          .map((path) => File(path!))
-                                          .toList();
-                                    }));
+                                              multiFileColor = List.generate(
+                                                  result!.paths.length,
+                                                  (index) => "Red");
+                                              files = result.paths
+                                                  .map((path) => File(path!))
+                                                  .toList();
+                                            }));
                                   },
                                   child: Container(
                                     width: double.infinity,
                                     color: Color(0xffA0C7F4).withOpacity(0.2),
                                     child: Column(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.center,
+                                          MainAxisAlignment.center,
                                       children: [
                                         Padding(
                                           padding: const EdgeInsets.symmetric(
@@ -211,17 +210,15 @@ class _GpxFileReadState extends State<GpxFileRead> {
                                   ),
                                 )),
                           ),
-
                         ],
                       ),
                     ),
                     Padding(
-                      padding:
-                      const EdgeInsets.only(left: 12, right: 12),
+                      padding: const EdgeInsets.only(left: 12, right: 12),
                       child: Column(
                         children: List.generate(
                           files.length,
-                              (index) {
+                          (index) {
                             return Builder(
                               builder: (context) {
                                 return Column(
@@ -231,12 +228,10 @@ class _GpxFileReadState extends State<GpxFileRead> {
                                       color: const Color(0xffA0C7F4)
                                           .withOpacity(0.1),
                                       child: Padding(
-                                        padding:
-                                        const EdgeInsets.all(12.0),
+                                        padding: const EdgeInsets.all(12.0),
                                         child: Row(
                                           mainAxisAlignment:
-                                          MainAxisAlignment
-                                              .spaceBetween,
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             const Icon(
                                               Icons.file_copy_sharp,
@@ -250,15 +245,12 @@ class _GpxFileReadState extends State<GpxFileRead> {
                                                     .path
                                                     .split("/")
                                                     .last,
-                                                overflow: TextOverflow
-                                                    .ellipsis,
+                                                overflow: TextOverflow.ellipsis,
                                                 textDirection:
-                                                TextDirection.ltr,
-                                                textAlign:
-                                                TextAlign.justify,
+                                                    TextDirection.ltr,
+                                                textAlign: TextAlign.justify,
                                                 maxLines: 2,
-                                                style: TextStyle(
-                                                    fontSize: 12),
+                                                style: TextStyle(fontSize: 12),
                                               ),
                                             ),
                                             const SizedBox(
@@ -268,11 +260,10 @@ class _GpxFileReadState extends State<GpxFileRead> {
                                               onPressed: () {
                                                 showDialog<void>(
                                                   context: context,
-                                                  builder: (BuildContext
-                                                  context) {
+                                                  builder:
+                                                      (BuildContext context) {
                                                     return MyDialogBox(
-                                                        multiFileColor[
-                                                        index],
+                                                        multiFileColor[index],
                                                         index,
                                                         setColor);
                                                   },
@@ -280,15 +271,13 @@ class _GpxFileReadState extends State<GpxFileRead> {
                                               },
                                               icon: Icon(
                                                 Icons.circle,
-                                                color: multiFileColor[
-                                                index] ==
-                                                    "Red"
+                                                color: multiFileColor[index] ==
+                                                        "Red"
                                                     ? Colors.red
-                                                    : multiFileColor[
-                                                index] ==
-                                                    "Blue"
-                                                    ? Colors.blue
-                                                    : Colors.green,
+                                                    : multiFileColor[index] ==
+                                                            "Blue"
+                                                        ? Colors.blue
+                                                        : Colors.green,
                                               ),
                                             ),
                                             IconButton(
@@ -297,10 +286,9 @@ class _GpxFileReadState extends State<GpxFileRead> {
                                                 setState(() {});
                                               },
                                               icon: Icon(
-                                                Icons
-                                                    .remove_circle_outline,
-                                                color: Colors.red
-                                                    .withOpacity(0.6),
+                                                Icons.remove_circle_outline,
+                                                color:
+                                                    Colors.red.withOpacity(0.6),
                                               ),
                                             ),
                                           ],
@@ -334,15 +322,20 @@ class _GpxFileReadState extends State<GpxFileRead> {
                                   }
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(content: Text("Please select a beat")));
+                                      SnackBar(
+                                          content:
+                                              Text("Please select a beat")));
                                 }
                               } else {
-                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                    content: Text("Please select a distributor")));
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        content: Text(
+                                            "Please select a distributor")));
                               }
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text("Please choose gpx file")));
+                                  SnackBar(
+                                      content: Text("Please choose gpx file")));
                             }
                           },
                           child: Container(
@@ -351,22 +344,22 @@ class _GpxFileReadState extends State<GpxFileRead> {
                             child: Center(
                               child: isDisabled
                                   ? CircularProgressIndicator(
-                                color: Colors.white,
-                              )
+                                      color: Colors.white,
+                                    )
                                   : Text("Start"),
                             ),
                           ),
                         ),
                       ],
                     )
-
                   ],
                 );
               }
-              return  Center(
-                child: Image.asset("assets/logo.png",),
+              return Center(
+                child: Image.asset(
+                  "assets/logo.png",
+                ),
               );
-
             },
           ),
         ),
@@ -378,6 +371,7 @@ class _GpxFileReadState extends State<GpxFileRead> {
   getFileData(List<File> datas, List<String> multiFileColor, context) async {
     List<bool> bools = List.generate(datas.length, (index) => false);
     Set<Polyline> polylines = {};
+    allOutlets = [];
     datas.asMap().entries.forEach((data) {
       data.value.readAsString().then(
             (file) => fileData(file).then((value) {

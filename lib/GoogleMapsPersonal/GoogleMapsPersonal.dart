@@ -12,9 +12,12 @@ class GoogleMapsPersonal extends StatelessWidget {
   final bool isHeader;
   final Function setHeader;
   final Set<Polyline> polylines;
+  final String distributorName;
+  final String beatName;
+  final Function setMarkerRed;
 
   GoogleMapsPersonal(this._panelController, this.markers, this._onMapCreated,
-      this.polylines, this.isHeader, this.setHeader);
+      this.polylines, this.isHeader, this.setHeader, this.distributorName, this.beatName, this.setMarkerRed);
 
   @override
   Widget build(BuildContext context) {
@@ -40,16 +43,6 @@ class GoogleMapsPersonal extends StatelessWidget {
             },
             markers: {
               ...markers,
-              Marker(
-                markerId: MarkerId("markerId"),
-                position: LatLng(
-                  27.650136,
-                  85.337996,
-                ),
-                onTap: () {
-                  _panelController.open();
-                },
-              )
             },
             myLocationEnabled: true,
             myLocationButtonEnabled: true,
@@ -99,7 +92,7 @@ class GoogleMapsPersonal extends StatelessWidget {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (_) {
-                    return ConfirmScreen();
+                    return ConfirmScreen(distributorName,beatName, setMarkerRed);
                   },
                 ),
               );

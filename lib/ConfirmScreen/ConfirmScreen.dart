@@ -1,24 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:nearestbeats/Backend/Entity/OutletEntity.dart';
+import 'package:nearestbeats/Backend/Service/OutletService.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../data.dart';
 
-class ConfirmScreen extends StatelessWidget {
-  TextEditingController beat = TextEditingController();
-  TextEditingController distributor = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+class ConfirmScreen extends StatefulWidget {
+  final String distributorName;
+  final String beatName;
+  final Function setMarkerRed;
 
-  // confirmAction() {
-  //   Map aBody = {};
-  //   outletsForBeat.forEach((element) {
-  //     aBody[element.id] = {
-  //       "beat": beat.text,
-  //       "distributor": distributor.text,
-  //     };
-  //   });
-  // }
+  ConfirmScreen(this.distributorName, this.beatName, this.setMarkerRed);
+
+  @override
+  State<ConfirmScreen> createState() => _ConfirmScreenState();
+}
+
+class _ConfirmScreenState extends State<ConfirmScreen> {
+  TextEditingController beat = TextEditingController();
+
+  TextEditingController distributor = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
+  bool isDisabled = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    beat.text = widget.beatName;
+    distributor.text = widget.distributorName;
+  }
 
   @override
   Widget build(BuildContext context) {
+    List<Outlet?> toListOutlets =
+        List.generate(outletsForBeat.toSet().length, (index) {
+      for (var element in allOutlets) {
+        if (element.id == outletsForBeat[index]) {
+          return element;
+        }
+      }
+    }).toSet().toList();
     return SafeArea(
         child: Scaffold(
       body: Form(
@@ -126,19 +149,12 @@ class ConfirmScreen extends StatelessWidget {
 
                     Expanded(
                         child: Column(
-                            children:
-                                List.generate(outletsForBeat.length, (index) {
-                      for (var element in allOutlets) {
-                        if (element.id == outletsForBeat[index]) {
-                          return element;
-                        }
-                      }
-                    }).map((e) {
+                            children: toListOutlets.map((e) {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            height: 60,
+                            height: 100,
                             width: double.infinity,
                             decoration: BoxDecoration(
                                 color: Colors.white,
@@ -154,16 +170,104 @@ class ConfirmScreen extends StatelessWidget {
                               padding: const EdgeInsets.all(8.0),
                               child: Container(
                                 alignment: Alignment.centerLeft,
-                                child: Text(
-                                  (e?.outletsName.toString())??"unknown",
-                                  style: TextStyle(fontSize: 16),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            (e?.outletsName.toString()) ??
+                                                "unknown",
+                                            style: TextStyle(fontSize: 16),
+                                          ),
+                                          Text(
+                                            (e?.ownersNumber.toString()) ??
+                                                "unknown",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.black
+                                                    .withOpacity(0.5)),
+                                          ),
+                                          SizedBox(
+                                            height: 12,
+                                          ),
+                                          Container(
+                                            width: 100,
+                                            clipBehavior: Clip.hardEdge,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            child: Material(
+                                              color: Colors.white,
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                  border: Border.all(
+                                                      color: Colors.blue),
+                                                ),
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    if (e != null) {
+                                                      launch(
+                                                          'https://www.google.com/maps/search/?api=1&query=${e.lat},${e.lng}');
+                                                    }
+                                                  },
+                                                  child: Container(
+                                                    margin: EdgeInsets.only(
+                                                        top: 3,
+                                                        bottom: 3,
+                                                        right: 8,
+                                                        left: 8),
+                                                    child: Builder(
+                                                        builder: (context) {
+                                                      return Center(
+                                                        child: Text(
+                                                          "View on Maps",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.black,
+                                                              fontSize: 12),
+                                                        ),
+                                                      );
+                                                    }),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Image.network(
+                                      (e?.img) ?? "",
+                                      fit: BoxFit.contain,
+                                      width: 100,
+                                      height: 100,
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          outletsForBeat.remove(e?.id);
+                                          widget.setMarkerRed((e?.id) ?? 0);
+                                        });
+                                      },
+                                      icon: Icon(
+                                        Icons.cancel,
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
                           ),
-                         const SizedBox(
+                          const SizedBox(
                             height: 6,
-                          )
+                          ),
                         ],
                       );
                     }).toList())),
@@ -182,16 +286,43 @@ class ConfirmScreen extends StatelessWidget {
                   color: Colors.green,
                   child: InkWell(
                     onTap: () {
-                      if (_formKey.currentState!.validate()) {}
+                      if (_formKey.currentState!.validate() && !isDisabled) {
+                        setState(() {
+                          isDisabled = true;
+                        });
+
+                        Map<String, Map<String, String>> aBody = {};
+                        for (var element in outletsForBeat) {
+                          aBody[element.toString()] = {
+                            "beat": beat.text,
+                            "distributor": distributor.text,
+                          };
+                        }
+                        OutletService()
+                            .updateOutlet(context, aBody)
+                            .then((value) {
+                          setState(() {
+                            isDisabled = false;
+                            outletsForBeat = [];
+                            allRegions = [];
+                            allOutlets = [];
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                          });
+                        });
+                      }
                     },
                     child: Container(
                       height: 60,
                       width: double.infinity,
                       child: Center(
-                        child: const Text(
-                          "Confirm",
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                        ),
+                        child: isDisabled
+                            ? CircularProgressIndicator()
+                            : Text(
+                                "Confirm",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 20),
+                              ),
                       ),
                     ),
                   ),
