@@ -26,6 +26,7 @@ class MajorSlidingPanel extends StatefulWidget {
   final Function changePolyline;
   final String distributorName;
   final String beatName;
+  final List<String> multiFileColors;
 
   MajorSlidingPanel(
       this.isAdded,
@@ -39,7 +40,7 @@ class MajorSlidingPanel extends StatefulWidget {
       this.polylines,
       this.googleMapController,
       this.changePolyline,
-      this.distributorName,this.beatName);
+      this.distributorName,this.beatName, this.multiFileColors);
 
   @override
   _MajorSlidingPanelState createState() => _MajorSlidingPanelState();
@@ -55,24 +56,16 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
   setMarkerGreen(markerID) {
     for (int i = 0; i < markers.length; i++) {
       if (markers[i].markerId == MarkerId(markerID.toString())) {
-        Marker marker = Marker(
-          markerId: MarkerId("$markerID"),
-          infoWindow: InfoWindow(
-            title: markers[i].infoWindow.title,
-            snippet: markers[i].infoWindow.snippet,
-          ),
-          icon: BitmapDescriptor.defaultMarkerWithHue(
-            BitmapDescriptor.hueGreen,
-          ),
-          position: markers[i].position,
-          onTap: () {
-            changeOutlet(allOutlets[i], markers[i].position);
-          },
-        );
+        Marker marker = markers[i].copyWith(iconParam: BitmapDescriptor.defaultMarkerWithHue(
+          BitmapDescriptor.hueGreen,
+        ),);
         setState(() {
           markers.remove(markers[i]);
           markers.add(marker);
-          outletsForBeat.add(markerID);
+          if(!outletsForBeat.contains(markerID)){
+
+            outletsForBeat.add(markerID);
+          }
           print(outletsForBeat);
         });
       }
@@ -82,20 +75,9 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
   setMarkerRed(markerID) {
     for (int i = 0; i < markers.length; i++) {
       if (markers[i].markerId == MarkerId(markerID.toString())) {
-        Marker marker = Marker(
-          markerId: MarkerId("$markerID"),
-          infoWindow: InfoWindow(
-            title: markers[i].infoWindow.title,
-            snippet: markers[i].infoWindow.snippet,
-          ),
-          icon: BitmapDescriptor.defaultMarkerWithHue(
-            BitmapDescriptor.hueRed,
-          ),
-          position: markers[i].position,
-          onTap: () {
-            changeOutlet(allOutlets[i], markers[i].position);
-          },
-        );
+        Marker marker = markers[i].copyWith(iconParam: BitmapDescriptor.defaultMarkerWithHue(
+          BitmapDescriptor.hueRed,
+        ),);
         setState(() {
           markers.remove(markers[i]);
           markers.add(marker);
@@ -117,7 +99,7 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
     widget.googleMapController?.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(
-          target: LatLng(newOutlet.lat, newOutlet.lng),
+          target: position,
           zoom: 17,
         ),
       ),
@@ -221,8 +203,8 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
                     greenRadius,
                     changeGreenRadius,
                     widget.changePolyline,
-                    widget.distributorName,
-                    googleMapController: widget.googleMapController)
+                    widget.distributorName,widget.multiFileColors,
+                    googleMapController: widget.googleMapController, )
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

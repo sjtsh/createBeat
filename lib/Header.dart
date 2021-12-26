@@ -17,19 +17,23 @@ class Header extends StatefulWidget {
   final double greenRadius;
   final Function changeGreenRadius;
   final Function changePolyline;
-  final distributorName ;
+  final distributorName;
+
+  final List<String> multiFileColor;
 
   Header(
-      this.radius,
-      this.changeRadius,
-      this.dropdownFiles,
-      this.polylines,
-      this.polyline,
-      this.greenRadius,
-      this.changeGreenRadius,
-      this.changePolyline,
-      this.distributorName,
-      {this.googleMapController});
+    this.radius,
+    this.changeRadius,
+    this.dropdownFiles,
+    this.polylines,
+    this.polyline,
+    this.greenRadius,
+    this.changeGreenRadius,
+    this.changePolyline,
+    this.distributorName,
+    this.multiFileColor, {
+    this.googleMapController,
+  });
 
   @override
   State<Header> createState() => _HeaderState();
@@ -45,14 +49,15 @@ class _HeaderState extends State<Header> {
       children: [
         Expanded(
           child: Row(
-
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const SizedBox(
                 width: 12,
               ),
               Text(widget.distributorName),
-              Expanded(child: Container(),),
+              Expanded(
+                child: Container(),
+              ),
               Text("${outletsForBeat.length} Outlets"),
               const SizedBox(
                 width: 12,
@@ -60,7 +65,6 @@ class _HeaderState extends State<Header> {
             ],
           ),
         ),
-
         Slider(
           onChangeEnd: (double value) {
             widget.changeRadius(value * 2000);
@@ -90,8 +94,11 @@ class _HeaderState extends State<Header> {
           mode: Mode.MENU,
           selectedItem: widget.polyline.polylineId.value,
           showSelectedItems: true,
-          items: List.generate(widget.polylines.length,
-              (index) => widget.polylines.toList()[index].polylineId.value),
+          items: List.generate(
+              widget.polylines.length,
+              (index) =>
+                  widget.polylines.toList()[index].polylineId.value +
+                  "(${widget.multiFileColor[index].substring(0, 1).toUpperCase()})"),
           hint: "Select Distributor",
           dropdownSearchDecoration: InputDecoration(
               contentPadding: EdgeInsets.only(left: 8),
@@ -101,7 +108,7 @@ class _HeaderState extends State<Header> {
           showSearchBox: true,
           popupItemDisabled: (String s) => s.startsWith('I'),
           onChanged: (input) {
-            widget.changePolyline(input);
+            widget.changePolyline(input?.substring(0, input.length - 3));
           },
         ),
       ],

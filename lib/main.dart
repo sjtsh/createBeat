@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:nearestbeats/GpxFileRead/GpxFileRead.dart';
-import 'package:nearestbeats/SelectionScreen/SelectionScreen.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'HomePage.dart';

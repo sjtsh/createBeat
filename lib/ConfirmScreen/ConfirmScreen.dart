@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nearestbeats/Backend/Entity/OutletEntity.dart';
 import 'package:nearestbeats/Backend/Service/OutletService.dart';
+import 'package:nearestbeats/GpxFileRead/GpxFileRead.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../data.dart';
@@ -144,12 +145,8 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                     SizedBox(
                       height: 12,
                     ),
-
-                    /// List view
-
-                    Expanded(
-                        child: Column(
-                            children: toListOutlets.map((e) {
+                    Column(
+                        children: toListOutlets.map((e) {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -157,15 +154,16 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                             height: 100,
                             width: double.infinity,
                             decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    offset: Offset(0, 2),
-                                    blurRadius: 3,
-                                    color: Colors.black.withOpacity(0.1),
-                                  )
-                                ]),
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: Offset(0, 2),
+                                  blurRadius: 3,
+                                  color: Colors.black.withOpacity(0.1),
+                                )
+                              ],
+                            ),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Container(
@@ -244,6 +242,11 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                                     ),
                                     Image.network(
                                       (e?.img) ?? "",
+                                      errorBuilder: (BuildContext context,
+                                          Object exception,
+                                          StackTrace? stackTrace) {
+                                        return Center(child: Text('Couldnt Load'));
+                                      },
                                       fit: BoxFit.contain,
                                       width: 100,
                                       height: 100,
@@ -270,7 +273,7 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                           ),
                         ],
                       );
-                    }).toList())),
+                    }).toList()),
                   ],
                 ),
               ),
@@ -306,8 +309,10 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                             outletsForBeat = [];
                             allRegions = [];
                             allOutlets = [];
-                            Navigator.pop(context);
-                            Navigator.pop(context);
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (_) {
+                              return GpxFileRead();
+                            }));
                           });
                         });
                       }

@@ -21,8 +21,9 @@ class MyHomePage extends StatefulWidget {
   final List<File> dropdownFiles;
   final Set<Polyline> polylines;
   final String distributorName;
+  final List<String > multiFileColor;
 
-  MyHomePage(this.dropdownFiles, this.polylines, this.distributorName);
+  MyHomePage(this.dropdownFiles, this.polylines, this.distributorName, this.multiFileColor);
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -114,7 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
               _googleMapController,
               changePolyline,
               widget.distributorName,
-              (polyline?.polylineId.value) ?? "ananymous",
+              (polyline?.polylineId.value) ?? "ananymous",widget.multiFileColor
             );
           },
         ),
