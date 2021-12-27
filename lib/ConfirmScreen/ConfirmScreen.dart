@@ -84,6 +84,11 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                   Expanded(
                     child: Container(),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 12),
+                    child: Text(
+                        "No of Outlets: ${outletsForBeat.length.toString()}"),
+                  ),
                 ],
               ),
             ),
@@ -245,7 +250,8 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                                       errorBuilder: (BuildContext context,
                                           Object exception,
                                           StackTrace? stackTrace) {
-                                        return Center(child: Text('Couldnt Load'));
+                                        return Center(
+                                            child: Text('Couldnt Load'));
                                       },
                                       fit: BoxFit.contain,
                                       width: 100,
