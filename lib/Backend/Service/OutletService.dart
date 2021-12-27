@@ -51,7 +51,7 @@ class OutletService {
 
   Future<bool> updateOutlet(
       context, Map<String, Map<String, String>> aBody) async {
-      print(aBody);
+    print(aBody);
     final response = await http.post(
       Uri.parse(
           "https://asia-south1-hilifedb.cloudfunctions.net/updateUnManagedOutlet"),

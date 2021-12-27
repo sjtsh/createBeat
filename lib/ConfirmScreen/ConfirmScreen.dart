@@ -11,7 +11,8 @@ class ConfirmScreen extends StatefulWidget {
   final String beatName;
   final Function setMarkerRed;
 
-  ConfirmScreen(this.distributorName, this.beatName, this.setMarkerRed);
+  ConfirmScreen(
+      this.distributorName, this.beatName, this.setMarkerRed,);
 
   @override
   State<ConfirmScreen> createState() => _ConfirmScreenState();
@@ -245,7 +246,8 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                                       errorBuilder: (BuildContext context,
                                           Object exception,
                                           StackTrace? stackTrace) {
-                                        return Center(child: Text('Couldnt Load'));
+                                        return Center(
+                                            child: Text('Couldnt Load'));
                                       },
                                       fit: BoxFit.contain,
                                       width: 100,
@@ -290,31 +292,39 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                   child: InkWell(
                     onTap: () {
                       if (_formKey.currentState!.validate() && !isDisabled) {
-                        setState(() {
-                          isDisabled = true;
-                        });
+                        setState(
+                          () {
+                            isDisabled = true;
+                          },
+                        );
 
                         Map<String, Map<String, String>> aBody = {};
-                        for (var element in outletsForBeat) {
+                        for (int element in outletsForBeat) {
                           aBody[element.toString()] = {
                             "beat": beat.text,
                             "distributor": distributor.text,
                           };
                         }
-                        OutletService()
-                            .updateOutlet(context, aBody)
-                            .then((value) {
-                          setState(() {
-                            isDisabled = false;
-                            outletsForBeat = [];
-                            allRegions = [];
-                            allOutlets = [];
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (_) {
-                              return GpxFileRead();
-                            }));
-                          });
-                        });
+                        OutletService().updateOutlet(context, aBody).then(
+                          (value) {
+                            setState(
+                              () async {
+                                isDisabled = false;
+                                outletsForBeat = [];
+                                allRegions = [];
+                                allOutlets = [];
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) {
+                                      return const GpxFileRead();
+                                    },
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        );
                       }
                     },
                     child: Container(
@@ -322,8 +332,8 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                       width: double.infinity,
                       child: Center(
                         child: isDisabled
-                            ? CircularProgressIndicator()
-                            : Text(
+                            ? const CircularProgressIndicator()
+                            : const Text(
                                 "Confirm",
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 20),

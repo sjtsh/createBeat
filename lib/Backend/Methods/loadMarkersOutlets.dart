@@ -18,24 +18,16 @@ List<Marker> loadMarkerOutlets(double radius, double greenRadius,
       }
     }
     if (radiiNear) {
-      bool isNear = false;
-      for (var element in polylineSelected.points) {
-        if (Geolocator.distanceBetween(allOutlets[i].lat, allOutlets[i].lng,
-                element.latitude, element.longitude) <
-            greenRadius) {
-          isNear = true;
-        }
-      }
-      if (isNear) {
+      if (allOutlets[i].isAssigned ?? false) {
         markers.add(
           Marker(
             markerId: MarkerId("${allOutlets[i].id}"),
             infoWindow: InfoWindow(
-              title: "${allOutlets[i].outletsName}",
-              snippet: allOutlets[i].beatsName,
+              title: allOutlets[i].outletsName,
+              snippet: allOutlets[i].newBeat,
             ),
             icon: BitmapDescriptor.defaultMarkerWithHue(
-              BitmapDescriptor.hueGreen,
+              BitmapDescriptor.hueBlue,
             ),
             position: LatLng(allOutlets[i].lat, allOutlets[i].lng),
             onTap: () {
@@ -46,11 +38,16 @@ List<Marker> loadMarkerOutlets(double radius, double greenRadius,
             },
           ),
         );
-        if (!outletsForBeat.contains(allOutlets[i].id)) {
-          outletsForBeat.add(allOutlets[i].id);
-        }
       } else {
-        if (allOutlets[i].isAssigned ?? false) {
+        bool isNear = false;
+        for (var element in polylineSelected.points) {
+          if (Geolocator.distanceBetween(allOutlets[i].lat, allOutlets[i].lng,
+                  element.latitude, element.longitude) <
+              greenRadius) {
+            isNear = true;
+          }
+        }
+        if (isNear) {
           markers.add(
             Marker(
               markerId: MarkerId("${allOutlets[i].id}"),
@@ -59,7 +56,7 @@ List<Marker> loadMarkerOutlets(double radius, double greenRadius,
                 snippet: allOutlets[i].beatsName,
               ),
               icon: BitmapDescriptor.defaultMarkerWithHue(
-                BitmapDescriptor.hueBlue,
+                BitmapDescriptor.hueGreen,
               ),
               position: LatLng(allOutlets[i].lat, allOutlets[i].lng),
               onTap: () {
@@ -70,6 +67,9 @@ List<Marker> loadMarkerOutlets(double radius, double greenRadius,
               },
             ),
           );
+          if (!outletsForBeat.contains(allOutlets[i].id)) {
+            outletsForBeat.add(allOutlets[i].id);
+          }
         } else {
           markers.add(
             Marker(

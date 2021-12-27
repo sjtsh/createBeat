@@ -378,6 +378,7 @@ class _GpxFileReadState extends State<GpxFileRead> {
     List<bool> bools = List.generate(datas.length, (index) => false);
     Set<Polyline> polylines = {};
     allOutlets = [];
+    outletsForBeat = [];
     datas.asMap().entries.forEach((data) {
       data.value.readAsString().then(
             (file) => fileData(file).then((value) {
@@ -410,7 +411,7 @@ class _GpxFileReadState extends State<GpxFileRead> {
                         MaterialPageRoute(
                           builder: (_) {
                             return MyHomePage(files, polylines, dropdownValue,
-                                multiFileColor);
+                                multiFileColor,);
                           },
                         ),
                       );

@@ -27,7 +27,6 @@ class MajorSlidingPanel extends StatefulWidget {
   final String distributorName;
   final String beatName;
   final List<String> multiFileColors;
-
   MajorSlidingPanel(
       this.isAdded,
       this.setAdded,
@@ -52,6 +51,7 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
   double greenRadius = 20;
   final PanelController _panelController = PanelController();
   Outlet? outlet;
+
 
   setMarkerGreen(markerID) {
     for (int i = 0; i < markers.length; i++) {

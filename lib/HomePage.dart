@@ -21,9 +21,10 @@ class MyHomePage extends StatefulWidget {
   final List<File> dropdownFiles;
   final Set<Polyline> polylines;
   final String distributorName;
-  final List<String > multiFileColor;
+  final List<String> multiFileColor;
 
-  MyHomePage(this.dropdownFiles, this.polylines, this.distributorName, this.multiFileColor);
+  MyHomePage(this.dropdownFiles, this.polylines, this.distributorName,
+      this.multiFileColor,);
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -103,20 +104,20 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Builder(
           builder: (context) {
             return MajorSlidingPanel(
-              isAdded,
-              setAdded,
-              polyline!,
-              width,
-              isHeader,
-              _onMapCreated,
-              setHeader,
-              widget.dropdownFiles,
-              widget.polylines,
-              _googleMapController,
-              changePolyline,
-              widget.distributorName,
-              (polyline?.polylineId.value) ?? "ananymous",widget.multiFileColor
-            );
+                isAdded,
+                setAdded,
+                polyline!,
+                width,
+                isHeader,
+                _onMapCreated,
+                setHeader,
+                widget.dropdownFiles,
+                widget.polylines,
+                _googleMapController,
+                changePolyline,
+                widget.distributorName,
+                (polyline?.polylineId.value) ?? "ananymous",
+                widget.multiFileColor,);
           },
         ),
       ),

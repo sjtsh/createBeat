@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:nearestbeats/Backend/Entity/Beat.dart';
 
 import '../data.dart';
-import 'ExpandablePanel2.dart';
 
 class ExpandablePanel1 extends StatefulWidget {
   final String region;
