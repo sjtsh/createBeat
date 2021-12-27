@@ -85,6 +85,11 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                   Expanded(
                     child: Container(),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 12),
+                    child: Text(
+                        "No of Outlets: ${outletsForBeat.length.toString()}"),
+                  ),
                 ],
               ),
             ),
