@@ -109,6 +109,7 @@ class _HeaderState extends State<Header> {
           popupItemDisabled: (String s) => s.startsWith('I'),
           onChanged: (input) {
             widget.changePolyline(input?.substring(0, input.length - 3));
+
           },
         ),
       ],
