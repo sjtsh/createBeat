@@ -3,10 +3,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:nearestbeats/GpxFileRead/GpxFileRead.dart';
+
 import 'package:sqflite/sqflite.dart';
 
 import 'HomePage.dart';
 import 'Backend/Entity/OutletEntity.dart';
+import 'NewUI/DistributorList.dart';
 import 'SelectionScreen/ChooseScreen.dart';
 import 'data.dart';
 
@@ -33,7 +35,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: GpxFileRead(),
+      home: DistributorList(),
     );
   }
 }
