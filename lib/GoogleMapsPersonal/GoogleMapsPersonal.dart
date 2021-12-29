@@ -15,17 +15,20 @@ class GoogleMapsPersonal extends StatelessWidget {
   final String distributorName;
   final String beatName;
   final Function setMarkerRed;
+  final Function changeRadius;
 
-  GoogleMapsPersonal(
-      this._panelController,
-      this.markers,
-      this._onMapCreated,
-      this.polylines,
-      this.isHeader,
-      this.setHeader,
-      this.distributorName,
-      this.beatName,
-      this.setMarkerRed,);
+  const GoogleMapsPersonal(
+    this._panelController,
+    this.markers,
+    this._onMapCreated,
+    this.polylines,
+    this.isHeader,
+    this.setHeader,
+    this.distributorName,
+    this.beatName,
+    this.setMarkerRed,
+    this.changeRadius,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +104,7 @@ class GoogleMapsPersonal extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (_) {
                     return ConfirmScreen(
-                        distributorName, beatName, setMarkerRed);
+                        distributorName, beatName, setMarkerRed, changeRadius);
                   },
                 ),
               );

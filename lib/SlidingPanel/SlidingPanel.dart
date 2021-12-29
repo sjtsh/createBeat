@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:nearestbeats/outletInfo/outletInfo.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -77,7 +74,9 @@ class SlidingPanel extends StatelessWidget {
                                   TextStyle(fontSize: 20, color: Colors.black),
                             ),
                             Text(
-                              outlet.beatsName,
+                              ((outlet.isAssigned) ?? false)
+                                  ? outlet.newBeat.toString()
+                                  : outlet.beatsName,
                               style: TextStyle(
                                   fontSize: 14,
                                   color: Colors.black.withOpacity(0.5)),
@@ -101,8 +100,8 @@ class SlidingPanel extends StatelessWidget {
                       Expanded(
                         child: outletsForBeat.contains(outlet.id)
                             ? Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
                                   clipBehavior: Clip.hardEdge,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(12),
@@ -127,10 +126,10 @@ class SlidingPanel extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                            )
+                              )
                             : Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
                                   clipBehavior: Clip.hardEdge,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(12),
@@ -156,7 +155,7 @@ class SlidingPanel extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                            ),
+                              ),
                       ),
                       Expanded(
                         child: InkWell(

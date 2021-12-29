@@ -27,6 +27,7 @@ class MajorSlidingPanel extends StatefulWidget {
   final String distributorName;
   final String beatName;
   final List<String> multiFileColors;
+
   MajorSlidingPanel(
       this.isAdded,
       this.setAdded,
@@ -39,7 +40,9 @@ class MajorSlidingPanel extends StatefulWidget {
       this.polylines,
       this.googleMapController,
       this.changePolyline,
-      this.distributorName,this.beatName, this.multiFileColors);
+      this.distributorName,
+      this.beatName,
+      this.multiFileColors);
 
   @override
   _MajorSlidingPanelState createState() => _MajorSlidingPanelState();
@@ -52,18 +55,18 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
   final PanelController _panelController = PanelController();
   Outlet? outlet;
 
-
   setMarkerGreen(markerID) {
     for (int i = 0; i < markers.length; i++) {
       if (markers[i].markerId == MarkerId(markerID.toString())) {
-        Marker marker = markers[i].copyWith(iconParam: BitmapDescriptor.defaultMarkerWithHue(
-          BitmapDescriptor.hueGreen,
-        ),);
+        Marker marker = markers[i].copyWith(
+          iconParam: BitmapDescriptor.defaultMarkerWithHue(
+            BitmapDescriptor.hueGreen,
+          ),
+        );
         setState(() {
           markers.remove(markers[i]);
           markers.add(marker);
-          if(!outletsForBeat.contains(markerID)){
-
+          if (!outletsForBeat.contains(markerID)) {
             outletsForBeat.add(markerID);
           }
           print(outletsForBeat);
@@ -75,9 +78,22 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
   setMarkerRed(markerID) {
     for (int i = 0; i < markers.length; i++) {
       if (markers[i].markerId == MarkerId(markerID.toString())) {
-        Marker marker = markers[i].copyWith(iconParam: BitmapDescriptor.defaultMarkerWithHue(
-          BitmapDescriptor.hueRed,
-        ),);
+        Outlet outlet =
+            allOutlets.firstWhere((element) => element.id == markerID);
+        Marker marker;
+        if (outlet.isAssigned ?? false) {
+          marker = markers[i].copyWith(
+            iconParam: BitmapDescriptor.defaultMarkerWithHue(
+              BitmapDescriptor.hueBlue,
+            ),
+          );
+        } else {
+          marker = markers[i].copyWith(
+            iconParam: BitmapDescriptor.defaultMarkerWithHue(
+              BitmapDescriptor.hueRed,
+            ),
+          );
+        }
         setState(() {
           markers.remove(markers[i]);
           markers.add(marker);
@@ -88,10 +104,9 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
     }
   }
 
-
   void changeOutlet(Outlet newOutlet, LatLng position) {
     setState(
-          () {
+      () {
         outlet = newOutlet;
       },
     );
@@ -111,24 +126,24 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
   void changeRadius(newRadius) {
     setState(() {
       radius = newRadius;
-      markers = loadMarkerOutlets(
-          radius, greenRadius, changeOutlet, widget.polyline);
+      markers =
+          loadMarkerOutlets(radius, greenRadius, changeOutlet, widget.polyline);
     });
   }
 
   void changeGreenRadius(newRadius) {
     setState(() {
       greenRadius = newRadius;
-      markers = loadMarkerOutlets(
-          radius, greenRadius, changeOutlet, widget.polyline);
+      markers =
+          loadMarkerOutlets(radius, greenRadius, changeOutlet, widget.polyline);
     });
   }
 
   @override
   void initState() {
     // TODO: implement initState
-    markers = loadMarkerOutlets(
-        radius, greenRadius, changeOutlet, widget.polyline);
+    markers =
+        loadMarkerOutlets(radius, greenRadius, changeOutlet, widget.polyline);
     super.initState();
   }
 
@@ -203,8 +218,10 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
                     greenRadius,
                     changeGreenRadius,
                     widget.changePolyline,
-                    widget.distributorName,widget.multiFileColors,
-                    googleMapController: widget.googleMapController, )
+                    widget.distributorName,
+                    widget.multiFileColors,
+                    googleMapController: widget.googleMapController,
+                  )
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -227,16 +244,16 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
           ),
           Expanded(
             child: GoogleMapsPersonal(
-              _panelController,
-              markers,
-              widget._onMapCreated,
-              widget.polylines,
-              widget.isHeader,
-              widget.setHeader,
-              widget.distributorName,
-              widget.beatName,
+                _panelController,
+                markers,
+                widget._onMapCreated,
+                widget.polylines,
+                widget.isHeader,
+                widget.setHeader,
+                widget.distributorName,
+                widget.beatName,
                 setMarkerRed,
-            ),
+                changeRadius),
           ),
         ],
       ),

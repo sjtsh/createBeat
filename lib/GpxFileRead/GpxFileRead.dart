@@ -410,8 +410,12 @@ class _GpxFileReadState extends State<GpxFileRead> {
                         context,
                         MaterialPageRoute(
                           builder: (_) {
-                            return MyHomePage(files, polylines, dropdownValue,
-                                multiFileColor,);
+                            return MyHomePage(
+                              files,
+                              polylines,
+                              dropdownValue,
+                              multiFileColor,
+                            );
                           },
                         ),
                       );

@@ -10,9 +10,14 @@ class ConfirmScreen extends StatefulWidget {
   final String distributorName;
   final String beatName;
   final Function setMarkerRed;
+  final Function changeRadius;
 
   ConfirmScreen(
-      this.distributorName, this.beatName, this.setMarkerRed,);
+    this.distributorName,
+    this.beatName,
+    this.setMarkerRed,
+    this.changeRadius,
+  );
 
   @override
   State<ConfirmScreen> createState() => _ConfirmScreenState();
@@ -194,6 +199,16 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                                                 color: Colors.black
                                                     .withOpacity(0.5)),
                                           ),
+                                          Text(
+                                            ((e?.isAssigned) ?? false)
+                                                ? (e?.newBeat ?? "unknown")
+                                                    .toString()
+                                                : (e?.beatsName) ?? "unknown",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.black
+                                                    .withOpacity(0.5)),
+                                          ),
                                           SizedBox(
                                             height: 12,
                                           ),
@@ -252,7 +267,8 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                                           Object exception,
                                           StackTrace? stackTrace) {
                                         return Center(
-                                            child: Text('Couldnt Load'));
+                                          child: Text('Couldnt Load'),
+                                        );
                                       },
                                       fit: BoxFit.contain,
                                       width: 100,
@@ -312,22 +328,26 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                         }
                         OutletService().updateOutlet(context, aBody).then(
                           (value) {
-                            setState(
-                              () async {
-                                isDisabled = false;
-                                outletsForBeat = [];
-                                allRegions = [];
-                                allOutlets = [];
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) {
-                                      return const GpxFileRead();
-                                    },
-                                  ),
-                                );
-                              },
-                            );
+                            allOutlets = [];
+                            outletsForBeat = [];
+                            List<bool> bool1s = List.generate(
+                                allRegions.length, (index) => false);
+                            for (int i = 0; i < allRegions.length; i++) {
+                              print(allRegions[i]);
+                              OutletService()
+                                  .fetchOutlet(context, allRegions[i])
+                                  .then((value) {
+                                allOutlets.addAll(value);
+                                bool1s[i] = true;
+                                if (!bool1s.contains(false)) {
+                                  widget.changeRadius(1000.0);
+                                  setState(() {
+                                    isDisabled = false;
+                                  });
+                                  Navigator.pop(context);
+                                }
+                              });
+                            }
                           },
                         );
                       }

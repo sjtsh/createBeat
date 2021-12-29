@@ -3,8 +3,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:nearestbeats/GpxFileRead/GpxFileRead.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 
+import 'ActivationScreen.dart';
+import 'Backend/Service/Auth.dart';
 import 'HomePage.dart';
 import 'Backend/Entity/OutletEntity.dart';
 import 'SelectionScreen/ChooseScreen.dart';
@@ -33,7 +36,41 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: GpxFileRead(),
+      // home: ,
+      home: FutureBuilder(
+        future: SharedPreferences.getInstance(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            SharedPreferences prefs = snapshot.data;
+            int code = prefs.getInt("key") ?? 0;
+            if (code == 0) {
+              return ActivationScreen();
+            } else {
+              AuthService().checkLogIn(code).then(
+                (value) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) {
+                        if (value) {
+                          return const GpxFileRead();
+                        } else {
+                          return ActivationScreen();
+                        }
+                      },
+                    ),
+                  );
+                },
+              );
+            }
+          }
+          return Center(
+            child: Image.asset(
+              "assets/logo.png",
+            ),
+          );
+        },
+      ),
     );
   }
 }
