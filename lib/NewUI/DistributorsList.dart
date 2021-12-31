@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 class DistributorsList extends StatelessWidget {
   final Function distributorTap;
   final bool onDistributorTapped;
+  final String value;
+  final int keyy;
 
-  DistributorsList(this.distributorTap, this.onDistributorTapped);
+  DistributorsList(this.distributorTap, this.onDistributorTapped, this.value, this.keyy);
 
   @override
   Widget build(BuildContext context) {

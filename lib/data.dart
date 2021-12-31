@@ -12,6 +12,8 @@ int threadCount = 10;
 
 List<String> allRegions = [];
 
+List<String> checkedDetails = [];
+
 List<String> headers = [
   "Zone",
   "Region",

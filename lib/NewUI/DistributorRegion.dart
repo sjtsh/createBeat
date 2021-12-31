@@ -4,6 +4,8 @@ import 'package:nearestbeats/Backend/Entity/Beat.dart';
 import 'package:nearestbeats/Backend/Methods/methods.dart';
 import 'package:nearestbeats/Backend/Service/BeatService.dart';
 
+import '../data.dart';
+
 import 'Distributor.dart';
 
 class DistributorRegion extends StatefulWidget {
@@ -15,11 +17,55 @@ class DistributorRegion extends StatefulWidget {
 
 class _DistributorRegionState extends State<DistributorRegion> {
   List<Beat> beats = [];
-  List<Beat> selectedBeats= [];
+  List<Beat> selectedBeats = [];
 
   String available = "0";
 
+  List region = [
+    "Gandaki",
+    "Lumbini",
+    "Koshi",
+    "Mechi",
+    "Narayani",
+    "Bagmati",
+    "Janakpur",
+    "Bheri",
+    "Seti",
+    "Sagarmatha",
+    "Karnali",
+    "Mahakali",
+    "Rara",
+    "Uandaki",
+    "Pumbini",
+    "Eoshi",
+    "pechi",
+    "Parayani",
+    "Bfagmati",
+    "Jafnakpur",
+  ];
+  List<bool> value = [];
 
+  tap() {
+    checkedDetails = [];
+    region.forEach((element) {
+      if (value[region.indexOf(element)]) {
+        checkedDetails.add(element);
+      }
+    });
+  }
+
+  checkbox(int index, bool isChecked) {
+    setState(() {
+      value[index] = isChecked;
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    value = List.generate(region.length, (index) => false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +131,7 @@ class _DistributorRegionState extends State<DistributorRegion> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Row(
@@ -100,7 +146,7 @@ class _DistributorRegionState extends State<DistributorRegion> {
                         Expanded(child: Container()),
                         Text(
                           "$available available",
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.w900,
                             color: Color(0xff676767),
                           ),
@@ -117,7 +163,7 @@ class _DistributorRegionState extends State<DistributorRegion> {
                             return value;
                           }),
                           builder: (context, AsyncSnapshot snapshot) {
-                             if (snapshot.hasData) {
+                            if (snapshot.hasData) {
                               List<String> myRegions = [];
                               beats = snapshot.data;
 
@@ -145,7 +191,6 @@ class _DistributorRegionState extends State<DistributorRegion> {
                                       children: [
                                         Padding(
                                           padding:
-
                                               const EdgeInsets.only(bottom: 8),
                                           child: Container(
                                             height: 66,
@@ -176,7 +221,7 @@ class _DistributorRegionState extends State<DistributorRegion> {
                                     );
                                   });
                             }
-                            return Center(
+                            return  const Center(
                               child: CircularProgressIndicator(),
                             );
                           }),
@@ -195,6 +240,7 @@ class _DistributorRegionState extends State<DistributorRegion> {
                     borderRadius: BorderRadius.circular(6)),
                 child: MaterialButton(
                   onPressed: () {
+                    print(checkedDetails);
                     Navigator.of(context)
                         .push(MaterialPageRoute(builder: (context) {
                       return Distributor();
