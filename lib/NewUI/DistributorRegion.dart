@@ -37,7 +37,7 @@ class _DistributorRegionState extends State<DistributorRegion> {
                         Expanded(child: Container())
                       ],
                     ),
-                    SizedBox(height: 20,),
+                    SizedBox(height: 24,),
                     TextFormField(
                       enableSuggestions: true,
                       style: TextStyle(
@@ -45,7 +45,7 @@ class _DistributorRegionState extends State<DistributorRegion> {
                         fontSize: 14,
                       ),
                       decoration: InputDecoration(
-                        fillColor: Color(0xffDADADA),
+                        fillColor: BeatsColors.inputBgColor,
                         filled: true,
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
@@ -53,7 +53,7 @@ class _DistributorRegionState extends State<DistributorRegion> {
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                             borderSide: BorderSide(
-                              color: Color(0xff6DA7FE),
+                              color: BeatsColors.inputBorderColor,
                             )),
                         hintText: "Search here",
                         hintStyle: TextStyle(
@@ -64,11 +64,23 @@ class _DistributorRegionState extends State<DistributorRegion> {
                       ),
                     ),
                     SizedBox(height: 20,),
-                    Text(
-                      "2 Distributor Region Selected ",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: BeatsColors.textColor),
+                    Row(
+                      children: [
+                        Text(
+                          "Selected Regions",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: BeatsColors.headingColor),
+                        ),
+                        Expanded(child: Container()),
+                        Text(
+                          "4 Selected",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: BeatsColors.headingColor),
+                        ),
+
+                      ],
                     ),
                     SizedBox(height: 20,),
                     Expanded(
@@ -113,7 +125,7 @@ class _DistributorRegionState extends State<DistributorRegion> {
                   ],
                 ),
               ),
-              SizedBox(height: 2,),
+              SizedBox(height: 12,),
               MaterialButton(
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(builder: (context){
@@ -125,8 +137,8 @@ class _DistributorRegionState extends State<DistributorRegion> {
                   width: double.infinity,
                   decoration: BoxDecoration(
                       color: BeatsColors.checkColor,
-                      borderRadius: BorderRadius.circular(12)),
-                  child: Center(child: Text("SELECT DISTRIBUTOR",
+                      borderRadius: BorderRadius.circular(6)),
+                  child: Center(child: Text("SELECT DISTRIBUTOR REGION",
 
                     style: TextStyle(fontWeight: FontWeight.bold,
                         color: Colors.white),)),

@@ -2,7 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:nearestbeats/ActivationScreen/ActivationScreen.dart';
+import 'package:nearestbeats/ConfirmationScreen/confirmationScreen.dart';
 import 'package:nearestbeats/GpxFileRead/GpxFileRead.dart';
+import 'package:nearestbeats/NewUI/DistributorRegion.dart';
 
 import 'package:sqflite/sqflite.dart';
 
@@ -34,8 +37,9 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        fontFamily: 'Rubik'
       ),
-      home: DistributorList(),
+      home: ActivationScreen(),
     );
   }
 }

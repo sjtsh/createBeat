@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:nearestbeats/ConfirmScreen/ConfirmScreen.dart';
+import 'package:nearestbeats/ConfirmationScreen/confirmationScreen.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../data.dart';
@@ -92,7 +93,7 @@ class GoogleMapsPersonal extends StatelessWidget {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (_) {
-                    return ConfirmScreen(distributorName,beatName, setMarkerRed);
+                    return ConfirmationScreen(distributorName, beatName, setMarkerRed);
                   },
                 ),
               );
