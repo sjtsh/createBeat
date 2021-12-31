@@ -124,66 +124,66 @@ class _ChooseScreenState extends State<ChooseScreen> {
                       ],
                     ),
                   ),
-                  // Builder(builder: (context) {
-                  //   return Padding(
-                  //     padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  //     child: Wrap(
-                  //       runAlignment: WrapAlignment.start,
-                  //       direction: Axis.horizontal,
-                  //       children: allRegions
-                  //           .map(
-                  //             (e) => Padding(
-                  //               padding: const EdgeInsets.all(4.0),
-                  //               child: InkWell(
-                  //                 onTap: () {
-                  //                   allRegions.remove(e);
-                  //                   widget.refresh();
-                  //                 },
-                  //                 child: Container(
-                  //                   decoration: BoxDecoration(
-                  //                     color: Colors.green,
-                  //                     borderRadius: BorderRadius.circular(8),
-                  //                   ),
-                  //                   child: Padding(
-                  //                     padding: const EdgeInsets.all(8.0),
-                  //                     child: Container(
-                  //                       child: Wrap(
-                  //                         crossAxisAlignment:
-                  //                             WrapCrossAlignment.center,
-                  //                         direction: Axis.horizontal,
-                  //                         children: [
-                  //                           Text(
-                  //                             e,
-                  //                             style: TextStyle(color: Colors.white),
-                  //                           ),
-                  //                           const SizedBox(
-                  //                             width: 5,
-                  //                           ),
-                  //                           const Icon(
-                  //                             Icons.clear,
-                  //                             size: 12,
-                  //                             color: Colors.white,
-                  //                           ),
-                  //                         ],
-                  //                       ),
-                  //                     ),
-                  //                   ),
-                  //                 ),
-                  //               ),
-                  //             ),
-                  //           )
-                  //           .toList(),
-                  //     ),
-                  //   );
-                  // }),
-                  // Column(
-                  //   children: widget.regions
-                  //       .map(
-                  //         (e) => ExpandablePanel1(
-                  //             e, expand, currentExpanded, widget.beats, widget.refresh),
-                  //       )
-                  //       .toList(),
-                  // ),
+                  Builder(builder: (context) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                      child: Wrap(
+                        runAlignment: WrapAlignment.start,
+                        direction: Axis.horizontal,
+                        children: allRegions
+                            .map(
+                              (e) => Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: InkWell(
+                                  onTap: () {
+                                    allRegions.remove(e);
+                                    widget.refresh();
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.green,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        child: Wrap(
+                                          crossAxisAlignment:
+                                              WrapCrossAlignment.center,
+                                          direction: Axis.horizontal,
+                                          children: [
+                                            Text(
+                                              e,
+                                              style: TextStyle(color: Colors.white),
+                                            ),
+                                            const SizedBox(
+                                              width: 5,
+                                            ),
+                                            const Icon(
+                                              Icons.clear,
+                                              size: 12,
+                                              color: Colors.white,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                            .toList(),
+                      ),
+                    );
+                  }),
+                  Column(
+                    children: widget.regions
+                        .map(
+                          (e) => ExpandablePanel1(
+                              e, expand, currentExpanded, widget.beats, widget.refresh),
+                        )
+                        .toList(),
+                  ),
 
                   Expanded(
                     child: GridView.builder(

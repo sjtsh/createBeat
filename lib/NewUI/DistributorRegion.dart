@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nearestbeats/Backend/Entity/Beat.dart';
 import 'package:nearestbeats/Backend/Methods/methods.dart';
-
+import 'package:nearestbeats/Backend/Service/BeatService.dart';
 
 import 'Distributor.dart';
 
@@ -13,28 +14,11 @@ class DistributorRegion extends StatefulWidget {
 }
 
 class _DistributorRegionState extends State<DistributorRegion> {
-  List region = [
-    "Gandaki",
-    "Lumbini",
-    "Koshi",
-    "Mechi",
-    "Narayani",
-    "Bagmati",
-    "Janakpur",
-    "Bheri",
-    "Seti",
-    "Sagarmatha",
-    "Karnali",
-    "Mahakali",
-    "Rara",
-    "Gandaki",
-    "Lumbini",
-    "Koshi",
-    "Mechi",
-    "Narayani",
-    "Bagmati",
-    "Janakpur",
-  ];
+  List<Beat> beats = [];
+  List<Beat> selectedBeats= [];
+
+  String available = "0";
+
 
 
   @override
@@ -114,8 +98,8 @@ class _DistributorRegionState extends State<DistributorRegion> {
                           ),
                         ),
                         Expanded(child: Container()),
-                        const Text(
-                          "20 Available",
+                        Text(
+                          "$available available",
                           style: TextStyle(
                             fontWeight: FontWeight.w900,
                             color: Color(0xff676767),
@@ -127,39 +111,73 @@ class _DistributorRegionState extends State<DistributorRegion> {
                       height: 20,
                     ),
                     Expanded(
-                      child: GridView.builder(
-                          scrollDirection: Axis.vertical,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 4, mainAxisSpacing: 16),
-                          itemCount: 20,
-                          itemBuilder: (context, index) {
-                            return Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 8),
-                                  child: Container(
-                                    height: 68,
-                                    width: 68,
-                                    decoration: const BoxDecoration(
-                                        color: Color(0xffCCCCCC),
-                                        shape: BoxShape.circle),
-                                    child: Center(
-                                        child: Text(getInitials(region[index]),
+                      child: FutureBuilder(
+                          future:
+                              BeatService().fetchBeats(context).then((value) {
+                            return value;
+                          }),
+                          builder: (context, AsyncSnapshot snapshot) {
+                             if (snapshot.hasData) {
+                              List<String> myRegions = [];
+                              beats = snapshot.data;
+
+                              WidgetsBinding.instance
+                                  ?.addPostFrameCallback((_) {
+                                setState(() {
+                                  available = myRegions.length.toString();
+                                });
+                              });
+
+                              beats.forEach((element) {
+                                if (!myRegions.contains(element.region)) {
+                                  myRegions.add(element.region);
+                                }
+                              });
+                              return GridView.builder(
+                                  scrollDirection: Axis.vertical,
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 4,
+                                          mainAxisSpacing: 16),
+                                  itemCount: myRegions.length,
+                                  itemBuilder: (context, index) {
+                                    return Column(
+                                      children: [
+                                        Padding(
+                                          padding:
+
+                                              const EdgeInsets.only(bottom: 8),
+                                          child: Container(
+                                            height: 66,
+                                            width: 66,
+                                            decoration: const BoxDecoration(
+                                                color: Color(0xffCCCCCC),
+                                                shape: BoxShape.circle),
+                                            child: Center(
+                                                child: Text(
+                                                    getInitials(
+                                                        myRegions[index]),
+                                                    style: const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 36,
+                                                        color: Colors.white))),
+                                          ),
+                                        ),
+                                        Container(
+                                          child: Text(
+                                            myRegions[index],
                                             style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 36,
-                                                color: Colors.white))),
-                                  ),
-                                ),
-                                Container(
-                                  child: Text(
-                                    region[index],
-                                    style: const TextStyle(
-                                      color: Color(0xff676767),fontWeight: FontWeight.w500),
-                                  ),
-                                ),
-                              ],
+                                                color: Color(0xff676767),
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            }
+                            return Center(
+                              child: CircularProgressIndicator(),
                             );
                           }),
                     )
