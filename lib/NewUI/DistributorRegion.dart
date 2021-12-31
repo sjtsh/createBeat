@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nearestbeats/Backend/Methods/methods.dart';
 
-
+import '../data.dart';
 import 'Distributor.dart';
 
 class DistributorRegion extends StatefulWidget {
@@ -27,15 +27,39 @@ class _DistributorRegionState extends State<DistributorRegion> {
     "Karnali",
     "Mahakali",
     "Rara",
-    "Gandaki",
-    "Lumbini",
-    "Koshi",
-    "Mechi",
-    "Narayani",
-    "Bagmati",
-    "Janakpur",
+    "Uandaki",
+    "Pumbini",
+    "Eoshi",
+    "pechi",
+    "Parayani",
+    "Bfagmati",
+    "Jafnakpur",
   ];
+  List<bool> value = [];
 
+  tap() {
+     checkedDetails = [];
+    region.forEach((element) {
+      if (value[region.indexOf(element)]) {
+        checkedDetails.add(element);
+
+      }
+    });
+
+  }
+
+  checkbox(int index, bool isChecked) {
+    setState(() {
+      value[index] = isChecked;
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    value = List.generate(region.length, (index) => false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -132,31 +156,50 @@ class _DistributorRegionState extends State<DistributorRegion> {
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 4, mainAxisSpacing: 16),
-                          itemCount: 20,
+                          itemCount: region.length,
                           itemBuilder: (context, index) {
                             return Column(
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.only(bottom: 8),
-                                  child: Container(
-                                    height: 68,
-                                    width: 68,
-                                    decoration: const BoxDecoration(
-                                        color: Color(0xffCCCCCC),
-                                        shape: BoxShape.circle),
-                                    child: Center(
-                                        child: Text(getInitials(region[index]),
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 36,
-                                                color: Colors.white))),
+                                  child: GestureDetector(
+                                    onTap:(){
+                                      setState(() {
+                                        value[index] =! value[index];
+                                      });
+                                      tap();
+
+
+                                    },
+                                    child:value[index]==false ?Container(
+                                      height: 66,
+                                      width: 66,
+                                      decoration: const BoxDecoration(
+                                          color: Color(0xffCCCCCC),
+                                          shape: BoxShape.circle),
+                                      child: Center(
+                                          child: Text(getInitials(region[index]),
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 36,
+                                                  color: Colors.white))),
+                                    ) :Container(
+                                      height: 66,
+                                      width: 66,
+                                      decoration: const BoxDecoration(
+                                          color: Color(0xff6C63FF) ,
+                                          shape: BoxShape.circle),
+                                      child: Center(
+                                          child: Icon(Icons.done,size: 30,color: Colors.white,),),
+                                    ) ,
                                   ),
                                 ),
                                 Container(
                                   child: Text(
                                     region[index],
                                     style: const TextStyle(
-                                      color: Color(0xff676767),fontWeight: FontWeight.w500),
+                                        color: Color(0xff676767),
+                                        fontWeight: FontWeight.w500),
                                   ),
                                 ),
                               ],
@@ -177,6 +220,7 @@ class _DistributorRegionState extends State<DistributorRegion> {
                     borderRadius: BorderRadius.circular(6)),
                 child: MaterialButton(
                   onPressed: () {
+                    print(checkedDetails);
                     Navigator.of(context)
                         .push(MaterialPageRoute(builder: (context) {
                       return Distributor();
