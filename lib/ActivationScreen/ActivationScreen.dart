@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:nearestbeats/Backend/Service/Auth.dart';
 import 'package:nearestbeats/Components/colors.dart';
+import 'package:nearestbeats/GpxFileRead/GpxFileRead.dart';
 import 'package:nearestbeats/NewUI/DistributorRegion.dart';
+import 'package:otp_text_field/otp_field.dart';
+import 'package:otp_text_field/otp_field_style.dart';
+import 'package:otp_text_field/style.dart';
 
-import 'ActivationCode.dart';
 
 class ActivationScreen extends StatelessWidget {
-  const ActivationScreen({Key? key}) : super(key: key);
+
+  
+  var authPin = "";
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +47,22 @@ class ActivationScreen extends StatelessWidget {
 
                         Padding(
                           padding: const EdgeInsets.only(bottom: 12, right: 12, left: 12),
-                          child: ActivationCode()
+                          child: OTPTextField(
+                            otpFieldStyle:OtpFieldStyle(backgroundColor: BeatsColors.inputBgColor,
+                            ),
+                            length: 6,
+                            width: MediaQuery.of(context).size.width,
+                            fieldWidth: 44,
+                            style: TextStyle(
+                                fontSize: 14
+                            ),
+                            textFieldAlignment: MainAxisAlignment.spaceAround,
+                            fieldStyle: FieldStyle.box,
+                            onCompleted: (pin) {
+                              print("Completed: " + pin);
+                              authPin = pin;
+                            },
+                          ),
                         )
                       ],
                     ),
@@ -50,9 +71,30 @@ class ActivationScreen extends StatelessWidget {
                 ),
                 MaterialButton(
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context){
-                      return DistributorRegion();
-                   }));
+                    AuthService()
+                        .checkLogIn(
+                      int.parse(authPin),
+                    )
+                        .then(
+                          (value) {
+                        if (value) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) {
+                                return const GpxFileRead();
+                              },
+                            ),
+                          );
+                          SharedPreferences.getInstance().then(
+                                (prefs) => prefs.setInt(
+                              "key",
+                              int.parse(controller.text),
+                            ),
+                          );
+                        }
+                      },
+                    );
                   },
                   child: Container(
                     height: 60,
@@ -73,3 +115,5 @@ class ActivationScreen extends StatelessWidget {
     );
   }
 }
+
+
