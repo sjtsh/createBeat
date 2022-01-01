@@ -229,9 +229,9 @@ class _ChooseScreenState extends State<ChooseScreen> {
         ),
         MaterialButton(
           onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context){
-              return DistributorRegion();
-            }));
+            // Navigator.of(context).push(MaterialPageRoute(builder: (context){
+            //   return DistributorRegion();
+            // }));
           },
           child: Container(
             height: 60,

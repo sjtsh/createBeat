@@ -15,6 +15,7 @@ import 'package:nearestbeats/Backend/Service/OutletService.dart';
 import 'package:nearestbeats/Header.dart';
 
 import 'package:nearestbeats/HomePage.dart';
+import 'package:nearestbeats/NewUI/DistributorRegion.dart';
 import 'package:nearestbeats/SelectionScreen/ChooseScreen.dart';
 import 'package:nearestbeats/SelectionScreen/ExpandablePanel.dart';
 
@@ -79,15 +80,16 @@ class _GpxFileReadState extends State<GpxFileRead> {
                   }
                 });
                 print(myRegions);
-                return ListView(
-                  children: [
-                   // ChooseScreen(myRegions, beats, refresh),
-                 //   DistributorList(),
-                    Column(
-                      children: [],
-                    ),
-                  ],
-                );
+                return DistributorRegion(myRegions, beats, refresh);
+                // return ListView(
+                //   children: [
+                //    ChooseScreen(myRegions, beats, refresh),
+                //    DistributorList(),
+                //     Column(
+                //       children: [],
+                //     ),
+                //   ],
+                // );
               }
               return Center(
                 child: Image.asset(

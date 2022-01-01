@@ -59,7 +59,7 @@ class _MyAppState extends State<MyApp> {
                     MaterialPageRoute(
                       builder: (_) {
                         if (value) {
-                          return const DistributorRegion();
+                          return const GpxFileRead();
                         } else {
                           return ActivationScreen();
                         }

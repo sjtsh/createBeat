@@ -83,7 +83,7 @@ class ActivationScreen extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder: (_) {
-                                return const DistributorRegion();
+                                return const GpxFileRead();
                               },
                             ),
                           );

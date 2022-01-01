@@ -1,10 +1,5 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'Backend/Entity/Beat.dart';
-import 'Backend/Entity/Region.dart';
-import 'GpxFileRead/BeatsPolyline.dart';
 import 'Backend/Entity/OutletEntity.dart';
 
 List<Outlet> allOutlets = [];
