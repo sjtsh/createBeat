@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:nearestbeats/Backend/Entity/Beat.dart';
 import 'package:nearestbeats/Backend/Service/BeatService.dart';
 import 'package:nearestbeats/GpxFileRead/GpxFileRead.dart';
-
 import 'package:nearestbeats/data.dart';
 
 import 'DistributorsList.dart';

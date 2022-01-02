@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:nearestbeats/Backend/Entity/Beat.dart';
 import 'package:nearestbeats/Backend/Methods/methods.dart';
 import 'package:nearestbeats/Backend/Service/BeatService.dart';
+import 'package:nearestbeats/Components/colors.dart';
 
 import '../data.dart';
 
@@ -177,7 +178,7 @@ class _DistributorRegionState extends State<DistributorRegion> {
                                                   Text(
                                                     e,
                                                     style: const TextStyle(
-                                                      color: Color(0xff676767),
+                                                      color: BeatsColors.headingColor,
 
                                                     ),
                                                   ),
@@ -187,7 +188,7 @@ class _DistributorRegionState extends State<DistributorRegion> {
                                                   const Icon(
                                                     Icons.clear,
                                                     size: 12,
-                                                    color: Color(0xff676767),
+                                                    color: BeatsColors.headingColor,
                                                   ),
                                                 ],
                                               ),
@@ -221,7 +222,7 @@ class _DistributorRegionState extends State<DistributorRegion> {
                           "Available Regions",
                           style: TextStyle(
                             fontWeight: FontWeight.w900,
-                            color: Color(0xff676767),
+                            color: BeatsColors.headingColor,
                           ),
                         ),
                         Expanded(child: Container()),
@@ -229,7 +230,7 @@ class _DistributorRegionState extends State<DistributorRegion> {
                           "${widget.regions.length} available",
                           style: const TextStyle(
                             fontWeight: FontWeight.w900,
-                            color: Color(0xff676767),
+                            color: BeatsColors.headingColor,
                           ),
                         ),
                       ],
@@ -269,7 +270,7 @@ class _DistributorRegionState extends State<DistributorRegion> {
                                             height: 66,
                                             width: 66,
                                             decoration: const BoxDecoration(
-                                                color: Color(0xff6C63FF),
+                                                color: BeatsColors.checkColor,
                                                 shape: BoxShape.circle),
                                             child: const Center(
                                                 child: Icon(
@@ -299,7 +300,7 @@ class _DistributorRegionState extends State<DistributorRegion> {
                                   child: Text(
                                     widget.regions[index],
                                     style: const TextStyle(
-                                        color: Color(0xff676767),
+                                        color: BeatsColors.headingColor,
                                         fontWeight: FontWeight.w500),
                                   ),
                                 ),

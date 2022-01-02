@@ -38,15 +38,6 @@ class _FutureDistributorRegionState extends State<FutureDistributorRegion> {
               });
               print(myRegions);
               return DistributorRegion(myRegions, beats, refresh);
-              // return ListView(
-              //   children: [
-              //    ChooseScreen(myRegions, beats, refresh),
-              //    DistributorList(),
-              //     Column(
-              //       children: [],
-              //     ),
-              //   ],
-              // );
             }
             return Center(
               child: Image.asset(
