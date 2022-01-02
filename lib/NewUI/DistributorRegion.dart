@@ -126,7 +126,7 @@ class _DistributorRegionState extends State<DistributorRegion> {
                                   Expanded(child: Container()),
                                   Text(
 
-                                    "${allRegions.length} Available",
+                                    "${allRegions.length} selected",
 
                                     style: const TextStyle(
                                       fontWeight: FontWeight.w900,

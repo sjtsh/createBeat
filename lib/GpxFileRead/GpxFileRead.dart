@@ -317,7 +317,7 @@ class _GpxFileReadState extends State<GpxFileRead> {
                           borderRadius: BorderRadius.circular(6)),
                       child: MaterialButton(
                         onPressed: () {
-                          getFileData(files, multiFileColor, context);
+                         getFileData(files, multiFileColor, context);
                         },
                         child: Center(
                           child: Text(
@@ -341,6 +341,7 @@ class _GpxFileReadState extends State<GpxFileRead> {
 
   /// reading data from file picked
   getFileData(List<File> datas, List<String> multiFileColor, context) async {
+    print(datas);
     List<bool> bools = List.generate(datas.length, (index) => false);
     Set<Polyline> polylines = {};
     allOutlets = [];
@@ -372,6 +373,7 @@ class _GpxFileReadState extends State<GpxFileRead> {
                     allOutlets.addAll(value);
                     bool1s[i] = true;
                     if (!bool1s.contains(false)) {
+                      print("Drop ${polylines}");
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -382,6 +384,7 @@ class _GpxFileReadState extends State<GpxFileRead> {
                               widget.dropdownValue,
                               multiFileColor,
                             );
+
                           },
                         ),
                       );

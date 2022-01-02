@@ -144,11 +144,13 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
     // TODO: implement initState
     markers =
         loadMarkerOutlets(radius, greenRadius, changeOutlet, widget.polyline);
+    print("markers$markers");
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return SlidingUpPanel(
       controller: _panelController,
       maxHeight: 280,
@@ -189,56 +191,8 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
           _panelController,
           setMarkerRed,
           setMarkerGreen),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      body: Stack(
         children: [
-          Container(
-            height: widget.isHeader ? 180 : 40,
-            width: widget.width,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(1),
-                  offset: Offset(0, -2),
-                  blurRadius: 3,
-                ),
-              ],
-              borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(12),
-                  bottomRight: Radius.circular(12)),
-            ),
-            child: widget.isHeader
-                ? Header(
-                    radius,
-                    changeRadius,
-                    widget.dropdownFiles,
-                    widget.polylines,
-                    widget.polyline,
-                    greenRadius,
-                    changeGreenRadius,
-                    widget.changePolyline,
-                    widget.distributorName,
-                    widget.multiFileColors,
-                    googleMapController: widget.googleMapController,
-                  )
-                : Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const SizedBox(
-                        width: 12,
-                      ),
-                      Text(widget.distributorName),
-                      Expanded(
-                        child: Container(),
-                      ),
-                      Text("${outletsForBeat.length} Outlets"),
-                      const SizedBox(
-                        width: 12,
-                      ),
-                    ],
-                  ),
-          ),
           const SizedBox(
             width: 50,
           ),
@@ -255,6 +209,23 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
                 setMarkerRed,
                 changeRadius),
           ),
+          Positioned(
+              top: 60,
+
+              child: Header(
+                radius,
+                changeRadius,
+                widget.dropdownFiles,
+                widget.polylines,
+                widget.polyline,
+                greenRadius,
+                changeGreenRadius,
+                widget.changePolyline,
+                widget.distributorName,
+                widget.multiFileColors,
+                width,
+                googleMapController: widget.googleMapController,
+              ))
         ],
       ),
     );
