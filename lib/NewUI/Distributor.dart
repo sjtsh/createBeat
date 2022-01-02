@@ -134,6 +134,11 @@ class _DistributorState extends State<Distributor> {
                                 (index) => myList[index].distributor)
                             .toSet()
                             .toList();
+                       WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+                         setState(() {
+                           totalDistributor = aList.length.toString();
+                         });
+                       });
                         return ListView.builder(
                           itemCount: aList.length,
                           itemBuilder: (context, i) {
