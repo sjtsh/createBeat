@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:nearestbeats/Backend/Entity/Beat.dart';
 import 'package:nearestbeats/Backend/Service/BeatService.dart';
 import 'package:nearestbeats/GpxFileRead/GpxFileRead.dart';
+
+import 'package:nearestbeats/NewUI/UploadFile.dart';
+
 import 'package:nearestbeats/data.dart';
 
 import 'DistributorsList.dart';
@@ -214,14 +217,16 @@ class _DistributorState extends State<Distributor> {
                 child: MaterialButton(
                   onPressed: () {
 
+
                     Navigator.of(context)
                         .push(MaterialPageRoute(builder: (context) {
                       return GpxFileRead(dropdownValue);
+
                     }));
                   },
                   child: Center(
                     child: Text(
-                      "SELECT ROUTES",
+                      "SELECT DISTRIBUTOR",
                       style: TextStyle(
                           fontWeight: FontWeight.bold, color: Colors.white),
                     ),

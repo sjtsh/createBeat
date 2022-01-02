@@ -20,6 +20,7 @@ class DistributorRegion extends StatefulWidget {
 }
 
 class _DistributorRegionState extends State<DistributorRegion> {
+
   String available = "0";
 
   List<bool> value = [];
@@ -38,42 +39,44 @@ class _DistributorRegionState extends State<DistributorRegion> {
     //value = List.generate(region.length, (index) => false);
   }
 
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      height: 35,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            Icons.arrow_back,
+        body: Column(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: EdgeInsets.all(12),
+                    height: 35,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.arrow_back,
+                        ),
+                        Expanded(child: Container()),
+                        const Text(
+                          "Select Distributor Region",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
                           ),
-                          Expanded(child: Container()),
-                          const Text(
-                            "Select Distributor Region",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Expanded(child: Container())
-                        ],
-                      ),
+                        ),
+                        Expanded(child: Container())
+                      ],
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    TextFormField(
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: TextFormField(
                       enableSuggestions: true,
                       style: const TextStyle(
                         color: Colors.black,
@@ -102,14 +105,17 @@ class _DistributorRegionState extends State<DistributorRegion> {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    allRegions.isNotEmpty
-                        ? Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
+
+                  ),
+                  allRegions.isNotEmpty
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 20,),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                              child: Row(
+
                                 children: [
                                   const Text(
                                     "Selected Regions",
@@ -120,7 +126,9 @@ class _DistributorRegionState extends State<DistributorRegion> {
                                   ),
                                   Expanded(child: Container()),
                                   Text(
+
                                     "${allRegions.length} Available",
+
                                     style: const TextStyle(
                                       fontWeight: FontWeight.w900,
                                       color: Color(0xff676767),
@@ -128,76 +136,89 @@ class _DistributorRegionState extends State<DistributorRegion> {
                                   ),
                                 ],
                               ),
-                              SizedBox(
-                                height: 12,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 12.0),
-                                child: Wrap(
-                                  alignment: WrapAlignment.start,
-                                  runAlignment: WrapAlignment.start,
-                                  direction: Axis.horizontal,
-                                  children: allRegions
-                                      .map(
-                                        (e) => Padding(
-                                          padding: const EdgeInsets.all(4.0),
-                                          child: InkWell(
-                                            onTap: () {
-                                              allRegions.remove(e);
-                                              widget.refresh();
-                                            },
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                  color:
-                                                      const Color(0xffF4F4F4),
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                        color: Colors.black
-                                                            .withOpacity(0.1),
-                                                        offset:
-                                                            const Offset(0, 2))
-                                                  ]),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Wrap(
-                                                  crossAxisAlignment:
-                                                      WrapCrossAlignment.center,
-                                                  direction: Axis.horizontal,
-                                                  children: [
-                                                    Text(
-                                                      e,
-                                                      style: const TextStyle(
-                                                          color: Colors.black),
+
+                            ),
+                            SizedBox(
+                              height: 12,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                              child: Wrap(
+                                alignment: WrapAlignment.start,
+                                runAlignment: WrapAlignment.start,
+                                direction: Axis.horizontal,
+                                children: allRegions
+                                    .map(
+                                      (e) => Padding(
+                                        padding: const EdgeInsets.only(
+                                            right: 6.0, bottom: 6.0),
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              color: const Color(0xffF4F4F4),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                    color: Colors.black
+                                                        .withOpacity(0.1),
+                                                    offset:
+                                                        const Offset(0, 2))
+                                              ]),
+                                          child: Padding(
+                                            padding:
+                                                const EdgeInsets.all(8.0),
+                                            child: InkWell(
+                                              onTap: () {
+                                                allRegions.remove(e);
+                                                widget.refresh();
+                                              },
+                                              child: Wrap(
+                                                crossAxisAlignment:
+                                                    WrapCrossAlignment.center,
+                                                direction: Axis.horizontal,
+                                                children: [
+                                                  Text(
+                                                    e,
+                                                    style: const TextStyle(
+                                                      color: Color(0xff676767),
+
                                                     ),
-                                                    const SizedBox(
-                                                      width: 5,
-                                                    ),
-                                                    const Icon(
-                                                      Icons.clear,
-                                                      size: 12,
-                                                      color: Colors.black,
-                                                    ),
-                                                  ],
-                                                ),
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 5,
+                                                  ),
+                                                  const Icon(
+                                                    Icons.clear,
+                                                    size: 12,
+                                                    color: Color(0xff676767),
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                           ),
                                         ),
-                                      )
-                                      .toList(),
-                                ),
+                                      ),
+                                    )
+                                    .toList(),
                               ),
-                            ],
-                          )
-                        : Container(),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 6.0),
+                              child: Divider(
+                                color: Colors.black.withOpacity(0.1),
+                                thickness: 1.5,
+                                height: 1.5,
+                              ),
+                            ),
+                          ],
+                        )
+                      : Container(),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: Row(
                       children: [
                         const Text(
                           "Available Regions",
@@ -216,21 +237,24 @@ class _DistributorRegionState extends State<DistributorRegion> {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Expanded(
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
                       child: GridView.builder(
                           scrollDirection: Axis.vertical,
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 4, mainAxisSpacing: 16),
+                                  crossAxisCount: 4, mainAxisSpacing: 16,),
                           itemCount: widget.regions.length,
                           itemBuilder: (context, index) {
                             return Column(
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.only(bottom: 8),
+                                  padding: const EdgeInsets.only(bottom: 8,),
                                   child: GestureDetector(
                                     onTap: () {
                                       if (allRegions
@@ -285,14 +309,17 @@ class _DistributorRegionState extends State<DistributorRegion> {
                               ],
                             );
                           }),
-                    )
-                  ],
-                ),
+                    ),
+                  )
+                ],
               ),
-              SizedBox(
-                height: 12,
-              ),
-              Container(
+            ),
+            SizedBox(
+              height: 12,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Container(
                 clipBehavior: Clip.hardEdge,
                 height: 60,
                 decoration: BoxDecoration(
@@ -313,9 +340,9 @@ class _DistributorRegionState extends State<DistributorRegion> {
                         fontWeight: FontWeight.bold, color: Colors.white),
                   )),
                 ),
-              )
-            ],
-          ),
+              ),
+            )
+          ],
         ),
       ),
     );

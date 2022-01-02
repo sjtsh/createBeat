@@ -60,11 +60,86 @@ class _GpxFileReadState extends State<GpxFileRead> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-
-        child: Scaffold(
-          body: Container(),
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 35,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Icon(
+                              Icons.arrow_back,
+                            ),
+                          ),
+                          Expanded(child: Container()),
+                          const Text(
+                            "Select Distributor",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Expanded(child: Container())
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const Text(
+                      "Upload Route Files",
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w900,
+                        color: Color(0xff676767),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Expanded(child: Container()),
+                    Container(
+                      clipBehavior: Clip.hardEdge,
+                      height: 60,
+                      decoration: BoxDecoration(
+                          color: Color(0xff6C63FF),
+                          borderRadius: BorderRadius.circular(6)),
+                      child: MaterialButton(
+                        onPressed: () {
+                          print(checkedDetails);
+                          // Navigator.of(context)
+                          //     .push(MaterialPageRoute(builder: (context) {
+                          //   return DistributorRegion();
+                          // }));
+                        },
+                        child: Center(
+                          child: Text(
+                            "SELECT DISTRIBUTOR",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
-
+      ),
     );
   }
 
