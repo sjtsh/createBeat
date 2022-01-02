@@ -23,7 +23,8 @@ import '../data.dart';
 import 'BeatsPolyline.dart';
 
 class GpxFileRead extends StatefulWidget {
-  const GpxFileRead({Key? key}) : super(key: key);
+  final String dropdownValue;
+  GpxFileRead(this.dropdownValue);
 
   @override
   _GpxFileReadState createState() => _GpxFileReadState();
@@ -35,21 +36,16 @@ class _GpxFileReadState extends State<GpxFileRead> {
   String currentExpanded = "";
   bool isDisabled = false;
 
-  expand(String currentExpanded) {
-    setState(() {
-      if (this.currentExpanded == currentExpanded) {
-        this.currentExpanded = "";
-      } else {
-        this.currentExpanded = currentExpanded;
-      }
-    });
-  }
+  // expand(String currentExpanded) {
+  //   setState(() {
+  //     if (this.currentExpanded == currentExpanded) {
+  //       this.currentExpanded = "";
+  //     } else {
+  //       this.currentExpanded = currentExpanded;
+  //     }
+  //   });
+  // }
 
-  refresh() {
-    setState(() {
-      dropdownValue = "Select Distributor";
-    });
-  }
 
   setColor(int index, String color) {
     setState(() {
@@ -57,7 +53,7 @@ class _GpxFileReadState extends State<GpxFileRead> {
     });
   }
 
-  String dropdownValue = 'Select Distributor';
+ // String dropdownValue = 'Select Distributor';
 
   int regionID = 0;
 
@@ -66,38 +62,7 @@ class _GpxFileReadState extends State<GpxFileRead> {
     return SafeArea(
 
         child: Scaffold(
-          body: FutureBuilder(
-            future: BeatService().fetchBeats(context).then((value) {
-              return value;
-            }),
-            builder: (context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData) {
-                List<String> myRegions = [];
-                List<Beat> beats = snapshot.data;
-                beats.forEach((element) {
-                  if (!myRegions.contains(element.region)) {
-                    myRegions.add(element.region);
-                  }
-                });
-                print(myRegions);
-                return DistributorRegion(myRegions, beats, refresh);
-                // return ListView(
-                //   children: [
-                //    ChooseScreen(myRegions, beats, refresh),
-                //    DistributorList(),
-                //     Column(
-                //       children: [],
-                //     ),
-                //   ],
-                // );
-              }
-              return Center(
-                child: Image.asset(
-                  "assets/logo.png",
-                ),
-              );
-            },
-          ),
+          body: Container(),
         ),
 
     );
@@ -143,7 +108,7 @@ class _GpxFileReadState extends State<GpxFileRead> {
                             return MyHomePage(
                               files,
                               polylines,
-                              dropdownValue,
+                              widget.dropdownValue,
                               multiFileColor,
                             );
                           },

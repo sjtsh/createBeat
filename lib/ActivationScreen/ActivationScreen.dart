@@ -3,6 +3,7 @@ import 'package:nearestbeats/Backend/Service/Auth.dart';
 import 'package:nearestbeats/Components/colors.dart';
 import 'package:nearestbeats/GpxFileRead/GpxFileRead.dart';
 import 'package:nearestbeats/NewUI/DistributorRegion.dart';
+import 'package:nearestbeats/NewUI/futureDistributorRegion.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/otp_field_style.dart';
 import 'package:otp_text_field/style.dart';
@@ -83,7 +84,7 @@ class ActivationScreen extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder: (_) {
-                                return const GpxFileRead();
+                                return const FutureDistributorRegion();
                               },
                             ),
                           );

@@ -6,6 +6,7 @@ import 'package:nearestbeats/ActivationScreen/ActivationScreen.dart';
 import 'package:nearestbeats/ConfirmationScreen/confirmationScreen.dart';
 import 'package:nearestbeats/GpxFileRead/GpxFileRead.dart';
 import 'package:nearestbeats/NewUI/DistributorRegion.dart';
+import 'package:nearestbeats/NewUI/futureDistributorRegion.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:sqflite/sqflite.dart';
@@ -59,7 +60,7 @@ class _MyAppState extends State<MyApp> {
                     MaterialPageRoute(
                       builder: (_) {
                         if (value) {
-                          return const GpxFileRead();
+                          return const FutureDistributorRegion();
                         } else {
                           return ActivationScreen();
                         }

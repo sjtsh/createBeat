@@ -1,29 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:nearestbeats/Backend/Entity/Beat.dart';
 import 'package:nearestbeats/Backend/Service/BeatService.dart';
+import 'package:nearestbeats/GpxFileRead/GpxFileRead.dart';
 import 'package:nearestbeats/data.dart';
 
 import 'DistributorsList.dart';
 
 class Distributor extends StatefulWidget {
-  const Distributor({Key? key}) : super(key: key);
+  final List<Beat> beats;
+
+  Distributor(this.beats);
 
   @override
   _DistributorState createState() => _DistributorState();
 }
 
 class _DistributorState extends State<Distributor> {
-  int onDistributorTapped = -1 ;
+  int onDistributorTapped = -1;
+
   String totalDistributor = "0";
-  List<Beat> beats = [];
-
-
 
   distributorTap(int notTapped) {
     setState(() {
       onDistributorTapped = notTapped;
     });
   }
+
+  String dropdownValue = "Unselected";
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +54,7 @@ class _DistributorState extends State<Distributor> {
                             ),
                           ),
                           Expanded(child: Container()),
-                         const Text(
+                          const Text(
                             "Select Distributor",
                             style: TextStyle(
                               fontSize: 16,
@@ -62,19 +65,19 @@ class _DistributorState extends State<Distributor> {
                         ],
                       ),
                     ),
-                    const  SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     TextFormField(
                       enableSuggestions: true,
-                      style:const TextStyle(
+                      style: const TextStyle(
                         color: Colors.black,
                         fontSize: 14,
                       ),
                       decoration: InputDecoration(
                         fillColor: Color(0xffF4F4F4),
                         filled: true,
-                        suffixIcon:const Icon(
+                        suffixIcon: const Icon(
                           Icons.search,
                           color: Color(0xff676767),
                         ),
@@ -84,12 +87,12 @@ class _DistributorState extends State<Distributor> {
                                 BorderSide(color: Colors.grey.shade400)),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
-                            borderSide:const BorderSide(
+                            borderSide: const BorderSide(
                               color: Color(0xff6DA7FE),
                             )),
                         hintText: "Search distributors",
-                        hintStyle:const TextStyle(
-                          color:  Color(0xff676767),
+                        hintStyle: const TextStyle(
+                          color: Color(0xff676767),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -119,159 +122,82 @@ class _DistributorState extends State<Distributor> {
                     const SizedBox(
                       height: 20,
                     ),
-                    // Column(
-                    //   children: [
-                    //     ["05- Saaru Enterprises- Pokhara", 0],
-                    //     ["05- Saaru Enterprises- Pokhara", 1],
-                    //     ["05- Saaru Enterprises- Pokhara", 2]
-                    //   ]
-                    //       .map(
-                    //         (e) => Column(
-                    //           children: [
-                    //             Container(
-                    //               height: 60,
-                    //               decoration: BoxDecoration(
-                    //                 borderRadius: BorderRadius.circular(6),
-                    //                 color: Colors.white,
-                    //                 boxShadow: [
-                    //                   BoxShadow(
-                    //                       offset: Offset(0, 2),
-                    //                       blurRadius: 1,
-                    //                       spreadRadius: 1,
-                    //                       color: Colors.black.withOpacity(0.1)),
-                    //                 ],
-                    //               ),
-                    //               child: Row(
-                    //                 children: [
-                    //                   SizedBox(
-                    //                     width: 12,
-                    //                   ),
-                    //                   InkWell(
-                    //                     onTap: () {
-                    //                       distributorTap(e[1] as int);
-                    //                     },
-                    //                     child: Container(
-                    //                       height: 38,
-                    //                       width: 38,
-                    //                       decoration: BoxDecoration(
-                    //                         shape: BoxShape.circle,
-                    //                         color: onDistributorTapped == e[1]
-                    //                             ? Color(0xff6C63FF)
-                    //                             : Color(0xffE7E7E7),
-                    //                       ),
-                    //                       child: Icon(Icons.done,
-                    //                           color: onDistributorTapped == e[1]
-                    //                               ? Colors.white
-                    //                               : Colors.transparent,
-                    //                           size: 24),
-                    //                     ),
-                    //                   ),
-                    //                   SizedBox(
-                    //                     width: 12,
-                    //                   ),
-                    //                   Text(
-                    //                     e[0] as String,
-                    //                     style: TextStyle(
-                    //                       fontWeight: FontWeight.w500,
-                    //                       color: Color(0xff676767),
-                    //                     ),
-                    //                   ),
-                    //                 ],
-                    //               ),
-                    //             ),
-                    //             SizedBox(
-                    //               height: 12,
-                    //             ),
-                    //           ],
-                    //         ),
-                    //       )
-                    //       .toList(),
-                    // ),
-
                     Expanded(
-                      child: FutureBuilder(
-                        future: BeatService().fetchBeats(context).then((value) {
-                          return value;
-                        }),
-                        builder: (context, AsyncSnapshot snapshot) {
-                          if (snapshot.hasData) {
-
-                            beats = snapshot.data;
-                            WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-                              setState(() {
-                                totalDistributor = beats.length.toString();
-                              });
-                            });
-                          }
-
-
-                          return ListView.builder(
-                              itemCount: beats.length,
-                              itemBuilder: (context, i) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(bottom: 12),
-                                  child: Container(
-                                    height: 60,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(6),
-                                      color: Colors.white,
-                                      boxShadow: [
-                                        BoxShadow(
-                                            offset: Offset(0, 2),
-                                            blurRadius: 1,
-                                            spreadRadius: 1,
-                                            color:
-                                                Colors.black.withOpacity(0.1)),
-                                      ],
+                      child: Builder(builder: (context) {
+                        List<Beat> myList = widget.beats
+                            .where((element) =>
+                                allRegions.contains(element.region))
+                            .toList();
+                        List aList = List.generate(myList.length,
+                                (index) => myList[index].distributor)
+                            .toSet()
+                            .toList();
+                        return ListView.builder(
+                          itemCount: aList.length,
+                          itemBuilder: (context, i) {
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 12),
+                              child: Container(
+                                height: 60,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6),
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                        offset: Offset(0, 2),
+                                        blurRadius: 1,
+                                        spreadRadius: 1,
+                                        color: Colors.black.withOpacity(0.1)),
+                                  ],
+                                ),
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 12,
                                     ),
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 12,
-                                        ),
-                                        InkWell(
-                                          onTap: () {
-                                            distributorTap(i);
-                                            //  setState(() {
-                                            //    seclectedIndex = i;
-                                            //  });
-                                          },
-                                          child: Container(
-                                            height: 38,
-                                            width: 38,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: onDistributorTapped == i
-                                                  ? Color(0xff6C63FF)
-                                                  : Color(0xffE7E7E7),
-                                            ),
-                                            child: Icon(Icons.done,
-                                                color: onDistributorTapped == i
-                                                    ? Colors.white
-                                                    : Colors.transparent,
-                                                size: 24),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 12,
-                                        ),
-                                        Flexible(
-                                          child: Text(
-                                            beats[i].distributor,
+                                    InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          dropdownValue =
+                                              aList[i] ?? "Unselected";
+                                        });
 
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              color: Color(0xff676767),
-                                            ),
-                                          ),
+                                      },
+                                      child: Container(
+                                        height: 38,
+                                        width: 38,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: dropdownValue == aList[i]
+                                              ? Color(0xff6C63FF)
+                                              : Color(0xffE7E7E7),
                                         ),
-                                      ],
+                                        child: Icon(Icons.done,
+                                            color: dropdownValue == aList[i]
+                                                ? Colors.white
+                                                : Colors.transparent,
+                                            size: 24),
+                                      ),
                                     ),
-                                  ),
-                                );
-                              });
-                        },
-                      ),
+                                    SizedBox(
+                                      width: 12,
+                                    ),
+                                    Flexible(
+                                      child: Text(
+                                        aList[i],
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          color: Color(0xff676767),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      }),
                     ),
                   ],
                 ),
@@ -287,11 +213,11 @@ class _DistributorState extends State<Distributor> {
                     borderRadius: BorderRadius.circular(6)),
                 child: MaterialButton(
                   onPressed: () {
-                    print(checkedDetails);
-                    // Navigator.of(context)
-                    //     .push(MaterialPageRoute(builder: (context) {
-                    //   return DistributorRegion();
-                    // }));
+
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
+                      return GpxFileRead(dropdownValue);
+                    }));
                   },
                   child: Center(
                     child: Text(

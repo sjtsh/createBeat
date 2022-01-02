@@ -20,43 +20,9 @@ class DistributorRegion extends StatefulWidget {
 }
 
 class _DistributorRegionState extends State<DistributorRegion> {
-  List<Beat> beats = [];
-  List<Beat> selectedBeats = [];
-
   String available = "0";
 
-  List region = [
-    "Gandaki",
-    "Lumbini",
-    "Koshi",
-    "Mechi",
-    "Narayani",
-    "Bagmati",
-    "Janakpur",
-    "Bheri",
-    "Seti",
-    "Sagarmatha",
-    "Karnali",
-    "Mahakali",
-    "Rara",
-    "Uandaki",
-    "Pumbini",
-    "Eoshi",
-    "pechi",
-    "Parayani",
-    "Bfagmati",
-    "Jafnakpur",
-  ];
   List<bool> value = [];
-
-  tap() {
-    checkedDetails = [];
-    for (var element in region) {
-      if (value[region.indexOf(element)]) {
-        checkedDetails.add(element);
-      }
-    }
-  }
 
   checkbox(int index, bool isChecked) {
     setState(() {
@@ -68,7 +34,8 @@ class _DistributorRegionState extends State<DistributorRegion> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    value = List.generate(region.length, (index) => false);
+
+    //value = List.generate(region.length, (index) => false);
   }
 
   @override
@@ -140,7 +107,7 @@ class _DistributorRegionState extends State<DistributorRegion> {
                     ),
                     allRegions.isNotEmpty
                         ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
                                 children: [
@@ -153,7 +120,7 @@ class _DistributorRegionState extends State<DistributorRegion> {
                                   ),
                                   Expanded(child: Container()),
                                   Text(
-                                    "${allRegions.length} available",
+                                    "${allRegions.length} Available",
                                     style: const TextStyle(
                                       fontWeight: FontWeight.w900,
                                       color: Color(0xff676767),
@@ -161,7 +128,9 @@ class _DistributorRegionState extends State<DistributorRegion> {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 12,),
+                              SizedBox(
+                                height: 12,
+                              ),
                               Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 12.0),
@@ -188,22 +157,21 @@ class _DistributorRegionState extends State<DistributorRegion> {
                                                     BoxShadow(
                                                         color: Colors.black
                                                             .withOpacity(0.1),
-                                                        offset: const Offset(0, 2))
+                                                        offset:
+                                                            const Offset(0, 2))
                                                   ]),
                                               child: Padding(
                                                 padding:
                                                     const EdgeInsets.all(8.0),
                                                 child: Wrap(
                                                   crossAxisAlignment:
-                                                      WrapCrossAlignment
-                                                          .center,
+                                                      WrapCrossAlignment.center,
                                                   direction: Axis.horizontal,
                                                   children: [
                                                     Text(
                                                       e,
                                                       style: const TextStyle(
-                                                          color:
-                                                              Colors.black),
+                                                          color: Colors.black),
                                                     ),
                                                     const SizedBox(
                                                       width: 5,
@@ -332,10 +300,10 @@ class _DistributorRegionState extends State<DistributorRegion> {
                     borderRadius: BorderRadius.circular(6)),
                 child: MaterialButton(
                   onPressed: () {
-                    print(checkedDetails);
+                    print(allRegions);
                     Navigator.of(context)
                         .push(MaterialPageRoute(builder: (context) {
-                      return Distributor();
+                      return Distributor(widget.beats);
                     }));
                   },
                   child: const Center(
