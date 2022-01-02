@@ -72,9 +72,6 @@ class _DistributorRegionState extends State<DistributorRegion> {
                       ],
                     ),
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12.0),
                     child: TextFormField(

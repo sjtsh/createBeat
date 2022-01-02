@@ -24,6 +24,7 @@ import 'BeatsPolyline.dart';
 
 class GpxFileRead extends StatefulWidget {
   final String dropdownValue;
+
   GpxFileRead(this.dropdownValue);
 
   @override
@@ -46,14 +47,13 @@ class _GpxFileReadState extends State<GpxFileRead> {
   //   });
   // }
 
-
   setColor(int index, String color) {
     setState(() {
       multiFileColor[index] = color;
     });
   }
 
- // String dropdownValue = 'Select Distributor';
+  // String dropdownValue = 'Select Distributor';
 
   int regionID = 0;
 
@@ -61,43 +61,47 @@ class _GpxFileReadState extends State<GpxFileRead> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      height: 35,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: const Icon(
-                              Icons.arrow_back,
-                            ),
+        body: Column(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: EdgeInsets.all(12),
+                    height: 35,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Icon(
+                            Icons.arrow_back,
                           ),
-                          Expanded(child: Container()),
-                          const Text(
-                            "Select Distributor",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
+                        ),
+                        Expanded(child: Container()),
+                        const Text(
+                          "Upload Map Files",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
                           ),
-                          Expanded(child: Container())
-                        ],
-                      ),
+                        ),
+                        Expanded(child: Container())
+                      ],
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Text(
+                  ),
+                  Divider(
+                    color: Colors.black.withOpacity(0.1),
+                    thickness: 1.5,
+                    height: 1.5,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        right: 12.0, left: 12.0, top: 22.0),
+                    child: const Text(
                       "Upload Route Files",
                       style: TextStyle(
                         fontSize: 14,
@@ -105,11 +109,181 @@ class _GpxFileReadState extends State<GpxFileRead> {
                         color: Color(0xff676767),
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: DottedBorder(
+                        color: Color(0xff6C63FF),
+                        strokeWidth: 1,
+                        dashPattern: [10, 6],
+                        child: GestureDetector(
+                          onTap: () {
+                            FilePicker.platform
+                                .pickFiles(allowMultiple: true,)
+                                .then((result) => setState(() {
+                                      multiFileColor = List.generate(
+                                          result!.paths.length,
+                                          (index) => "Red");
+                                      files = result.paths
+                                          .map((path) => File(path!))
+                                          .toList();
+                                    }));
+                          },
+                          child: Container(
+                            height: 60,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Center(
+                              child: const Text(
+                                "ADD NEW FILE",
+                                style: TextStyle(
+                                  color: Color(0xff6C63FF),
+                                ),
+                              ),
+                            ),
+                          ),
+                        )),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        right: 12.0, left: 12.0, top: 12.0),
+                    child: const Text(
+                      "4 Files Uploaded",
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w900,
+                        color: Color(0xff676767),
+                      ),
                     ),
-                    Expanded(child: Container()),
-                    Container(
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 12,
+                      right: 12,
+                      top: 12,
+                    ),
+                    child: Column(
+                      children: List.generate(
+                        files.length,
+                        (index) {
+                          return Builder(
+                            builder: (context) {
+                              return Column(
+                                children: [
+                                  Container(
+                                    height: 60,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(6),
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                            offset: Offset(0, 2),
+                                            blurRadius: 1,
+                                            spreadRadius: 1,
+                                            color:
+                                                Colors.black.withOpacity(0.1)),
+                                      ],
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                            height: 38,
+                                            width: 38,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Color(0xff6C63FF),
+                                            ),
+                                            child: Icon(Icons.done,
+                                                color: Colors.white, size: 24),
+                                          ),
+                                          const SizedBox(
+                                            width: 20,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              files[index].path.split("/").last,
+                                              overflow: TextOverflow.ellipsis,
+                                              textDirection: TextDirection.ltr,
+                                              textAlign: TextAlign.justify,
+                                              maxLines: 2,
+                                              style: TextStyle(fontSize: 12),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: 20,
+                                          ),
+                                          IconButton(
+                                            onPressed: () {
+                                              showDialog<void>(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return MyDialogBox(
+                                                      multiFileColor[index],
+                                                      index,
+                                                      setColor);
+                                                },
+                                              );
+                                            },
+                                            icon: Icon(
+                                              Icons.circle,
+                                              color:
+                                                  multiFileColor[index] == "Red"
+                                                      ? Colors.red
+                                                      : multiFileColor[index] ==
+                                                              "Blue"
+                                                          ? Colors.blue
+                                                          : Colors.green,
+                                            ),
+                                          ),
+                                          IconButton(
+                                            onPressed: () {
+                                              files.removeAt(index);
+                                              setState(() {});
+                                            },
+                                            icon: Container(
+                                              height: 20,
+                                              width: 20,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Colors.red
+                                              ),
+                                              child: Center(
+                                                child: Icon(
+                                                  Icons.clear,size: 13,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 12,
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  Expanded(child: Container()),
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Container(
                       clipBehavior: Clip.hardEdge,
                       height: 60,
                       decoration: BoxDecoration(
@@ -125,19 +299,19 @@ class _GpxFileReadState extends State<GpxFileRead> {
                         },
                         child: Center(
                           child: Text(
-                            "SELECT DISTRIBUTOR",
+                            "UPLOAD ROUTES",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white),
                           ),
                         ),
                       ),
-                    )
-                  ],
-                ),
+                    ),
+                  )
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
