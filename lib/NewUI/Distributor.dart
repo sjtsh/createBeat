@@ -6,8 +6,6 @@ import 'package:nearestbeats/GpxFileRead/GpxFileRead.dart';
 
 import 'package:nearestbeats/data.dart';
 
-import 'DistributorsList.dart';
-
 class Distributor extends StatefulWidget {
   final List<Beat> beats;
 

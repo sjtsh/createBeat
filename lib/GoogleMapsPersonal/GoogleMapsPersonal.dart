@@ -6,7 +6,7 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../data.dart';
 
-class GoogleMapsPersonal extends StatelessWidget {
+class GoogleMapsPersonal extends StatefulWidget {
   final PanelController _panelController;
   final List<Marker> markers;
   final Function _onMapCreated;
@@ -32,6 +32,19 @@ class GoogleMapsPersonal extends StatelessWidget {
   );
 
   @override
+  State<GoogleMapsPersonal> createState() => _GoogleMapsPersonalState();
+}
+
+class _GoogleMapsPersonalState extends State<GoogleMapsPersonal> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    widget._panelController.open();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     return Stack(
@@ -51,16 +64,18 @@ class GoogleMapsPersonal extends StatelessWidget {
               zoom: 17,
             ),
             onMapCreated: (GoogleMapController _controller) {
-              _onMapCreated(_controller);
+              widget._onMapCreated(_controller);
             },
             markers: {
-              ...markers,
+              ...widget.markers,
             },
             myLocationEnabled: true,
             myLocationButtonEnabled: true,
-            polylines: polylines,
+            polylines: widget.polylines,
           ),
         ),
+
+
       ],
     );
   }

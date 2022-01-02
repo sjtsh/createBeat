@@ -36,6 +36,7 @@ class _GpxFileReadState extends State<GpxFileRead> {
   List<String> multiFileColor = [];
   String currentExpanded = "";
   bool isDisabled = false;
+  bool isTapped = false;
 
   // expand(String currentExpanded) {
   //   setState(() {
@@ -115,39 +116,53 @@ class _GpxFileReadState extends State<GpxFileRead> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(12.0),
-                    child: DottedBorder(
+                    child: GestureDetector(
+                      onTap: () {
+                        FilePicker.platform
+                            .pickFiles(
+                              allowMultiple: true,
+                            )
+                            .then((result) => setState(() {
+                                  multiFileColor = List.generate(
+                                      result!.paths.length + 10,
+                                      (index) => "Red");
+                                  result.paths
+                                      .map((path) => File(path!))
+                                      .toList()
+                                      .forEach((element) {
+                                    bool isThere = false;
+                                    for (var file in files) {
+                                      if (file.path == element.path) {
+                                        isThere = true;
+                                        break;
+                                      }
+                                    }
+                                    if (!isThere) {
+                                      files.add(element);
+                                    }
+                                  });
+                                }));
+                      },
+                      child: DottedBorder(
+                        borderType: BorderType.RRect,
+                        radius: Radius.circular(6),
                         color: Color(0xff6C63FF),
                         strokeWidth: 1,
                         dashPattern: [10, 6],
-                        child: GestureDetector(
-                          onTap: () {
-                            FilePicker.platform
-                                .pickFiles(allowMultiple: true,)
-                                .then((result) => setState(() {
-                                      multiFileColor = List.generate(
-                                          result!.paths.length,
-                                          (index) => "Red");
-                                      files = result.paths
-                                          .map((path) => File(path!))
-                                          .toList();
-                                    }));
-                          },
-                          child: Container(
-                            height: 60,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Center(
-                              child: const Text(
-                                "ADD NEW FILE",
-                                style: TextStyle(
-                                  color: Color(0xff6C63FF),
-                                ),
+                        child: Container(
+                          height: 60,
+                          width: double.infinity,
+                          child: Center(
+                            child: const Text(
+                              "ADD NEW FILE",
+                              style: TextStyle(
+                                color: Color(0xff6C63FF),
                               ),
                             ),
                           ),
-                        )),
+                        ),
+                      ),
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(
@@ -195,15 +210,27 @@ class _GpxFileReadState extends State<GpxFileRead> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Container(
-                                            height: 38,
-                                            width: 38,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: Color(0xff6C63FF),
+                                          GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                isTapped = !isTapped;
+                                              });
+                                            },
+                                            child: Container(
+                                              height: 38,
+                                              width: 38,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: isTapped
+                                                    ? Color(0xff6C63FF)
+                                                    : Colors.white,
+                                              ),
+                                              child: Icon(Icons.done,
+                                                  color: isTapped
+                                                      ? Colors.white
+                                                      : Colors.transparent,
+                                                  size: 24),
                                             ),
-                                            child: Icon(Icons.done,
-                                                color: Colors.white, size: 24),
                                           ),
                                           const SizedBox(
                                             width: 20,
@@ -221,28 +248,31 @@ class _GpxFileReadState extends State<GpxFileRead> {
                                           const SizedBox(
                                             width: 20,
                                           ),
-                                          IconButton(
-                                            onPressed: () {
-                                              showDialog<void>(
-                                                context: context,
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return MyDialogBox(
-                                                      multiFileColor[index],
-                                                      index,
-                                                      setColor);
-                                                },
-                                              );
+                                          InkWell(
+                                            onTap: () {
+                                              showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return MyDialogBox(
+                                                        multiFileColor[index],
+                                                        index,
+                                                        setColor);
+                                                  });
                                             },
-                                            icon: Icon(
-                                              Icons.circle,
-                                              color:
-                                                  multiFileColor[index] == "Red"
-                                                      ? Colors.red
-                                                      : multiFileColor[index] ==
-                                                              "Blue"
-                                                          ? Colors.blue
-                                                          : Colors.green,
+                                            child: Container(
+                                              height: 20,
+                                              width: 20,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: multiFileColor[index] ==
+                                                        "Red"
+                                                    ? Colors.red
+                                                    : multiFileColor[index] ==
+                                                            "Blue"
+                                                        ? Colors.blue
+                                                        : Colors.green,
+                                              ),
                                             ),
                                           ),
                                           IconButton(
@@ -254,12 +284,12 @@ class _GpxFileReadState extends State<GpxFileRead> {
                                               height: 20,
                                               width: 20,
                                               decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: Colors.red
-                                              ),
+                                                  shape: BoxShape.circle,
+                                                  color: Colors.red),
                                               child: Center(
                                                 child: Icon(
-                                                  Icons.clear,size: 13,
+                                                  Icons.clear,
+                                                  size: 13,
                                                   color: Colors.white,
                                                 ),
                                               ),
@@ -291,8 +321,7 @@ class _GpxFileReadState extends State<GpxFileRead> {
                           borderRadius: BorderRadius.circular(6)),
                       child: MaterialButton(
                         onPressed: () {
-
-                         getFileData(files, multiFileColor, context);
+                          getFileData(files, multiFileColor, context);
                         },
                         child: Center(
                           child: Text(
@@ -359,7 +388,6 @@ class _GpxFileReadState extends State<GpxFileRead> {
                               widget.dropdownValue,
                               multiFileColor,
                             );
-
                           },
                         ),
                       );
@@ -390,55 +418,63 @@ class MyDialogBox extends StatefulWidget {
 class _MyDialogBoxState extends State<MyDialogBox> {
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment(0.8, 0.5 + widget.index * 0.1),
+    return Center(
       child: Material(
-          child: Container(
-        height: 200,
-        width: 200,
-        child: Column(
-          children: <String>["Red", "Blue", "Green"]
-              .asMap()
-              .entries
-              .map((e) => InkWell(
-                    onTap: () {
-                      widget.setColor(widget.index, e.value);
-                      Navigator.pop(context);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(e.value),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.blue),
-                                shape: BoxShape.circle),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                height: 12,
-                                width: 12,
+        child: Container(
+          decoration: ShapeDecoration(
+            color: Color(0xffF5F5F5),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+          ),
+          child: SizedBox(
+            height: 200,
+            width: 250,
+            child: Column(
+              children: <String>["Red", "Blue", "Green"]
+                  .asMap()
+                  .entries
+                  .map((e) => InkWell(
+                        onTap: () {
+                          widget.setColor(widget.index, e.value);
+                          Navigator.pop(context);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(e.value),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Container(
                                 decoration: BoxDecoration(
-                                  color: e == widget.colorSelected
-                                      ? Colors.blue
-                                      : Colors.white,
-                                  shape: BoxShape.circle,
+                                    border: Border.all(color: Colors.blue),
+                                    shape: BoxShape.circle),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    height: 12,
+                                    width: 12,
+                                    decoration: BoxDecoration(
+                                      color: e == widget.colorSelected
+                                          ? Colors.blue
+                                          : Colors.white,
+                                      shape: BoxShape.circle,
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
-                  ))
-              .toList(),
+                        ),
+                      ))
+                  .toList(),
+            ),
+          ),
         ),
-      )),
+      ),
     );
   }
 }
