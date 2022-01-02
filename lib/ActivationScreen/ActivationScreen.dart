@@ -73,31 +73,39 @@ class ActivationScreen extends StatelessWidget {
                 ),
                 MaterialButton(
                   onPressed: () {
-                    AuthService()
-                        .checkLogIn(
-                      int.parse(authPin),
-                    )
-                        .then(
-                          (value) {
-                        if (value) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) {
-                                return const FutureDistributorRegion();
-                              },
-                            ),
-                          );
-                          SharedPreferences.getInstance().then(
-                                (prefs) => prefs.setInt(
-                              "key",
-                              int.parse(authPin),
-                            ),
-                          );
-                        }
-                      },
-                    );
-                  },
+                if(authPin.isNotEmpty || authPin.length==6){
+                  AuthService()
+                      .checkLogIn(
+                    int.parse(authPin),
+                  )
+                      .then(
+                    (value) {
+                      if (value == true) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) {
+                              return const FutureDistributorRegion();
+                            },
+                          ),
+                        );
+                        SharedPreferences.getInstance().then(
+                          (prefs) => prefs.setInt(
+                            "key",
+                            int.parse(authPin),
+                          ),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                            content: Text("Invalid Authentication Code")));
+                      }
+                    },
+                  );
+                }else{
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text("Please enter Authentication Code")));
+                }
+              },
                   child: Container(
                     height: 60,
                     width: double.infinity,
