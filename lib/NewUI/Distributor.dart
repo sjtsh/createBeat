@@ -30,43 +30,44 @@ class _DistributorState extends State<Distributor> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      height: 35,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: const Icon(
-                              Icons.arrow_back,
-                            ),
+        body: Column(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: EdgeInsets.all(12),
+                    height: 35,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Icon(
+                            Icons.arrow_back,
                           ),
-                          Expanded(child: Container()),
-                         const Text(
-                            "Select Distributor",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
+                        ),
+                        Expanded(child: Container()),
+                       const Text(
+                          "Select Distributor",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
                           ),
-                          Expanded(child: Container())
-                        ],
-                      ),
+                        ),
+                        Expanded(child: Container())
+                      ],
                     ),
-                    const  SizedBox(
-                      height: 20,
-                    ),
-                    TextFormField(
+                  ),
+                  const  SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: TextFormField(
                       enableSuggestions: true,
                       style:const TextStyle(
                         color: Colors.black,
@@ -95,10 +96,18 @@ class _DistributorState extends State<Distributor> {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12.0),
+                    child: Divider(
+                      color: Colors.black.withOpacity(0.1),
+                      thickness: 1.5,
+                      height: 1.5,
                     ),
-                    Row(
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: Row(
                       children: [
                         const Text(
                           "Available Distributors",
@@ -117,170 +126,173 @@ class _DistributorState extends State<Distributor> {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    // Column(
-                    //   children: [
-                    //     ["05- Saaru Enterprises- Pokhara", 0],
-                    //     ["05- Saaru Enterprises- Pokhara", 1],
-                    //     ["05- Saaru Enterprises- Pokhara", 2]
-                    //   ]
-                    //       .map(
-                    //         (e) => Column(
-                    //           children: [
-                    //             Container(
-                    //               height: 60,
-                    //               decoration: BoxDecoration(
-                    //                 borderRadius: BorderRadius.circular(6),
-                    //                 color: Colors.white,
-                    //                 boxShadow: [
-                    //                   BoxShadow(
-                    //                       offset: Offset(0, 2),
-                    //                       blurRadius: 1,
-                    //                       spreadRadius: 1,
-                    //                       color: Colors.black.withOpacity(0.1)),
-                    //                 ],
-                    //               ),
-                    //               child: Row(
-                    //                 children: [
-                    //                   SizedBox(
-                    //                     width: 12,
-                    //                   ),
-                    //                   InkWell(
-                    //                     onTap: () {
-                    //                       distributorTap(e[1] as int);
-                    //                     },
-                    //                     child: Container(
-                    //                       height: 38,
-                    //                       width: 38,
-                    //                       decoration: BoxDecoration(
-                    //                         shape: BoxShape.circle,
-                    //                         color: onDistributorTapped == e[1]
-                    //                             ? Color(0xff6C63FF)
-                    //                             : Color(0xffE7E7E7),
-                    //                       ),
-                    //                       child: Icon(Icons.done,
-                    //                           color: onDistributorTapped == e[1]
-                    //                               ? Colors.white
-                    //                               : Colors.transparent,
-                    //                           size: 24),
-                    //                     ),
-                    //                   ),
-                    //                   SizedBox(
-                    //                     width: 12,
-                    //                   ),
-                    //                   Text(
-                    //                     e[0] as String,
-                    //                     style: TextStyle(
-                    //                       fontWeight: FontWeight.w500,
-                    //                       color: Color(0xff676767),
-                    //                     ),
-                    //                   ),
-                    //                 ],
-                    //               ),
-                    //             ),
-                    //             SizedBox(
-                    //               height: 12,
-                    //             ),
-                    //           ],
-                    //         ),
-                    //       )
-                    //       .toList(),
-                    // ),
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  // Column(
+                  //   children: [
+                  //     ["05- Saaru Enterprises- Pokhara", 0],
+                  //     ["05- Saaru Enterprises- Pokhara", 1],
+                  //     ["05- Saaru Enterprises- Pokhara", 2]
+                  //   ]
+                  //       .map(
+                  //         (e) => Column(
+                  //           children: [
+                  //             Container(
+                  //               height: 60,
+                  //               decoration: BoxDecoration(
+                  //                 borderRadius: BorderRadius.circular(6),
+                  //                 color: Colors.white,
+                  //                 boxShadow: [
+                  //                   BoxShadow(
+                  //                       offset: Offset(0, 2),
+                  //                       blurRadius: 1,
+                  //                       spreadRadius: 1,
+                  //                       color: Colors.black.withOpacity(0.1)),
+                  //                 ],
+                  //               ),
+                  //               child: Row(
+                  //                 children: [
+                  //                   SizedBox(
+                  //                     width: 12,
+                  //                   ),
+                  //                   InkWell(
+                  //                     onTap: () {
+                  //                       distributorTap(e[1] as int);
+                  //                     },
+                  //                     child: Container(
+                  //                       height: 38,
+                  //                       width: 38,
+                  //                       decoration: BoxDecoration(
+                  //                         shape: BoxShape.circle,
+                  //                         color: onDistributorTapped == e[1]
+                  //                             ? Color(0xff6C63FF)
+                  //                             : Color(0xffE7E7E7),
+                  //                       ),
+                  //                       child: Icon(Icons.done,
+                  //                           color: onDistributorTapped == e[1]
+                  //                               ? Colors.white
+                  //                               : Colors.transparent,
+                  //                           size: 24),
+                  //                     ),
+                  //                   ),
+                  //                   SizedBox(
+                  //                     width: 12,
+                  //                   ),
+                  //                   Text(
+                  //                     e[0] as String,
+                  //                     style: TextStyle(
+                  //                       fontWeight: FontWeight.w500,
+                  //                       color: Color(0xff676767),
+                  //                     ),
+                  //                   ),
+                  //                 ],
+                  //               ),
+                  //             ),
+                  //             SizedBox(
+                  //               height: 12,
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       )
+                  //       .toList(),
+                  // ),
 
-                    Expanded(
-                      child: FutureBuilder(
-                        future: BeatService().fetchBeats(context).then((value) {
-                          return value;
-                        }),
-                        builder: (context, AsyncSnapshot snapshot) {
-                          if (snapshot.hasData) {
+                  Expanded(
+                    child: FutureBuilder(
+                      future: BeatService().fetchBeats(context).then((value) {
+                        return value;
+                      }),
+                      builder: (context, AsyncSnapshot snapshot) {
+                        if (snapshot.hasData) {
 
-                            beats = snapshot.data;
-                            WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-                              setState(() {
-                                totalDistributor = beats.length.toString();
-                              });
+                          beats = snapshot.data;
+                          WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+                            setState(() {
+                              totalDistributor = beats.length.toString();
                             });
-                          }
+                          });
+                        }
 
 
-                          return ListView.builder(
-                              itemCount: beats.length,
-                              itemBuilder: (context, i) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(bottom: 12),
-                                  child: Container(
-                                    height: 60,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(6),
-                                      color: Colors.white,
-                                      boxShadow: [
-                                        BoxShadow(
-                                            offset: Offset(0, 2),
-                                            blurRadius: 1,
-                                            spreadRadius: 1,
-                                            color:
-                                                Colors.black.withOpacity(0.1)),
-                                      ],
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 12,
-                                        ),
-                                        InkWell(
-                                          onTap: () {
-                                            distributorTap(i);
-                                            //  setState(() {
-                                            //    seclectedIndex = i;
-                                            //  });
-                                          },
-                                          child: Container(
-                                            height: 38,
-                                            width: 38,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: onDistributorTapped == i
-                                                  ? Color(0xff6C63FF)
-                                                  : Color(0xffE7E7E7),
-                                            ),
-                                            child: Icon(Icons.done,
-                                                color: onDistributorTapped == i
-                                                    ? Colors.white
-                                                    : Colors.transparent,
-                                                size: 24),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 12,
-                                        ),
-                                        Flexible(
-                                          child: Text(
-                                            beats[i].distributor,
-
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              color: Color(0xff676767),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                        return ListView.builder(
+                            itemCount: beats.length,
+                            itemBuilder: (context, i) {
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 12,left: 12,right: 12),
+                                child: Container(
+                                  height: 60,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(6),
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                          offset: Offset(0, 2),
+                                          blurRadius: 1,
+                                          spreadRadius: 1,
+                                          color:
+                                              Colors.black.withOpacity(0.1)),
+                                    ],
                                   ),
-                                );
-                              });
-                        },
-                      ),
+                                  child: Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 12,
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          distributorTap(i);
+                                          //  setState(() {
+                                          //    seclectedIndex = i;
+                                          //  });
+                                        },
+                                        child: Container(
+                                          height: 38,
+                                          width: 38,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: onDistributorTapped == i
+                                                ? Color(0xff6C63FF)
+                                                : Color(0xffE7E7E7),
+                                          ),
+                                          child: Icon(Icons.done,
+                                              color: onDistributorTapped == i
+                                                  ? Colors.white
+                                                  : Colors.transparent,
+                                              size: 24),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 12,
+                                      ),
+                                      Flexible(
+                                        child: Text(
+                                          beats[i].distributor,
+
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            color: Color(0xff676767),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            });
+                      },
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              SizedBox(
-                height: 12,
-              ),
-              Container(
+            ),
+            SizedBox(
+              height: 12,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Container(
                 clipBehavior: Clip.hardEdge,
                 height: 60,
                 decoration: BoxDecoration(
@@ -302,9 +314,9 @@ class _DistributorState extends State<Distributor> {
                     ),
                   ),
                 ),
-              )
-            ],
-          ),
+              ),
+            )
+          ],
         ),
       ),
     );
