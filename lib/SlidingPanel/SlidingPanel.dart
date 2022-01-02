@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:nearestbeats/Components/colors.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -48,48 +49,51 @@ class SlidingPanel extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 16.0),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(
+                          12,
+                        ),
+                        bottomLeft: Radius.circular(
+                          12,
+                        ),
+                      ),
+                      image: DecorationImage(
+                        image: NetworkImage(
+                          outlet.img,
+                        ),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 12,
+                  ),
+                  Text(
+                    outlet.beatsName,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w900,
+                      color: BeatsColors.headingColor,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 12,
+                  ),
                   Row(
                     children: [
-                      Expanded(
-                        child: Container(
-                          width: 100,
-                          height: 100,
-                          child: Image.network(
-                            outlet.img,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                      Image.asset(
+                        "assets/img.png",
+                        width: 19,
+                        height: 19,
                       ),
                       SizedBox(
                         width: 10,
                       ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              outlet.outletsName,
-                              style:
-                                  TextStyle(fontSize: 20, color: Colors.black),
-                            ),
-                            Text(
-                              ((outlet.isAssigned) ?? false)
-                                  ? outlet.newBeat.toString()
-                                  : outlet.beatsName,
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black.withOpacity(0.5)),
-                            ),
-                            Text(
-                              outlet.distributor,
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black.withOpacity(0.5)),
-                            ),
-                          ],
-                        ),
-                      )
+                      Text(outlet.outletsName),
                     ],
                   ),
                   SizedBox(
@@ -97,92 +101,124 @@ class SlidingPanel extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      Expanded(
-                        child: outletsForBeat.contains(outlet.id)
-                            ? Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  clipBehavior: Clip.hardEdge,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: Material(
-                                    color: Colors.red,
-                                    child: InkWell(
-                                      onTap: () {
-                                        setMarkerRed(outlet.id);
-                                      },
-                                      child: Container(
-                                        height: 60,
-                                        child: Center(
-                                          child: Text(
-                                            "Remove from Beat",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 14),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            : Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  clipBehavior: Clip.hardEdge,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: Material(
-                                    color: Colors.green,
-                                    child: InkWell(
-                                      onTap: () {
-                                        setMarkerGreen(outlet.id);
-                                      },
-                                      child: Container(
-                                        height: 60,
-                                        width: double.infinity,
-                                        child: Center(
-                                          child: Text(
-                                            "Add to Beat",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 14),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
+                      Image.asset(
+                        "assets/img_1.png",
+                        width: 19,
+                        height: 19,
                       ),
-                      Expanded(
-                        child: InkWell(
-                          onTap: () {
-                            _panelController.close();
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              height: 60,
-                              decoration: BoxDecoration(
-                                color: Colors.blueGrey,
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  "Close",
-                                  style: TextStyle(
-                                      fontSize: 20, color: Colors.white),
-                                ),
-                              ),
-                            ),
-                          ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(outlet.distributor),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                      color: Color(0xff6C63FF),
+                    ),),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Text(
+                        "ADD TO BEAT",
+                        style: TextStyle(
+                          color: Color(0xff6C63FF),
                         ),
                       ),
-                    ],
-                  )
+                    ),
+                  ),
+                  // Row(
+                  //   children: [
+                  //     Expanded(
+                  //       child: outletsForBeat.contains(outlet.id)
+                  //           ? Padding(
+                  //               padding: const EdgeInsets.all(8.0),
+                  //               child: Container(
+                  //                 clipBehavior: Clip.hardEdge,
+                  //                 decoration: BoxDecoration(
+                  //                   borderRadius: BorderRadius.circular(12),
+                  //                 ),
+                  //                 child: Material(
+                  //                   color: Colors.red,
+                  //                   child: InkWell(
+                  //                     onTap: () {
+                  //                       setMarkerRed(outlet.id);
+                  //                     },
+                  //                     child: Container(
+                  //                       height: 60,
+                  //                       child: Center(
+                  //                         child: Text(
+                  //                           "Remove from Beat",
+                  //                           style: TextStyle(
+                  //                               color: Colors.white,
+                  //                               fontSize: 14),
+                  //                         ),
+                  //                       ),
+                  //                     ),
+                  //                   ),
+                  //                 ),
+                  //               ),
+                  //             )
+                  //           : Padding(
+                  //               padding: const EdgeInsets.all(8.0),
+                  //               child: Container(
+                  //                 clipBehavior: Clip.hardEdge,
+                  //                 decoration: BoxDecoration(
+                  //                   borderRadius: BorderRadius.circular(12),
+                  //                 ),
+                  //                 child: Material(
+                  //                   color: Colors.green,
+                  //                   child: InkWell(
+                  //                     onTap: () {
+                  //                       setMarkerGreen(outlet.id);
+                  //                     },
+                  //                     child: Container(
+                  //                       height: 60,
+                  //                       width: double.infinity,
+                  //                       child: Center(
+                  //                         child: Text(
+                  //                           "Add to Beat",
+                  //                           style: TextStyle(
+                  //                               color: Colors.white,
+                  //                               fontSize: 14),
+                  //                         ),
+                  //                       ),
+                  //                     ),
+                  //                   ),
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //     ),
+                  //     Expanded(
+                  //       child: InkWell(
+                  //         onTap: () {
+                  //           _panelController.close();
+                  //         },
+                  //         child: Padding(
+                  //           padding: const EdgeInsets.all(8.0),
+                  //           child: Container(
+                  //             height: 60,
+                  //             decoration: BoxDecoration(
+                  //               color: Colors.blueGrey,
+                  //               borderRadius: BorderRadius.circular(12),
+                  //             ),
+                  //             child: Center(
+                  //               child: Text(
+                  //                 "Close",
+                  //                 style: TextStyle(
+                  //                     fontSize: 20, color: Colors.white),
+                  //               ),
+                  //             ),
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // )
                 ],
               ),
             ),

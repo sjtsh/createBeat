@@ -6,7 +6,7 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../data.dart';
 
-class GoogleMapsPersonal extends StatelessWidget {
+class GoogleMapsPersonal extends StatefulWidget {
   final PanelController _panelController;
   final List<Marker> markers;
   final Function _onMapCreated;
@@ -32,6 +32,19 @@ class GoogleMapsPersonal extends StatelessWidget {
   );
 
   @override
+  State<GoogleMapsPersonal> createState() => _GoogleMapsPersonalState();
+}
+
+class _GoogleMapsPersonalState extends State<GoogleMapsPersonal> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    widget._panelController.open();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     return Stack(
@@ -51,14 +64,14 @@ class GoogleMapsPersonal extends StatelessWidget {
               zoom: 17,
             ),
             onMapCreated: (GoogleMapController _controller) {
-              _onMapCreated(_controller);
+              widget._onMapCreated(_controller);
             },
             markers: {
-              ...markers,
+              ...widget.markers,
             },
             myLocationEnabled: true,
             myLocationButtonEnabled: true,
-            polylines: polylines,
+            polylines: widget.polylines,
           ),
         ),
         Positioned(
@@ -66,7 +79,7 @@ class GoogleMapsPersonal extends StatelessWidget {
           top: 150,
           child: GestureDetector(
             onTap: () {
-              setHeader(!isHeader);
+              widget.setHeader(!widget.isHeader);
             },
             child: Padding(
               padding: const EdgeInsets.all(12.0),
@@ -87,7 +100,7 @@ class GoogleMapsPersonal extends StatelessWidget {
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
-                  isHeader
+                  widget.isHeader
                       ? Icons.arrow_upward_rounded
                       : Icons.arrow_downward_rounded,
                   color: Colors.black,
@@ -101,15 +114,9 @@ class GoogleMapsPersonal extends StatelessWidget {
           top: 150,
           child: GestureDetector(
             onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) {
 
-                    return ConfirmationScreen(distributorName, beatName, setMarkerRed);
+               widget._panelController.open();
 
-                  },
-                ),
-              );
             },
             child: Padding(
               padding: const EdgeInsets.all(12.0),
@@ -129,7 +136,7 @@ class GoogleMapsPersonal extends StatelessWidget {
                   ),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.arrow_forward_ios_rounded,
                   color: Colors.white,
                 ),
