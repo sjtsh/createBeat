@@ -20,8 +20,25 @@ class DistributorRegion extends StatefulWidget {
 }
 
 class _DistributorRegionState extends State<DistributorRegion> {
-  List<Beat> beats = [];
-  List<Beat> selectedBeats = [];
+
+  String available = "0";
+
+  List<bool> value = [];
+
+  checkbox(int index, bool isChecked) {
+    setState(() {
+      value[index] = isChecked;
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    //value = List.generate(region.length, (index) => false);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -54,9 +71,6 @@ class _DistributorRegionState extends State<DistributorRegion> {
                       ],
                     ),
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12.0),
                     child: TextFormField(
@@ -88,6 +102,7 @@ class _DistributorRegionState extends State<DistributorRegion> {
                         ),
                       ),
                     ),
+
                   ),
                   allRegions.isNotEmpty
                       ? Column(
@@ -97,6 +112,7 @@ class _DistributorRegionState extends State<DistributorRegion> {
                             Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 12.0),
                               child: Row(
+
                                 children: [
                                   const Text(
                                     "Selected Regions",
@@ -107,7 +123,9 @@ class _DistributorRegionState extends State<DistributorRegion> {
                                   ),
                                   Expanded(child: Container()),
                                   Text(
-                                    "${allRegions.length} selected",
+
+                                    "${allRegions.length} Available",
+
                                     style: const TextStyle(
                                       fontWeight: FontWeight.w900,
                                       color: Color(0xff676767),
@@ -115,6 +133,7 @@ class _DistributorRegionState extends State<DistributorRegion> {
                                   ),
                                 ],
                               ),
+
                             ),
                             SizedBox(
                               height: 12,
@@ -159,6 +178,7 @@ class _DistributorRegionState extends State<DistributorRegion> {
                                                     e,
                                                     style: const TextStyle(
                                                       color: Color(0xff676767),
+
                                                     ),
                                                   ),
                                                   const SizedBox(
@@ -304,10 +324,10 @@ class _DistributorRegionState extends State<DistributorRegion> {
                     borderRadius: BorderRadius.circular(6)),
                 child: MaterialButton(
                   onPressed: () {
-                    print(checkedDetails);
+                    print(allRegions);
                     Navigator.of(context)
                         .push(MaterialPageRoute(builder: (context) {
-                      return Distributor();
+                      return Distributor(widget.beats);
                     }));
                   },
                   child: const Center(
