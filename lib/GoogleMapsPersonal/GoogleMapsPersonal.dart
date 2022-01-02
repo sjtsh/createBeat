@@ -63,7 +63,7 @@ class GoogleMapsPersonal extends StatelessWidget {
         ),
         Positioned(
           left: 2,
-          top: 45,
+          top: 150,
           child: GestureDetector(
             onTap: () {
               setHeader(!isHeader);
@@ -98,7 +98,7 @@ class GoogleMapsPersonal extends StatelessWidget {
         ),
         Positioned(
           right: 2,
-          top: 45,
+          top: 150,
           child: GestureDetector(
             onTap: () {
               Navigator.of(context).push(
