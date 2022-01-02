@@ -335,7 +335,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                           ]),
                       child: Row(
                         children: [
-                          Image.network("assets/activation.png"),
+                          Image.asset("assets/activation.png"),
                           Expanded(child: Container()),
                           Padding(
                             padding: const EdgeInsets.all(12.0),

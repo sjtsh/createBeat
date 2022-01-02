@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'Backend/Entity/OutletEntity.dart';
+import 'ConfirmationScreen/confirmationScreen.dart';
 import 'data.dart';
 
 class Header extends StatefulWidget {
@@ -18,9 +19,13 @@ class Header extends StatefulWidget {
   final Function changeGreenRadius;
   final Function changePolyline;
   final distributorName;
+  final String beatName;
+
+  final Function setMarkerRed;
+  final contexts;
 
   final List<String> multiFileColor;
-  final width;
+
 
   Header(
     this.radius,
@@ -32,7 +37,10 @@ class Header extends StatefulWidget {
     this.changeGreenRadius,
     this.changePolyline,
     this.distributorName,
-    this.multiFileColor, this.width,
+    this.beatName,
+    this.setMarkerRed,
+    this.contexts,
+    this.multiFileColor,
       {
     this.googleMapController,
   });
@@ -48,6 +56,7 @@ class _HeaderState extends State<Header> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(widget.contexts).size.width;
 
 
     // return Column(
@@ -123,9 +132,18 @@ class _HeaderState extends State<Header> {
     return Column(
       children: [
         Container(
-          color: Colors.white,
+
           height: 50,
-          width: widget.width - 24,
+          width: width - 24,
+          decoration: BoxDecoration(
+              color: Colors.white,
+            borderRadius: !isExpanded? BorderRadius.circular(6):BorderRadius.only(topLeft:Radius.circular(6),topRight:Radius.circular(6),),
+            boxShadow:  [BoxShadow(
+              offset: Offset(0,2),
+              blurRadius: 3,
+              color: Colors.black.withOpacity(0.1)
+            )]
+          ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Align(
@@ -134,6 +152,7 @@ class _HeaderState extends State<Header> {
                 children: [
                   IconButton(
                       onPressed: () {
+
                         setState(() {
                           isExpanded = !isExpanded;
                           if(!isExpanded2){
@@ -155,9 +174,21 @@ class _HeaderState extends State<Header> {
                       icon: isExpanded
                           ? Icon(Icons.close)
                           : Icon(Icons.line_weight_sharp)),
+                  Expanded(child: Container()),
                   Text("1 outlet selected"),
+                  Expanded(child: Container()),
                   IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) {
+
+                              return ConfirmationScreen(widget.distributorName, widget.beatName, widget.setMarkerRed);
+
+                            },
+                          ),
+                        );
+                      },
                       icon: Icon(Icons.arrow_forward)),
                 ],
               ),
@@ -167,10 +198,20 @@ class _HeaderState extends State<Header> {
         Builder(builder: (context) {
 
           return AnimatedContainer(
-            width: widget.width - 24,
-            height: isExpanded ? 300 : 0,
-            color: Colors.white,
+            width: width - 24,
+            height: isExpanded ? 170 : 0,
+
             duration: Duration(milliseconds: 200),
+              decoration:  BoxDecoration(
+
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(bottomRight:Radius.circular(6),bottomLeft:Radius.circular(6),),
+                  boxShadow: [BoxShadow(
+                      offset: Offset(0,2),
+                      blurRadius: 3,
+                    color: Colors.black.withOpacity(0.1),
+                  )]
+              ),
             child: isExpanded2
                 ? Column(
               children: [
@@ -198,6 +239,32 @@ class _HeaderState extends State<Header> {
                 thumbColor: Colors.green,
                 inactiveColor: Colors.black.withOpacity(0.1),
               ),
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: DropdownSearch<String>(
+                  showClearButton: false,
+                  mode: Mode.MENU,
+                  selectedItem: widget.polyline.polylineId.value,
+                  showSelectedItems: true,
+                  items: List.generate(
+                      widget.polylines.length,
+                      (index) =>
+                          widget.polylines.toList()[index].polylineId.value +
+                          "(${widget.multiFileColor[index].substring(0, 1).toUpperCase()})"),
+                  hint: "Select Distributor",
+                  dropdownSearchDecoration: InputDecoration(
+                      contentPadding: EdgeInsets.only(left: 8),
+                      fillColor: Color(0xffA0C7F4).withOpacity(0.1),
+                      filled: true,
+                      border: InputBorder.none),
+                  showSearchBox: true,
+                  popupItemDisabled: (String s) => s.startsWith('I'),
+                  onChanged: (input) {
+                    widget.changePolyline(input?.substring(0, input.length - 3));
+
+                  },
+                ),
+          ),
 
               ],
             ): Container(),

@@ -24,11 +24,13 @@ class OutletService {
             },
           ),
         );
+        print(response.body);
         if (response.statusCode == 200) {
           List<dynamic> values = jsonDecode(response.body);
           aStatusCode = 200;
           List<Outlet> outlets = values.map((e) => Outlet.fromJson(e)).toList();
           return outlets;
+
         } else {
           throw Exception("failed to load post, status code error");
         }

@@ -348,7 +348,7 @@ class _GpxFileReadState extends State<GpxFileRead> {
                     allOutlets.addAll(value);
                     bool1s[i] = true;
                     if (!bool1s.contains(false)) {
-                      print("Drop ${polylines}");
+                      print("Drop ${allOutlets.length}");
                       Navigator.push(
                         context,
                         MaterialPageRoute(

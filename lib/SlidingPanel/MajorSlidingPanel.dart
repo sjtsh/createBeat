@@ -142,6 +142,7 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
   @override
   void initState() {
     // TODO: implement initState
+    print("hahaha $allOutlets");
     markers =
         loadMarkerOutlets(radius, greenRadius, changeOutlet, widget.polyline);
     print("markers$markers");
@@ -150,7 +151,7 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
+
     return SlidingUpPanel(
       controller: _panelController,
       maxHeight: 280,
@@ -192,6 +193,7 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
           setMarkerRed,
           setMarkerGreen),
       body: Stack(
+        alignment: Alignment.center,
         children: [
           const SizedBox(
             width: 50,
@@ -222,8 +224,11 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
                 changeGreenRadius,
                 widget.changePolyline,
                 widget.distributorName,
+                widget.beatName,
+                setMarkerRed,
+                context,
                 widget.multiFileColors,
-                width,
+
                 googleMapController: widget.googleMapController,
               ))
         ],
