@@ -4,8 +4,6 @@ import 'package:nearestbeats/Backend/Service/BeatService.dart';
 import 'package:nearestbeats/GpxFileRead/GpxFileRead.dart';
 import 'package:nearestbeats/data.dart';
 
-import 'DistributorsList.dart';
-
 class Distributor extends StatefulWidget {
   final List<Beat> beats;
 
@@ -127,7 +125,7 @@ class _DistributorState extends State<Distributor> {
                     ),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 12,
                   ),
                   Expanded(
                     child: Builder(builder: (context) {
@@ -143,7 +141,7 @@ class _DistributorState extends State<Distributor> {
                         itemCount: aList.length,
                         itemBuilder: (context, i) {
                           return Padding(
-                            padding: const EdgeInsets.only(bottom: 12),
+                            padding: const EdgeInsets.only(bottom: 12,left: 12,right: 12),
                             child: Container(
                               height: 60,
                               decoration: BoxDecoration(
