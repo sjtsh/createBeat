@@ -136,7 +136,7 @@ class _HeaderState extends State<Header> {
       children: [
         Container(
 
-          height: 50,
+          height: 65,
           width: width - 24,
           decoration: BoxDecoration(
               color: Colors.white,
@@ -150,7 +150,7 @@ class _HeaderState extends State<Header> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Align(
-              alignment: Alignment.topCenter,
+              alignment: Alignment.center,
               child: Row(
                 children: [
                   IconButton(
@@ -178,7 +178,7 @@ class _HeaderState extends State<Header> {
                           ? Icon(Icons.close)
                           : Icon(Icons.line_weight_sharp)),
                   Expanded(child: Container()),
-                  Text("1 outlet selected"),
+                  Text("1 outlet selected", style: TextStyle(fontWeight: FontWeight.bold, color: BeatsColors.headingColor),),
                   Expanded(child: Container()),
                   IconButton(
                       onPressed: () {

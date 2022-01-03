@@ -76,7 +76,7 @@ List<Marker> loadMarkerOutlets(double radius, double greenRadius,
             Marker(
               markerId: MarkerId("${allOutlets[i].id}"),
               infoWindow: InfoWindow(
-                title: "${allOutlets[i].outletsName}",
+                title: allOutlets[i].outletsName,
                 snippet: allOutlets[i].beatsName,
               ),
               icon: BitmapDescriptor.defaultMarkerWithHue(
@@ -95,6 +95,6 @@ List<Marker> loadMarkerOutlets(double radius, double greenRadius,
       }
     }
   }
-  print(markers);
+  print("marker in hell ${markers} ${allOutlets[0].lat} ");
   return markers;
 }

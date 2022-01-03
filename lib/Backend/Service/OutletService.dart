@@ -24,7 +24,6 @@ class OutletService {
             },
           ),
         );
-        print(response.body);
         if (response.statusCode == 200) {
           List<dynamic> values = jsonDecode(response.body);
           aStatusCode = 200;

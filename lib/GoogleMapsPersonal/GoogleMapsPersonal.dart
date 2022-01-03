@@ -40,8 +40,9 @@ class _GoogleMapsPersonalState extends State<GoogleMapsPersonal> {
   @override
   void initState() {
     // TODO: implement initState
-    widget._panelController.open();
+   // widget._panelController.open();
     super.initState();
+
   }
 
   @override
@@ -55,6 +56,7 @@ class _GoogleMapsPersonalState extends State<GoogleMapsPersonal> {
             // myLocationButtonEnabled: true,
             zoomControlsEnabled: false,
             zoomGesturesEnabled: true,
+            tiltGesturesEnabled: false,
             initialCameraPosition: const CameraPosition(
               target: LatLng(
                 27.624917,
@@ -62,6 +64,8 @@ class _GoogleMapsPersonalState extends State<GoogleMapsPersonal> {
               ),
               // target: LatLng(myLat, myLng),
               zoom: 17,
+              tilt: 0,
+
             ),
             onMapCreated: (GoogleMapController _controller) {
               widget._onMapCreated(_controller);
@@ -70,7 +74,7 @@ class _GoogleMapsPersonalState extends State<GoogleMapsPersonal> {
               ...widget.markers,
             },
             myLocationEnabled: true,
-            myLocationButtonEnabled: true,
+            myLocationButtonEnabled: false,
             polylines: widget.polylines,
           ),
         ),

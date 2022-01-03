@@ -142,10 +142,10 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
   @override
   void initState() {
     // TODO: implement initState
-    print("hahaha $allOutlets");
+
     markers =
         loadMarkerOutlets(radius, greenRadius, changeOutlet, widget.polyline);
-    print("markers$markers");
+
     super.initState();
   }
 
@@ -154,8 +154,8 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
 
     return SlidingUpPanel(
       controller: _panelController,
-      maxHeight: 280,
-      minHeight: 50,
+      maxHeight: 350,
+      minHeight: 0,
       isDraggable: false,
       panelSnapping: true,
       parallaxEnabled: true,
@@ -212,7 +212,7 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
                 changeRadius),
           ),
           Positioned(
-              top: 60,
+              top: 30,
 
               child: Header(
                 radius,

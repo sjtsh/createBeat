@@ -36,15 +36,20 @@ class SlidingPanel extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
-            Container(
-              height: 4,
-              width: 70,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(3),
-                  color: Colors.black.withOpacity(0.1)),
+            Row(
+              children: [
+                Container(
+                  height: 4,
+                  width: 70,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.black.withOpacity(0.1)),
+                ),
+
+              ],
             ),
             SizedBox(
-              height: 20,
+              height: 16,
             ),
             Padding(
               padding: const EdgeInsets.only(top: 16.0),
@@ -52,15 +57,10 @@ class SlidingPanel extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
+                    height: 100,
+                    width: double.infinity,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(
-                          12,
-                        ),
-                        bottomLeft: Radius.circular(
-                          12,
-                        ),
-                      ),
+                      borderRadius: BorderRadius.circular(12),
                       image: DecorationImage(
                         image: NetworkImage(
                           outlet.img,
@@ -115,21 +115,47 @@ class SlidingPanel extends StatelessWidget {
                   SizedBox(
                     height: 20,
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                      color: Color(0xff6C63FF),
-                    ),),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Text(
-                        "ADD TO BEAT",
-                        style: TextStyle(
+                  Row(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
                           color: Color(0xff6C63FF),
+                        ),),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Text(
+                            "ADD TO BEAT",
+                            style: TextStyle(
+                              color: Color(0xff6C63FF),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                      Expanded(child: Container()),
+                      GestureDetector(
+                        onTap: (){
+                          _panelController.close();
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                              color: BeatsColors.headingColor,
+                            ),),
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Text(
+                              "CLOSE",
+                              style: TextStyle(
+                                color: BeatsColors.headingColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                   // Row(
                   //   children: [

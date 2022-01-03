@@ -37,6 +37,7 @@ class _DistributorRegionState extends State<DistributorRegion> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    allRegions.clear();
 
     //value = List.generate(region.length, (index) => false);
   }
@@ -58,9 +59,7 @@ class _DistributorRegionState extends State<DistributorRegion> {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const Icon(
-                          Icons.arrow_back,
-                        ),
+                        
                         Expanded(child: Container()),
                         const Text(
                           "Select Distributor Region",
@@ -313,9 +312,7 @@ class _DistributorRegionState extends State<DistributorRegion> {
                 ],
               ),
             ),
-            SizedBox(
-              height: 12,
-            ),
+
             Padding(
               padding: const EdgeInsets.all(12.0),
               child: Container(

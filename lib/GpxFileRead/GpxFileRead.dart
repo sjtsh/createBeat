@@ -11,6 +11,7 @@ import 'package:nearestbeats/Backend/Entity/Beat.dart';
 import 'package:nearestbeats/Backend/Entity/Region.dart';
 import 'package:nearestbeats/Backend/Service/BeatService.dart';
 import 'package:nearestbeats/Backend/Service/OutletService.dart';
+import 'package:nearestbeats/Components/colors.dart';
 
 import 'package:nearestbeats/Header.dart';
 
@@ -37,16 +38,7 @@ class _GpxFileReadState extends State<GpxFileRead> {
   String currentExpanded = "";
   bool isDisabled = false;
   bool isTapped = false;
-
-  // expand(String currentExpanded) {
-  //   setState(() {
-  //     if (this.currentExpanded == currentExpanded) {
-  //       this.currentExpanded = "";
-  //     } else {
-  //       this.currentExpanded = currentExpanded;
-  //     }
-  //   });
-  // }
+  int fileLength = 0;
 
   setColor(int index, String color) {
     setState(() {
@@ -141,6 +133,8 @@ class _GpxFileReadState extends State<GpxFileRead> {
                                       files.add(element);
                                     }
                                   });
+
+                                  fileLength = files.length;
                                 }));
                       },
                       child: DottedBorder(
@@ -167,8 +161,8 @@ class _GpxFileReadState extends State<GpxFileRead> {
                   Padding(
                     padding: const EdgeInsets.only(
                         right: 12.0, left: 12.0, top: 12.0),
-                    child: const Text(
-                      "4 Files Uploaded",
+                    child:  Text(
+                      "${fileLength} Files Uploaded",
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w900,
@@ -210,44 +204,6 @@ class _GpxFileReadState extends State<GpxFileRead> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          GestureDetector(
-                                            onTap: () {
-                                              setState(() {
-                                                isTapped = !isTapped;
-                                              });
-                                            },
-                                            child: Container(
-                                              height: 38,
-                                              width: 38,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: isTapped
-                                                    ? Color(0xff6C63FF)
-                                                    : Colors.white,
-                                              ),
-                                              child: Icon(Icons.done,
-                                                  color: isTapped
-                                                      ? Colors.white
-                                                      : Colors.transparent,
-                                                  size: 24),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            width: 20,
-                                          ),
-                                          Expanded(
-                                            child: Text(
-                                              files[index].path.split("/").last,
-                                              overflow: TextOverflow.ellipsis,
-                                              textDirection: TextDirection.ltr,
-                                              textAlign: TextAlign.justify,
-                                              maxLines: 2,
-                                              style: TextStyle(fontSize: 12),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            width: 20,
-                                          ),
                                           InkWell(
                                             onTap: () {
                                               showDialog(
@@ -261,24 +217,41 @@ class _GpxFileReadState extends State<GpxFileRead> {
                                                   });
                                             },
                                             child: Container(
-                                              height: 20,
-                                              width: 20,
+                                              height: 38,
+                                              width: 38,
                                               decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
                                                 color: multiFileColor[index] ==
-                                                        "Red"
+                                                    "Red"
                                                     ? Colors.red
                                                     : multiFileColor[index] ==
-                                                            "Blue"
-                                                        ? Colors.blue
-                                                        : Colors.green,
+                                                    "Blue"
+                                                    ? Colors.blue
+                                                    : Colors.green,
                                               ),
                                             ),
                                           ),
+                                         SizedBox(width: 20,),
+                                          Expanded(
+                                            child: Text(
+                                              files[index].path.split("/").last,
+                                              overflow: TextOverflow.ellipsis,
+                                              textDirection: TextDirection.ltr,
+                                              textAlign: TextAlign.justify,
+                                              maxLines: 2,
+                                              style: TextStyle(fontSize: 12),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: 20,
+                                          ),
+
                                           IconButton(
                                             onPressed: () {
                                               files.removeAt(index);
-                                              setState(() {});
+                                              setState(() {
+                                                fileLength= files.length;
+                                              });
                                             },
                                             icon: Container(
                                               height: 20,
@@ -363,7 +336,7 @@ class _GpxFileReadState extends State<GpxFileRead> {
                         : multiFileColor[data.key] == "Blue"
                             ? Colors.blue
                             : Colors.green,
-                    width: 5),
+                    width: 2),
               );
               bools[data.key] = true;
               if (!bools.contains(false)) {
@@ -377,7 +350,7 @@ class _GpxFileReadState extends State<GpxFileRead> {
                     allOutlets.addAll(value);
                     bool1s[i] = true;
                     if (!bool1s.contains(false)) {
-                      print("Drop ${allOutlets.length}");
+                      print("Drop ${allOutlets[i].outletsName}");
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -428,49 +401,59 @@ class _MyDialogBoxState extends State<MyDialogBox> {
             ),
           ),
           child: SizedBox(
-            height: 200,
+            height: 220,
             width: 250,
             child: Column(
-              children: <String>["Red", "Blue", "Green"]
-                  .asMap()
-                  .entries
-                  .map((e) => InkWell(
-                        onTap: () {
-                          widget.setColor(widget.index, e.value);
-                          Navigator.pop(context);
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(e.value),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.blue),
-                                    shape: BoxShape.circle),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    height: 12,
-                                    width: 12,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.all(12.0),
+                  child: Align(alignment:Alignment.centerLeft,child: Text("Select Path Color", style: TextStyle(fontWeight: FontWeight.bold, color: BeatsColors.headingColor),)),
+                ),
+                Column(
+                  children: <String>["Red", "Blue", "Green"]
+                      .asMap()
+                      .entries
+                      .map((e) => InkWell(
+                            onTap: () {
+                              widget.setColor(widget.index, e.value);
+                              Navigator.pop(context);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(e.value),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  Container(
                                     decoration: BoxDecoration(
-                                      color: e == widget.colorSelected
-                                          ? Colors.blue
-                                          : Colors.white,
-                                      shape: BoxShape.circle,
+                                        border: Border.all(color:  e.value == "Red"
+                                            ? Colors.red
+                                            : e.value =="Blue" ? Colors.blue : Colors.green),
+                                        shape: BoxShape.circle),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        height: 12,
+                                        width: 12,
+                                        decoration: BoxDecoration(
+                                          color: e.value == "Red"
+                                              ? Colors.red
+                                              : e.value =="Blue" ? Colors.blue : Colors.green,
+                                          shape: BoxShape.circle,
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
-                      ))
-                  .toList(),
+                            ),
+                          ))
+                      .toList(),
+                ),
+              ],
             ),
           ),
         ),
