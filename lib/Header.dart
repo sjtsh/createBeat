@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:nearestbeats/Components/colors.dart';
 
 import 'Backend/Entity/OutletEntity.dart';
 import 'ConfirmationScreen/confirmationScreen.dart';
@@ -57,6 +58,8 @@ class _HeaderState extends State<Header> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(widget.contexts).size.width;
+    double mapRadius =widget.radius.ceilToDouble();
+    double areaRadius =widget.greenRadius.ceilToDouble();
 
 
     // return Column(
@@ -137,7 +140,7 @@ class _HeaderState extends State<Header> {
           width: width - 24,
           decoration: BoxDecoration(
               color: Colors.white,
-            borderRadius: !isExpanded? BorderRadius.circular(6):BorderRadius.only(topLeft:Radius.circular(6),topRight:Radius.circular(6),),
+            borderRadius: !isExpanded? BorderRadius.circular(16):BorderRadius.only(topLeft:Radius.circular(16),topRight:Radius.circular(16),),
             boxShadow:  [BoxShadow(
               offset: Offset(0,2),
               blurRadius: 3,
@@ -199,13 +202,13 @@ class _HeaderState extends State<Header> {
 
           return AnimatedContainer(
             width: width - 24,
-            height: isExpanded ? 170 : 0,
+            height: isExpanded ? 250 : 0,
 
             duration: Duration(milliseconds: 200),
               decoration:  BoxDecoration(
 
                   color: Colors.white,
-                  borderRadius: BorderRadius.only(bottomRight:Radius.circular(6),bottomLeft:Radius.circular(6),),
+                  borderRadius: BorderRadius.only(bottomRight:Radius.circular(16),bottomLeft:Radius.circular(16),),
                   boxShadow: [BoxShadow(
                       offset: Offset(0,2),
                       blurRadius: 3,
@@ -213,61 +216,95 @@ class _HeaderState extends State<Header> {
                   )]
               ),
             child: isExpanded2
-                ? Column(
+                ? Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Column(
               children: [
-            Slider(
-                  onChangeEnd: (double value) {
-                    widget.changeRadius(value * 2000);
-                  },
-                  value: widget.radius > 2000 ? 1 : (widget.radius / 2000),
-                  onChanged: (double value) {},
-                  divisions: 20,
-                  label: widget.radius.toString(),
-                  activeColor: Colors.red.withOpacity(0.5),
-                  thumbColor: Colors.red,
-                  inactiveColor: Colors.black.withOpacity(0.1),
-                ),
-              Slider(
-                onChangeEnd: (double value) {
-                  widget.changeGreenRadius(value * 200);
-                },
-                value: widget.greenRadius > 200 ? 1 : (widget.greenRadius / 200),
-                onChanged: (double value) {},
-                divisions: 20,
-                label: widget.greenRadius.toString(),
-                activeColor: Colors.green.withOpacity(0.5),
-                thumbColor: Colors.green,
-                inactiveColor: Colors.black.withOpacity(0.1),
+                  DropdownSearch<String>(
+
+                    showClearButton: false,
+                    mode: Mode.MENU,
+                    selectedItem: widget.polyline.polylineId.value,
+                    showSelectedItems: true,
+                    items: List.generate(
+                        widget.polylines.length,
+                            (index) =>
+                        widget.polylines.toList()[index].polylineId.value +
+                            "(${widget.multiFileColor[index].substring(0, 1).toUpperCase()})"),
+                    hint: "Select Distributor",
+                    dropdownSearchDecoration: InputDecoration(
+                        contentPadding: EdgeInsets.only(left: 8),
+
+                        border: InputBorder.none),
+                    showSearchBox: true,
+                    popupItemDisabled: (String s) => s.startsWith('I'),
+                    onChanged: (input) {
+                      widget.changePolyline(input?.substring(0, input.length - 3));
+
+                    },
+                  ),
+            Padding(
+              padding: const EdgeInsets.all(12),
+              child: Row(
+                  children: [
+                    Text("Map Radius", style:TextStyle(fontWeight: FontWeight.bold, color:BeatsColors.headingColor )),
+                    Expanded(child: Container()),
+                    Text("${mapRadius.toString()}m", style:TextStyle(fontWeight: FontWeight.bold, color:BeatsColors.headingColor )),
+                  ],
               ),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: DropdownSearch<String>(
-                  showClearButton: false,
-                  mode: Mode.MENU,
-                  selectedItem: widget.polyline.polylineId.value,
-                  showSelectedItems: true,
-                  items: List.generate(
-                      widget.polylines.length,
-                      (index) =>
-                          widget.polylines.toList()[index].polylineId.value +
-                          "(${widget.multiFileColor[index].substring(0, 1).toUpperCase()})"),
-                  hint: "Select Distributor",
-                  dropdownSearchDecoration: InputDecoration(
-                      contentPadding: EdgeInsets.only(left: 8),
-                      fillColor: Color(0xffA0C7F4).withOpacity(0.1),
-                      filled: true,
-                      border: InputBorder.none),
-                  showSearchBox: true,
-                  popupItemDisabled: (String s) => s.startsWith('I'),
-                  onChanged: (input) {
-                    widget.changePolyline(input?.substring(0, input.length - 3));
+            ),
+            Slider(
+
+                    onChangeEnd: (double value) {
+                      widget.changeRadius(value * 2000);
+                    },
+                    value: widget.radius > 2000 ? 1 : (widget.radius / 2000),
+                    onChanged: (double value) {
+                      WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+                        setState(() {
+                          mapRadius = value;
+                        });
+                      });
+                    },
+                    label: widget.radius.toString(),
+                    activeColor: BeatsColors.inputBgColor,
+                    thumbColor: BeatsColors.checkColor,
+                    inactiveColor: BeatsColors.inputBgColor,
+
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Row(
+                      children: [
+                        Text("Area Radius", style:TextStyle(fontWeight: FontWeight.bold, color:BeatsColors.headingColor )),
+                        Expanded(child: Container()),
+                        Text("${areaRadius.toString()}m", style:TextStyle(fontWeight: FontWeight.bold, color:BeatsColors.headingColor )),
+                      ],
+                    ),
+                  ),
+              Slider(
+                  onChangeEnd: (double value) {
+                    widget.changeGreenRadius(value * 200);
+                  },
+                  value: widget.greenRadius > 200 ? 1 : (widget.greenRadius / 200),
+                  onChanged: (double value) {
+                    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+                      setState(() {
+                        areaRadius = value;
+                      });
+                    });
 
                   },
-                ),
-          ),
+                  label: widget.greenRadius.toString(),
+                  activeColor: BeatsColors.inputBgColor,
+                  thumbColor: BeatsColors.checkColor,
+                  inactiveColor: BeatsColors.inputBgColor,
+              ),
+
 
               ],
-            ): Container(),
+            ),
+                ): Container(),
           );
         }),
       ],
