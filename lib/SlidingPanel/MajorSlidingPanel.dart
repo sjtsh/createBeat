@@ -198,19 +198,17 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
           const SizedBox(
             width: 50,
           ),
-          Expanded(
-            child: GoogleMapsPersonal(
-                _panelController,
-                markers,
-                widget._onMapCreated,
-                widget.polylines,
-                widget.isHeader,
-                widget.setHeader,
-                widget.distributorName,
-                widget.beatName,
-                setMarkerRed,
-                changeRadius),
-          ),
+          GoogleMapsPersonal(
+              _panelController,
+              markers,
+              widget._onMapCreated,
+              widget.polylines,
+              widget.isHeader,
+              widget.setHeader,
+              widget.distributorName,
+              widget.beatName,
+              setMarkerRed,
+              changeRadius),
           Positioned(
               top: 12,
 

@@ -220,7 +220,7 @@ class _DistributorState extends State<Distributor> {
                   onPressed: () {
 
                     if(dropdownValue != "Unselected") {
-                      print(dropdownValue);
+
                       Navigator.of(context)
                           .push(MaterialPageRoute(builder: (context) {
                         return GpxFileRead(dropdownValue);

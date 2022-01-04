@@ -44,7 +44,6 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
     List<Outlet?> toListOutlets =
         List.generate(outletsForBeat.toSet().length, (index) {
       for (var element in allOutlets) {
-        print("how not aako $element");
         if (element.id == outletsForBeat[index]) {
           return element;
         }
@@ -334,7 +333,7 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                             List<bool> bool1s = List.generate(
                                 allRegions.length, (index) => false);
                             for (int i = 0; i < allRegions.length; i++) {
-                              print(allRegions[i]);
+
                               OutletService()
                                   .fetchOutlet(context, allRegions[i])
                                   .then((value) {

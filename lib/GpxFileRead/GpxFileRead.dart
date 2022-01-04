@@ -325,7 +325,6 @@ class _GpxFileReadState extends State<GpxFileRead> {
 
   /// reading data from file picked
   getFileData(List<File> datas, List<String> multiFileColor, context) async {
-    print(datas);
     List<bool> bools = List.generate(datas.length, (index) => false);
     Set<Polyline> polylines = {};
     allOutlets = [];
@@ -350,7 +349,7 @@ class _GpxFileReadState extends State<GpxFileRead> {
                 List<bool> bool1s =
                     List.generate(allRegions.length, (index) => false);
                 for (int i = 0; i < allRegions.length; i++) {
-                  print(allRegions[i]);
+
                   OutletService()
                       .fetchOutlet(context, allRegions[i])
                       .then((value) {

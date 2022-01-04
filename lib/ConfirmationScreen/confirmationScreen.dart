@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nearestbeats/Backend/Entity/OutletEntity.dart';
 import 'package:nearestbeats/Backend/Service/OutletService.dart';
@@ -31,7 +32,6 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
   final _formKey = GlobalKey<FormState>();
   bool isDisabled = false;
 
-
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -41,29 +41,15 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<Outlet?> toListOutlets = List.generate(outletsForBeat.toSet().length, (index) {
+    print("building on coonfirmation screen");
+    List<Outlet?> toListOutlets =
+        List.generate(outletsForBeat.toSet().length, (index) {
       for (var element in allOutlets) {
-        print("confirmation ma $allOutlets");
         if (element.id == outletsForBeat[index]) {
           return element;
         }
       }
     }).toSet().toList();
-
-    List<String> listo = [
-      "one",
-      "two",
-      "three",
-      "four",
-      "five",
-      "six",
-      "seven",
-      "eight",
-      "nine",
-      "ten",
-      "twelve",
-      "thirteen"
-    ];
 
     return SafeArea(
         child: Scaffold(
@@ -73,9 +59,8 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
           children: [
             Expanded(
               child: ListView.builder(
-                itemCount: 10,
+                itemCount: toListOutlets.length,
                 itemBuilder: (context, index) {
-                  print("456 $toListOutlets");
                   if (index == 0) {
                     return Column(
                       children: [
@@ -214,7 +199,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                               ),
                               Expanded(child: Container()),
                               Text(
-                                "3 Selected",
+                                "${toListOutlets.length} Selected",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: BeatsColors.headingColor),
@@ -222,122 +207,6 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                             ],
                           ),
                         ),
-                        // Padding(
-                        //   padding: const EdgeInsets.only(
-                        //       left: 12, right: 12, bottom: 8),
-                        //   child: Container(
-                        //     height: 100,
-                        //     decoration: BoxDecoration(
-                        //         color: Colors.white,
-                        //         borderRadius: BorderRadius.circular(6),
-                        //         boxShadow: [
-                        //           BoxShadow(
-                        //               offset: Offset(0, 2),
-                        //               blurRadius: 3,
-                        //               color: BeatsColors.greyColor)
-                        //         ]),
-                        //     child: Row(
-                        //       children: [
-                        //         Image.asset("assets/activation.png"),
-                        //         Expanded(child: Container()),
-                        //         Padding(
-                        //           padding: const EdgeInsets.all(12.0),
-                        //           child: Column(
-                        //             crossAxisAlignment: CrossAxisAlignment.start,
-                        //             children: [
-                        //               Text(
-                        //                 "Kulekhani Cold Store $index",
-                        //                 style: TextStyle(
-                        //                     fontWeight: FontWeight.bold,
-                        //                     color: BeatsColors.headingColor),
-                        //               ),
-                        //               SizedBox(
-                        //                 height: 3,
-                        //               ),
-                        //               Text(
-                        //                 "984321237$index",
-                        //                 style: TextStyle(
-                        //                     color: BeatsColors.headingColor),
-                        //               ),
-                        //               SizedBox(
-                        //                 height: 8,
-                        //               ),
-                        //               Container(
-                        //                 width: 110,
-                        //                 height: 26,
-                        //                 clipBehavior: Clip.hardEdge,
-                        //                 decoration: BoxDecoration(
-                        //                   borderRadius: BorderRadius.circular(12),
-                        //                 ),
-                        //                 child: Material(
-                        //                   color: Colors.white,
-                        //                   child: Container(
-                        //                     decoration: BoxDecoration(
-                        //                       borderRadius:
-                        //                           BorderRadius.circular(12),
-                        //                       border: Border.all(
-                        //                           color: BeatsColors.checkColor),
-                        //                     ),
-                        //                     child: InkWell(
-                        //                       onTap: () {
-                        //                         // if (e != null) {
-                        //                         //   launch(
-                        //                         //       'https://www.google.com/maps/search/?api=1&query=${e.lat},${e.lng}');
-                        //                         // }
-                        //                       },
-                        //                       child: Container(
-                        //                         margin: EdgeInsets.only(
-                        //                             top: 3,
-                        //                             bottom: 3,
-                        //                             right: 8,
-                        //                             left: 8),
-                        //                         child:
-                        //                             Builder(builder: (context) {
-                        //                           return Center(
-                        //                             child: Text(
-                        //                               "VIEW ON MAPS",
-                        //                               style: TextStyle(
-                        //                                   color: BeatsColors
-                        //                                       .checkColor,
-                        //                                   fontSize: 12),
-                        //                             ),
-                        //                           );
-                        //                         }),
-                        //                       ),
-                        //                     ),
-                        //                   ),
-                        //                 ),
-                        //               ),
-                        //             ],
-                        //           ),
-                        //         ),
-                        //         Expanded(child: Container()),
-                        //         Padding(
-                        //           padding: const EdgeInsets.only(right: 16),
-                        //           child: Container(
-                        //             decoration: const BoxDecoration(
-                        //               shape: BoxShape.circle,
-                        //               color: BeatsColors.closeColor,
-                        //             ),
-                        //             child: Padding(
-                        //               padding: const EdgeInsets.all(2.0),
-                        //               child: GestureDetector(
-                        //                 onTap: () {
-                        //                   /// on tap funtion
-                        //                 },
-                        //                 child: Icon(
-                        //                   Icons.close,
-                        //                   color: Colors.white,
-                        //                   size: 14,
-                        //                 ),
-                        //               ),
-                        //             ),
-                        //           ),
-                        //         )
-                        //       ],
-                        //     ),
-                        //   ),
-                        // ),
                       ],
                     );
                   }
@@ -358,16 +227,33 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                           ]),
                       child: Row(
                         children: [
-                          Image.asset("assets/activation.png"),
-                          Expanded(child: Container()),
+                          Image.network(
+                            (toListOutlets[index]?.img) ?? "",
+                            errorBuilder: (BuildContext context,
+                                Object exception,
+                                StackTrace? stackTrace) {
+                              return Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text("Couldn't load" ),
+                              ),
+                                );
+                            },
+                            fit: BoxFit.cover,
+                            width: 120,
+
+                          ),
+
                           Padding(
                             padding: const EdgeInsets.all(12.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  // allOutlets[index-1]!.outletsName,
-                                  "${listo[index - 1]}  under construction",
+
+                                  toListOutlets[index - 1]!.outletsName,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: BeatsColors.headingColor),
@@ -376,8 +262,9 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                                   height: 3,
                                 ),
                                 Text(
-                                  //(allOutlets[index-1]!.ownersNumber.toString()),
-                                  "984321237$index",
+                                  (toListOutlets[index - 1]!
+                                      .ownersNumber
+                                      .toString()),
                                   style: const TextStyle(
                                       color: BeatsColors.headingColor),
                                 ),
@@ -401,10 +288,10 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                                       ),
                                       child: InkWell(
                                         onTap: () {
-                                          // if (e != null) {
-                                          //   launch(
-                                          //       'https://www.google.com/maps/search/?api=1&query=${e.lat},${e.lng}');
-                                          // }
+                                          if (toListOutlets[index] != null) {
+                                            launch(
+                                                'https://www.google.com/maps/search/?api=1&query=${toListOutlets[index]?.lat},${toListOutlets[index]?.lng}');
+                                          }
                                         },
                                         child: Container(
                                           margin: const EdgeInsets.only(
@@ -443,17 +330,9 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                                 padding: const EdgeInsets.all(2.0),
                                 child: GestureDetector(
                                   onTap: () {
-                                    setState(() { /// REMAINING ---------------------------------------------------------------
-                                      // outletsForBeat.remove(e?.id);
-                                      //  widget.setMarkerRed((e?.id) ?? 0);
-                                      print("k vako hola confirm");
-                                      print(toListOutlets);
-                                      for (int i = 0;
-                                          i < allOutlets.length;
-                                          i++) {
-                                        print(
-                                            "confirm ${allOutlets[i].outletsName}");
-                                      }
+                                    setState(() {
+                                      outletsForBeat.remove(toListOutlets[index]?.id);
+                                       widget.setMarkerRed((toListOutlets[index]?.id) ?? 0);
                                     });
                                   },
                                   child: const Icon(
@@ -488,13 +367,12 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                       };
                     }
                     OutletService().updateOutlet(context, aBody).then(
-                          (value) {
+                      (value) {
                         allOutlets = [];
                         outletsForBeat = [];
-                        List<bool> bool1s = List.generate(
-                            allRegions.length, (index) => false);
+                        List<bool> bool1s =
+                            List.generate(allRegions.length, (index) => false);
                         for (int i = 0; i < allRegions.length; i++) {
-                          print(allRegions[i]);
                           OutletService()
                               .fetchOutlet(context, allRegions[i])
                               .then((value) {

@@ -8,7 +8,6 @@ List<Marker> loadMarkerOutlets(double radius, double greenRadius,
     Function changeOutlet, Polyline polylineSelected) {
   outletsForBeat = [];
   List<Marker> markers = [];
-  print(allOutlets);
   for (int i = 0; i < allOutlets.length; i++) {
     bool radiiNear = false;
     for (var element in polylineSelected.points) {
@@ -95,6 +94,5 @@ List<Marker> loadMarkerOutlets(double radius, double greenRadius,
       }
     }
   }
-  print("marker in hell ${markers} ${allOutlets[0].lat} ");
   return markers;
 }

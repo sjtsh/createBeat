@@ -36,7 +36,6 @@ class _FutureDistributorRegionState extends State<FutureDistributorRegion> {
                   myRegions.add(element.region);
                 }
               });
-              print(myRegions);
               return DistributorRegion(myRegions, beats, refresh);
             }
             return Center(

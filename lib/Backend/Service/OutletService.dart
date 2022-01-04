@@ -52,7 +52,7 @@ class OutletService {
 
   Future<bool> updateOutlet(
       context, Map<String, Map<String, String>> aBody) async {
-    print(aBody);
+
     final response = await http.post(
       Uri.parse(
           "https://asia-south1-hilifedb.cloudfunctions.net/updateUnManagedOutlet"),
@@ -62,7 +62,6 @@ class OutletService {
       body: jsonEncode(aBody),
     );
     if (response.statusCode == 200) {
-      print(response.body);
       return true;
     } else {
       throw Exception("failed to load post, status code error");
