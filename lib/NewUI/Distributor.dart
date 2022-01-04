@@ -219,12 +219,18 @@ class _DistributorState extends State<Distributor> {
                 child: MaterialButton(
                   onPressed: () {
 
+                    if(dropdownValue != "Unselected") {
+                      print(dropdownValue);
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) {
+                        return GpxFileRead(dropdownValue);
+                      }));
+                    }else {
 
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) {
-                      return GpxFileRead(dropdownValue);
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Please select Distributors"),duration: Duration(seconds: 1)),);
 
-                    }));
+                    }
+
                   },
                   child: Center(
                     child: Text(

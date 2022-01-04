@@ -140,9 +140,9 @@ class _HeaderState extends State<Header> {
           width: width - 24,
           decoration: BoxDecoration(
               color: Colors.white,
-            borderRadius: !isExpanded? BorderRadius.circular(16):BorderRadius.only(topLeft:Radius.circular(16),topRight:Radius.circular(16),),
+            borderRadius: !isExpanded? BorderRadius.circular(16):const BorderRadius.only(topLeft:Radius.circular(16),topRight:Radius.circular(16),),
             boxShadow:  [BoxShadow(
-              offset: Offset(0,2),
+              offset: const Offset(0,2),
               blurRadius: 3,
               color: Colors.black.withOpacity(0.1)
             )]
@@ -161,7 +161,7 @@ class _HeaderState extends State<Header> {
                           if(!isExpanded2){
                             // when decreasing
                             Future.delayed(
-                                Duration(milliseconds: 200))
+                                const Duration(milliseconds: 200))
                                 .then((value) {
                               setState(() {
 
@@ -178,7 +178,7 @@ class _HeaderState extends State<Header> {
                           ? Icon(Icons.close)
                           : Icon(Icons.line_weight_sharp)),
                   Expanded(child: Container()),
-                  Text("1 outlet selected", style: TextStyle(fontWeight: FontWeight.bold, color: BeatsColors.headingColor),),
+                  Text("${outletsForBeat.length} outlets", style: TextStyle(fontWeight: FontWeight.bold, color: BeatsColors.headingColor),),
                   Expanded(child: Container()),
                   IconButton(
                       onPressed: () {
@@ -186,7 +186,7 @@ class _HeaderState extends State<Header> {
                           MaterialPageRoute(
                             builder: (_) {
 
-                              return ConfirmationScreen(widget.distributorName, widget.beatName, widget.setMarkerRed);
+                              return ConfirmationScreen(widget.distributorName, widget.beatName, widget.setMarkerRed,widget.changeRadius);
 
                             },
                           ),

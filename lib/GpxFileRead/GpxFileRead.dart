@@ -294,10 +294,17 @@ class _GpxFileReadState extends State<GpxFileRead> {
                           borderRadius: BorderRadius.circular(6)),
                       child: MaterialButton(
                         onPressed: () {
-                          getFileData(files, multiFileColor, context);
+                          if(fileLength!=0) {
+                            setState(() {
+                              isTapped =true;
+                            });
+                            getFileData(files, multiFileColor, context);
+                          }else{
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Please add file to continue"),duration: Duration(seconds: 1),));
+                          }
                         },
                         child: Center(
-                          child: Text(
+                          child:isTapped? const CircularProgressIndicator(): const Text(
                             "UPLOAD ROUTES",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -350,7 +357,6 @@ class _GpxFileReadState extends State<GpxFileRead> {
                     allOutlets.addAll(value);
                     bool1s[i] = true;
                     if (!bool1s.contains(false)) {
-                      print("Drop ${allOutlets[i].outletsName}");
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -366,6 +372,7 @@ class _GpxFileReadState extends State<GpxFileRead> {
                       );
                       setState(() {
                         isDisabled = false;
+                        isTapped =false;
                       });
                     }
                   });

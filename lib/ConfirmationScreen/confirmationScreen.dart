@@ -10,8 +10,14 @@ class ConfirmationScreen extends StatefulWidget {
   final String distributorName;
   final String beatName;
   final Function setMarkerRed;
+  final Function changeRadius;
 
-  ConfirmationScreen(this.distributorName, this.beatName, this.setMarkerRed);
+  ConfirmationScreen(
+    this.distributorName,
+    this.beatName,
+    this.setMarkerRed,
+    this.changeRadius,
+  );
 
   @override
   _ConfirmationScreenState createState() => _ConfirmationScreenState();
@@ -22,19 +28,20 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
 
   TextEditingController distributor = TextEditingController();
 
-
   final _formKey = GlobalKey<FormState>();
   bool isDisabled = false;
-  List<Outlet?> toListOutlets= [];
+
 
   void initState() {
     // TODO: implement initState
     super.initState();
     beat.text = widget.beatName;
     distributor.text = widget.distributorName;
+  }
 
- toListOutlets =
-    List.generate(outletsForBeat.toSet().length, (index) {
+  @override
+  Widget build(BuildContext context) {
+    List<Outlet?> toListOutlets = List.generate(outletsForBeat.toSet().length, (index) {
       for (var element in allOutlets) {
         print("confirmation ma $allOutlets");
         if (element.id == outletsForBeat[index]) {
@@ -42,22 +49,21 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
         }
       }
     }).toSet().toList();
-  }
 
-
-  @override
-  Widget build(BuildContext context) {
-
-
-
-
-
-
-    List<String> listo = ["one", "two","three", "four","five", "six","seven", "eight","nine", "ten","twelve", "thirteen"];
-
-
-
-
+    List<String> listo = [
+      "one",
+      "two",
+      "three",
+      "four",
+      "five",
+      "six",
+      "seven",
+      "eight",
+      "nine",
+      "ten",
+      "twelve",
+      "thirteen"
+    ];
 
     return SafeArea(
         child: Scaffold(
@@ -113,8 +119,8 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                               TextFormField(
                                 controller: distributor,
                                 enableSuggestions: true,
-                                validator: (dis){
-                                  if(dis==null|| dis.isEmpty){
+                                validator: (dis) {
+                                  if (dis == null || dis.isEmpty) {
                                     return "Please enter Distributor name";
                                   }
                                 },
@@ -160,7 +166,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                               TextFormField(
                                 controller: beat,
                                 validator: (beat) {
-                                  if (beat == null || beat.isEmpty){
+                                  if (beat == null || beat.isEmpty) {
                                     return "Please enter beat name";
                                   }
                                 },
@@ -360,20 +366,20 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                 // allOutlets[index-1]!.outletsName,
-                                  listo[index],
-                                  style: TextStyle(
+                                  // allOutlets[index-1]!.outletsName,
+                                  "${listo[index - 1]}  under construction",
+                                  style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: BeatsColors.headingColor),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 3,
                                 ),
                                 Text(
                                   //(allOutlets[index-1]!.ownersNumber.toString()),
                                   "984321237$index",
-                                  style:
-                                      TextStyle(color: BeatsColors.headingColor),
+                                  style: const TextStyle(
+                                      color: BeatsColors.headingColor),
                                 ),
                                 const SizedBox(
                                   height: 8,
@@ -401,17 +407,18 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                                           // }
                                         },
                                         child: Container(
-                                          margin: EdgeInsets.only(
+                                          margin: const EdgeInsets.only(
                                               top: 3,
                                               bottom: 3,
                                               right: 8,
                                               left: 8),
                                           child: Builder(builder: (context) {
-                                            return Center(
+                                            return const Center(
                                               child: Text(
                                                 "VIEW ON MAPS",
                                                 style: TextStyle(
-                                                    color: BeatsColors.checkColor,
+                                                    color:
+                                                        BeatsColors.checkColor,
                                                     fontSize: 12),
                                               ),
                                             );
@@ -436,17 +443,20 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                                 padding: const EdgeInsets.all(2.0),
                                 child: GestureDetector(
                                   onTap: () {
-                                    setState(() {
-                                         // outletsForBeat.remove(e?.id);
-                                         //  widget.setMarkerRed((e?.id) ?? 0);
+                                    setState(() { /// REMAINING ---------------------------------------------------------------
+                                      // outletsForBeat.remove(e?.id);
+                                      //  widget.setMarkerRed((e?.id) ?? 0);
                                       print("k vako hola confirm");
                                       print(toListOutlets);
-                                      for (int i =0; i<allOutlets.length; i++){
-                                        print ("confirm ${allOutlets[i].outletsName}");
+                                      for (int i = 0;
+                                          i < allOutlets.length;
+                                          i++) {
+                                        print(
+                                            "confirm ${allOutlets[i].outletsName}");
                                       }
-                                        });                                     },
-
-                                  child: Icon(
+                                    });
+                                  },
+                                  child: const Icon(
                                     Icons.close,
                                     color: Colors.white,
                                     size: 14,
@@ -477,20 +487,30 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                         "distributor": distributor.text,
                       };
                     }
-                    OutletService()
-                        .updateOutlet(context, aBody)
-                        .then((value) {
-                      setState(() {
-                        isDisabled = false;
-                        outletsForBeat = [];
-                        allRegions = [];
+                    OutletService().updateOutlet(context, aBody).then(
+                          (value) {
                         allOutlets = [];
-                        // Navigator.push(context,
-                        //     MaterialPageRoute(builder: (_) {
-                        //       return GpxFileRead();
-                        //     }));
-                      });
-                    });
+                        outletsForBeat = [];
+                        List<bool> bool1s = List.generate(
+                            allRegions.length, (index) => false);
+                        for (int i = 0; i < allRegions.length; i++) {
+                          print(allRegions[i]);
+                          OutletService()
+                              .fetchOutlet(context, allRegions[i])
+                              .then((value) {
+                            allOutlets.addAll(value);
+                            bool1s[i] = true;
+                            if (!bool1s.contains(false)) {
+                              widget.changeRadius(1000.0);
+                              setState(() {
+                                isDisabled = false;
+                              });
+                              Navigator.pop(context);
+                            }
+                          });
+                        }
+                      },
+                    );
                   }
                 }
               },
@@ -501,11 +521,14 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                     color: BeatsColors.checkColor,
                     borderRadius: BorderRadius.circular(12)),
                 child: Center(
-                    child: isDisabled ? CircularProgressIndicator():Text(
-                  "UPDATE NEW BEAT",
-                  style:
-                      TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-                )),
+                    child: isDisabled
+                        ? CircularProgressIndicator()
+                        : Text(
+                            "UPDATE NEW BEAT",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          )),
               ),
             ),
             SizedBox(

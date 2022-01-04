@@ -37,7 +37,9 @@ class SlidingPanel extends StatelessWidget {
         child: Column(
           children: [
             Row(
+
               children: [
+                Expanded(child: Container()),
                 Container(
                   height: 4,
                   width: 70,
@@ -45,6 +47,17 @@ class SlidingPanel extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.black.withOpacity(0.1)),
                 ),
+                Expanded(child: Container()),
+                Container(
+                  decoration: const BoxDecoration(shape: BoxShape.circle,
+                    color: BeatsColors.headingColor,),
+
+                  child: Padding(
+                    padding: const EdgeInsets.all(3.0),
+                    child: Icon(Icons.close, color: Colors.white,
+                    size: 14,),
+                  ),
+                )
 
               ],
             ),

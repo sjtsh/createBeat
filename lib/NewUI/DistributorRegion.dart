@@ -323,11 +323,14 @@ class _DistributorRegionState extends State<DistributorRegion> {
                     borderRadius: BorderRadius.circular(6)),
                 child: MaterialButton(
                   onPressed: () {
-                    print(allRegions);
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) {
-                      return Distributor(widget.beats);
-                    }));
+                   if(allRegions.isNotEmpty) {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) {
+                        return Distributor(widget.beats);
+                      }));
+                    }else {
+                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: ( Text("Please Select Distributor Region")),duration: Duration(seconds: 1)));
+                   }
                   },
                   child: const Center(
                       child: Text(

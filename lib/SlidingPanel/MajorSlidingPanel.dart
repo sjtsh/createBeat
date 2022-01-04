@@ -155,7 +155,7 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
     return SlidingUpPanel(
       controller: _panelController,
       maxHeight: 350,
-      minHeight: 0,
+      minHeight: 20,
       isDraggable: false,
       panelSnapping: true,
       parallaxEnabled: true,
@@ -212,7 +212,7 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
                 changeRadius),
           ),
           Positioned(
-              top: 30,
+              top: 12,
 
               child: Header(
                 radius,
