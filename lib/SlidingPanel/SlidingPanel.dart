@@ -37,7 +37,6 @@ class SlidingPanel extends StatelessWidget {
         child: Column(
           children: [
             Row(
-
               children: [
                 Expanded(child: Container()),
                 Container(
@@ -48,218 +47,198 @@ class SlidingPanel extends StatelessWidget {
                       color: Colors.black.withOpacity(0.1)),
                 ),
                 Expanded(child: Container()),
-                Container(
-                  decoration: const BoxDecoration(shape: BoxShape.circle,
-                    color: BeatsColors.headingColor,),
-
-                  child: Padding(
-                    padding: const EdgeInsets.all(3.0),
-                    child: Icon(Icons.close, color: Colors.white,
-                    size: 14,),
+                GestureDetector(
+                  onTap: (){
+                    _panelController.close();
+                  },
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: BeatsColors.headingColor,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(3.0),
+                      child: Icon(
+                        Icons.close,
+                        color: Colors.white,
+                        size: 12,
+                      ),
+                    ),
                   ),
-                )
-
+                ),
               ],
             ),
             SizedBox(
               height: 16,
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    height: 100,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      image: DecorationImage(
-                        image: NetworkImage(
-                          outlet.img,
-                        ),
-                        fit: BoxFit.cover,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  height: 125,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    image: DecorationImage(
+                      image: NetworkImage(
+                        outlet.img,
+                      ),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                Text(
+                  outlet.outletsName,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w900,
+                    color: BeatsColors.headingColor,
+                  ),
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                Row(
+                  children: [
+                    Image.asset(
+                      "assets/img.png",
+                      width: 19,
+                      height: 19,
+                    ),
+                    SizedBox(
+                      width: 12,
+                    ),
+                    Text(outlet.beatsName),
+                  ],
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                Row(
+                  children: [
+                    Image.asset(
+                      "assets/img_1.png",
+                      width: 19,
+                      height: 19,
+                    ),
+                    SizedBox(
+                      width: 12,
+                    ),
+                    Text(outlet.distributor),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: Color(0xff6C63FF),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text(
+                      "ADD TO BEAT",
+                      style: TextStyle(
+                        color: Color(0xff6C63FF),
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  Text(
-                    outlet.beatsName,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w900,
-                      color: BeatsColors.headingColor,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  Row(
-                    children: [
-                      Image.asset(
-                        "assets/img.png",
-                        width: 19,
-                        height: 19,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(outlet.outletsName),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  Row(
-                    children: [
-                      Image.asset(
-                        "assets/img_1.png",
-                        width: 19,
-                        height: 19,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(outlet.distributor),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                            border: Border.all(
-                          color: Color(0xff6C63FF),
-                        ),),
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Text(
-                            "ADD TO BEAT",
-                            style: TextStyle(
-                              color: Color(0xff6C63FF),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(child: Container()),
-                      GestureDetector(
-                        onTap: (){
-                          _panelController.close();
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(
-                              color: BeatsColors.headingColor,
-                            ),),
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Text(
-                              "CLOSE",
-                              style: TextStyle(
-                                color: BeatsColors.headingColor,
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  // Row(
-                  //   children: [
-                  //     Expanded(
-                  //       child: outletsForBeat.contains(outlet.id)
-                  //           ? Padding(
-                  //               padding: const EdgeInsets.all(8.0),
-                  //               child: Container(
-                  //                 clipBehavior: Clip.hardEdge,
-                  //                 decoration: BoxDecoration(
-                  //                   borderRadius: BorderRadius.circular(12),
-                  //                 ),
-                  //                 child: Material(
-                  //                   color: Colors.red,
-                  //                   child: InkWell(
-                  //                     onTap: () {
-                  //                       setMarkerRed(outlet.id);
-                  //                     },
-                  //                     child: Container(
-                  //                       height: 60,
-                  //                       child: Center(
-                  //                         child: Text(
-                  //                           "Remove from Beat",
-                  //                           style: TextStyle(
-                  //                               color: Colors.white,
-                  //                               fontSize: 14),
-                  //                         ),
-                  //                       ),
-                  //                     ),
-                  //                   ),
-                  //                 ),
-                  //               ),
-                  //             )
-                  //           : Padding(
-                  //               padding: const EdgeInsets.all(8.0),
-                  //               child: Container(
-                  //                 clipBehavior: Clip.hardEdge,
-                  //                 decoration: BoxDecoration(
-                  //                   borderRadius: BorderRadius.circular(12),
-                  //                 ),
-                  //                 child: Material(
-                  //                   color: Colors.green,
-                  //                   child: InkWell(
-                  //                     onTap: () {
-                  //                       setMarkerGreen(outlet.id);
-                  //                     },
-                  //                     child: Container(
-                  //                       height: 60,
-                  //                       width: double.infinity,
-                  //                       child: Center(
-                  //                         child: Text(
-                  //                           "Add to Beat",
-                  //                           style: TextStyle(
-                  //                               color: Colors.white,
-                  //                               fontSize: 14),
-                  //                         ),
-                  //                       ),
-                  //                     ),
-                  //                   ),
-                  //                 ),
-                  //               ),
-                  //             ),
-                  //     ),
-                  //     Expanded(
-                  //       child: InkWell(
-                  //         onTap: () {
-                  //           _panelController.close();
-                  //         },
-                  //         child: Padding(
-                  //           padding: const EdgeInsets.all(8.0),
-                  //           child: Container(
-                  //             height: 60,
-                  //             decoration: BoxDecoration(
-                  //               color: Colors.blueGrey,
-                  //               borderRadius: BorderRadius.circular(12),
-                  //             ),
-                  //             child: Center(
-                  //               child: Text(
-                  //                 "Close",
-                  //                 style: TextStyle(
-                  //                     fontSize: 20, color: Colors.white),
-                  //               ),
-                  //             ),
-                  //           ),
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ],
-                  // )
-                ],
-              ),
+                ),
+                // Row(
+                //   children: [
+                //     Expanded(
+                //       child: outletsForBeat.contains(outlet.id)
+                //           ? Padding(
+                //               padding: const EdgeInsets.all(8.0),
+                //               child: Container(
+                //                 clipBehavior: Clip.hardEdge,
+                //                 decoration: BoxDecoration(
+                //                   borderRadius: BorderRadius.circular(12),
+                //                 ),
+                //                 child: Material(
+                //                   color: Colors.red,
+                //                   child: InkWell(
+                //                     onTap: () {
+                //                       setMarkerRed(outlet.id);
+                //                     },
+                //                     child: Container(
+                //                       height: 60,
+                //                       child: Center(
+                //                         child: Text(
+                //                           "Remove from Beat",
+                //                           style: TextStyle(
+                //                               color: Colors.white,
+                //                               fontSize: 14),
+                //                         ),
+                //                       ),
+                //                     ),
+                //                   ),
+                //                 ),
+                //               ),
+                //             )
+                //           : Padding(
+                //               padding: const EdgeInsets.all(8.0),
+                //               child: Container(
+                //                 clipBehavior: Clip.hardEdge,
+                //                 decoration: BoxDecoration(
+                //                   borderRadius: BorderRadius.circular(12),
+                //                 ),
+                //                 child: Material(
+                //                   color: Colors.green,
+                //                   child: InkWell(
+                //                     onTap: () {
+                //                       setMarkerGreen(outlet.id);
+                //                     },
+                //                     child: Container(
+                //                       height: 60,
+                //                       width: double.infinity,
+                //                       child: Center(
+                //                         child: Text(
+                //                           "Add to Beat",
+                //                           style: TextStyle(
+                //                               color: Colors.white,
+                //                               fontSize: 14),
+                //                         ),
+                //                       ),
+                //                     ),
+                //                   ),
+                //                 ),
+                //               ),
+                //             ),
+                //     ),
+                //     Expanded(
+                //       child: InkWell(
+                //         onTap: () {
+                //           _panelController.close();
+                //         },
+                //         child: Padding(
+                //           padding: const EdgeInsets.all(8.0),
+                //           child: Container(
+                //             height: 60,
+                //             decoration: BoxDecoration(
+                //               color: Colors.blueGrey,
+                //               borderRadius: BorderRadius.circular(12),
+                //             ),
+                //             child: Center(
+                //               child: Text(
+                //                 "Close",
+                //                 style: TextStyle(
+                //                     fontSize: 20, color: Colors.white),
+                //               ),
+                //             ),
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //   ],
+                // )
+              ],
             ),
           ],
         ),

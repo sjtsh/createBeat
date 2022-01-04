@@ -304,7 +304,7 @@ class _GpxFileReadState extends State<GpxFileRead> {
                           }
                         },
                         child: Center(
-                          child:isTapped? const CircularProgressIndicator(): const Text(
+                          child:isTapped? const CircularProgressIndicator(color: Colors.white,): const Text(
                             "UPLOAD ROUTES",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
