@@ -112,6 +112,7 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
     setState(
       () {
         outlet = newOutlet;
+       // isPanelOpen =!isPanelOpen;
       },
     );
     _panelController.open();
@@ -195,7 +196,9 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
           widget.polyline,
           _panelController,
           setMarkerRed,
-          setMarkerGreen),
+          setMarkerGreen,
+          isPanelOpen
+      ),
       body: Stack(
         alignment: Alignment.center,
         children: [
