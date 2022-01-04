@@ -55,6 +55,10 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
   final PanelController _panelController = PanelController();
   Outlet? outlet;
 
+  /// for panel
+
+  bool isPanelOpen= false;
+
   setMarkerGreen(markerID) {
     for (int i = 0; i < markers.length; i++) {
       if (markers[i].markerId == MarkerId(markerID.toString())) {
@@ -155,8 +159,8 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
     return SlidingUpPanel(
       controller: _panelController,
       maxHeight: 350,
-      minHeight: 20,
-      isDraggable: false,
+      minHeight: 35,
+      isDraggable:false,
       panelSnapping: true,
       parallaxEnabled: true,
       color: Colors.transparent,
