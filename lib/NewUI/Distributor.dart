@@ -3,7 +3,6 @@ import 'package:nearestbeats/Backend/Entity/Beat.dart';
 import 'package:nearestbeats/Backend/Service/BeatService.dart';
 import 'package:nearestbeats/GpxFileRead/GpxFileRead.dart';
 
-
 import 'package:nearestbeats/data.dart';
 
 class Distributor extends StatefulWidget {
@@ -18,7 +17,9 @@ class Distributor extends StatefulWidget {
 class _DistributorState extends State<Distributor> {
   int onDistributorTapped = -1;
 
-  String totalDistributor = "0";
+  List aList = [];
+  List aListForDisplay = [];
+  TextEditingController controller = TextEditingController();
 
   distributorTap(int notTapped) {
     setState(() {
@@ -27,6 +28,19 @@ class _DistributorState extends State<Distributor> {
   }
 
   String dropdownValue = "Unselected";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    List<Beat> myList = widget.beats
+        .where((element) => allRegions.contains(element.region))
+        .toList();
+    aList = List.generate(myList.length, (index) => myList[index].distributor)
+        .toSet()
+        .toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +83,7 @@ class _DistributorState extends State<Distributor> {
                       height: 20,
                     ),
                     TextFormField(
+                      controller: controller,
                       enableSuggestions: true,
                       style: const TextStyle(
                         color: Colors.black,
@@ -96,6 +111,16 @@ class _DistributorState extends State<Distributor> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
+                      onChanged: (text) {
+                        text = text.toLowerCase();
+                        setState(() {
+                          aListForDisplay = aList.where((element) {
+                            var distributorName =
+                                element.toString().toLowerCase();
+                            return distributorName.contains(text);
+                          }).toList();
+                        });
+                      },
                     ),
                     const SizedBox(
                       height: 20,
@@ -111,7 +136,7 @@ class _DistributorState extends State<Distributor> {
                         ),
                         Expanded(child: Container()),
                         Text(
-                          "$totalDistributor Available",
+                          "${controller.text == "" ? aList.length : aListForDisplay.length} Available",
                           style: const TextStyle(
                             fontWeight: FontWeight.w900,
                             color: Color(0xff676767),
@@ -124,84 +149,94 @@ class _DistributorState extends State<Distributor> {
                     ),
                     Expanded(
                       child: Builder(builder: (context) {
-                        List<Beat> myList = widget.beats
-                            .where((element) =>
-                                allRegions.contains(element.region))
-                            .toList();
-                        List aList = List.generate(myList.length,
-                                (index) => myList[index].distributor)
-                            .toSet()
-                            .toList();
-                       WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-                         setState(() {
-                           totalDistributor = aList.length.toString();
-                         });
-                       });
-                        return ListView.builder(
-                          itemCount: aList.length,
-                          itemBuilder: (context, i) {
-                            return Padding(
-                              padding: const EdgeInsets.only(bottom: 12),
-                              child: Container(
-                                height: 60,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(6),
-                                  color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                        offset: Offset(0, 2),
-                                        blurRadius: 1,
-                                        spreadRadius: 1,
-                                        color: Colors.black.withOpacity(0.1)),
-                                  ],
-                                ),
-                                child: Row(
-                                  children: [
-                                    SizedBox(
-                                      width: 12,
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          dropdownValue =
-                                              aList[i] ?? "Unselected";
-                                        });
-
-                                      },
-                                      child: Container(
-                                        height: 38,
-                                        width: 38,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: dropdownValue == aList[i]
-                                              ? Color(0xff6C63FF)
-                                              : Color(0xffE7E7E7),
-                                        ),
-                                        child: Icon(Icons.done,
-                                            color: dropdownValue == aList[i]
-                                                ? Colors.white
-                                                : Colors.transparent,
-                                            size: 24),
+                        if (aListForDisplay.isNotEmpty ||
+                            controller.text == "") {
+                          return ListView.builder(
+                            itemCount: controller.text == ""
+                                ? aList.length
+                                : aListForDisplay.length,
+                            itemBuilder: (context, i) {
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 12),
+                                child: Container(
+                                  height: 60,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(6),
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                          offset: Offset(0, 2),
+                                          blurRadius: 1,
+                                          spreadRadius: 1,
+                                          color: Colors.black.withOpacity(0.1)),
+                                    ],
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 12,
                                       ),
-                                    ),
-                                    SizedBox(
-                                      width: 12,
-                                    ),
-                                    Flexible(
-                                      child: Text(
-                                        aList[i],
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          color: Color(0xff676767),
+                                      InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            dropdownValue =
+                                                controller.text == ""
+                                                    ? aList[i] ?? "Unselected"
+                                                    : aListForDisplay[i];
+                                          });
+                                        },
+                                        child: Container(
+                                          height: 38,
+                                          width: 38,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: (controller.text == "" &&
+                                                        dropdownValue ==
+                                                            aList[i]) ||
+                                                    (controller.text != "" &&
+                                                        dropdownValue ==
+                                                            aListForDisplay[i])
+                                                ? Color(0xff6C63FF)
+                                                : Color(0xffE7E7E7),
+                                          ),
+                                          child: Icon(Icons.done,
+                                              color: (controller.text == "" &&
+                                                          dropdownValue ==
+                                                              aList[i]) ||
+                                                      (controller.text != "" &&
+                                                          dropdownValue ==
+                                                              aListForDisplay[
+                                                                  i])
+                                                  ? Colors.white
+                                                  : Colors.transparent,
+                                              size: 24),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                      SizedBox(
+                                        width: 12,
+                                      ),
+                                      Flexible(
+                                        child: Text(
+                                          controller.text == ""
+                                              ? aList[i]
+                                              : aListForDisplay[i],
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            color: Color(0xff676767),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
-                        );
+                              );
+                            },
+                          );
+                        } else {
+                          return Center(
+                            child: Text("No Search Results"),
+                          );
+                        }
                       }),
                     ),
                   ],
@@ -218,19 +253,18 @@ class _DistributorState extends State<Distributor> {
                     borderRadius: BorderRadius.circular(6)),
                 child: MaterialButton(
                   onPressed: () {
-
-                    if(dropdownValue != "Unselected") {
-
+                    if (dropdownValue != "Unselected") {
                       Navigator.of(context)
                           .push(MaterialPageRoute(builder: (context) {
                         return GpxFileRead(dropdownValue);
                       }));
-                    }else {
-
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Please select Distributors"),duration: Duration(seconds: 1)),);
-
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content: Text("Please select Distributors"),
+                            duration: Duration(seconds: 1)),
+                      );
                     }
-
                   },
                   child: Center(
                     child: Text(

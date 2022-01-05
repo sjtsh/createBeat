@@ -10,28 +10,29 @@ import '../data.dart';
 import 'Distributor.dart';
 
 class DistributorRegion extends StatefulWidget {
+  List<String> regionsToDisplay;
   final List<String> regions;
   final List<Beat> beats;
   final Function refresh;
 
-  const DistributorRegion(this.regions, this.beats, this.refresh);
+  DistributorRegion(
+      this.regionsToDisplay, this.regions, this.beats, this.refresh);
 
   @override
   _DistributorRegionState createState() => _DistributorRegionState();
 }
 
 class _DistributorRegionState extends State<DistributorRegion> {
-
   String available = "0";
-
   List<bool> value = [];
+
+  TextEditingController regionController = TextEditingController();
 
   checkbox(int index, bool isChecked) {
     setState(() {
       value[index] = isChecked;
     });
   }
-
 
   @override
   void initState() {
@@ -41,7 +42,6 @@ class _DistributorRegionState extends State<DistributorRegion> {
 
     //value = List.generate(region.length, (index) => false);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +59,6 @@ class _DistributorRegionState extends State<DistributorRegion> {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        
                         Expanded(child: Container()),
                         const Text(
                           "Select Distributor Region",
@@ -75,6 +74,7 @@ class _DistributorRegionState extends State<DistributorRegion> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12.0),
                     child: TextFormField(
+                      controller: regionController,
                       enableSuggestions: true,
                       style: const TextStyle(
                         color: Colors.black,
@@ -102,18 +102,29 @@ class _DistributorRegionState extends State<DistributorRegion> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
+                      onChanged: (text) {
+                        text = text.toLowerCase();
+                        setState(() {
+                          widget.regionsToDisplay =
+                              widget.regions.where((region) {
+                            var regionName = region.toLowerCase();
+                            return regionName.contains(text);
+                          }).toList();
+                        });
+                      },
                     ),
-
                   ),
                   allRegions.isNotEmpty
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(height: 20,),
+                            SizedBox(
+                              height: 20,
+                            ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 12.0),
                               child: Row(
-
                                 children: [
                                   const Text(
                                     "Selected Regions",
@@ -124,9 +135,7 @@ class _DistributorRegionState extends State<DistributorRegion> {
                                   ),
                                   Expanded(child: Container()),
                                   Text(
-
                                     "${allRegions.length} selected",
-
                                     style: const TextStyle(
                                       fontWeight: FontWeight.w900,
                                       color: Color(0xff676767),
@@ -134,13 +143,13 @@ class _DistributorRegionState extends State<DistributorRegion> {
                                   ),
                                 ],
                               ),
-
                             ),
                             SizedBox(
                               height: 12,
                             ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 12.0),
                               child: Wrap(
                                 alignment: WrapAlignment.start,
                                 runAlignment: WrapAlignment.start,
@@ -159,12 +168,10 @@ class _DistributorRegionState extends State<DistributorRegion> {
                                                 BoxShadow(
                                                     color: Colors.black
                                                         .withOpacity(0.1),
-                                                    offset:
-                                                        const Offset(0, 2))
+                                                    offset: const Offset(0, 2))
                                               ]),
                                           child: Padding(
-                                            padding:
-                                                const EdgeInsets.all(8.0),
+                                            padding: const EdgeInsets.all(8.0),
                                             child: InkWell(
                                               onTap: () {
                                                 allRegions.remove(e);
@@ -178,8 +185,8 @@ class _DistributorRegionState extends State<DistributorRegion> {
                                                   Text(
                                                     e,
                                                     style: const TextStyle(
-                                                      color: BeatsColors.headingColor,
-
+                                                      color: BeatsColors
+                                                          .headingColor,
                                                     ),
                                                   ),
                                                   const SizedBox(
@@ -188,7 +195,8 @@ class _DistributorRegionState extends State<DistributorRegion> {
                                                   const Icon(
                                                     Icons.clear,
                                                     size: 12,
-                                                    color: BeatsColors.headingColor,
+                                                    color: BeatsColors
+                                                        .headingColor,
                                                   ),
                                                 ],
                                               ),
@@ -201,7 +209,8 @@ class _DistributorRegionState extends State<DistributorRegion> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 6.0),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 6.0),
                               child: Divider(
                                 color: Colors.black.withOpacity(0.1),
                                 thickness: 1.5,
@@ -227,7 +236,7 @@ class _DistributorRegionState extends State<DistributorRegion> {
                         ),
                         Expanded(child: Container()),
                         Text(
-                          "${widget.regions.length} available",
+                          "${widget.regionsToDisplay.length} available",
                           style: const TextStyle(
                             fontWeight: FontWeight.w900,
                             color: BeatsColors.headingColor,
@@ -240,79 +249,96 @@ class _DistributorRegionState extends State<DistributorRegion> {
                     height: 20,
                   ),
                   Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                      child: GridView.builder(
-                          scrollDirection: Axis.vertical,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 4, mainAxisSpacing: 16,),
-                          itemCount: widget.regions.length,
-                          itemBuilder: (context, index) {
-                            return Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 8,),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      if (allRegions
-                                          .contains(widget.regions[index])) {
-                                        allRegions
-                                            .remove(widget.regions[index]);
-                                      } else {
-                                        allRegions.add(widget.regions[index]);
-                                      }
-                                      widget.refresh();
-                                    },
-                                    child: allRegions
-                                            .contains(widget.regions[index])
-                                        ? Container(
-                                            height: 66,
-                                            width: 66,
-                                            decoration: const BoxDecoration(
-                                                color: BeatsColors.checkColor,
-                                                shape: BoxShape.circle),
-                                            child: const Center(
-                                                child: Icon(
-                                              Icons.check,
-                                              color: Colors.white,
-                                            )),
-                                          )
-                                        : Container(
-                                            height: 66,
-                                            width: 66,
-                                            decoration: const BoxDecoration(
-                                                color: Color(0xffCCCCCC),
-                                                shape: BoxShape.circle),
-                                            child: Center(
-                                                child: Text(
-                                                    getInitials(
-                                                        widget.regions[index]),
-                                                    style: const TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 36,
-                                                        color: Colors.white))),
-                                          ),
-                                  ),
-                                ),
-                                Container(
-                                  child: Text(
-                                    widget.regions[index],
-                                    style: const TextStyle(
-                                        color: BeatsColors.headingColor,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                ),
-                              ],
-                            );
-                          }),
+                      child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: Builder(
+                      builder: (context) {
+                        if (widget.regionsToDisplay.isNotEmpty ||
+                            regionController.text == "") {
+                          return GridView.builder(
+                              scrollDirection: Axis.vertical,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 4,
+                                mainAxisSpacing: 16,
+                              ),
+                              itemCount: widget.regionsToDisplay.length,
+                              itemBuilder: (context, index) {
+                                return Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                        bottom: 8,
+                                      ),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          if (allRegions.contains(
+                                              widget.regionsToDisplay[index])) {
+                                            allRegions.remove(
+                                                widget.regionsToDisplay[index]);
+                                          } else {
+                                            allRegions.add(
+                                                widget.regionsToDisplay[index]);
+                                          }
+                                          widget.refresh();
+                                        },
+                                        child: allRegions.contains(
+                                                widget.regionsToDisplay[index])
+                                            ? Container(
+                                                height: 66,
+                                                width: 66,
+                                                decoration: const BoxDecoration(
+                                                    color:
+                                                        BeatsColors.checkColor,
+                                                    shape: BoxShape.circle),
+                                                child: const Center(
+                                                    child: Icon(
+                                                  Icons.check,
+                                                  color: Colors.white,
+                                                )),
+                                              )
+                                            : Container(
+                                                height: 66,
+                                                width: 66,
+                                                decoration: const BoxDecoration(
+                                                    color: Color(0xffCCCCCC),
+                                                    shape: BoxShape.circle),
+                                                child: Center(
+                                                    child: Text(
+                                                        getInitials(widget
+                                                                .regionsToDisplay[
+                                                            index]),
+                                                        style: const TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 36,
+                                                            color:
+                                                                Colors.white))),
+                                              ),
+                                      ),
+                                    ),
+                                    Container(
+                                      child: Text(
+                                        widget.regionsToDisplay[index],
+                                        style: const TextStyle(
+                                            color: BeatsColors.headingColor,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              });
+                        } else {
+                          return const Center(
+                            child: Text("No Search Results"),
+                          );
+                        }
+                      },
                     ),
-                  )
+                  ))
                 ],
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.all(12.0),
               child: Container(
@@ -323,14 +349,16 @@ class _DistributorRegionState extends State<DistributorRegion> {
                     borderRadius: BorderRadius.circular(6)),
                 child: MaterialButton(
                   onPressed: () {
-                   if(allRegions.isNotEmpty) {
+                    if (allRegions.isNotEmpty) {
                       Navigator.of(context)
                           .push(MaterialPageRoute(builder: (context) {
                         return Distributor(widget.beats);
                       }));
-                    }else {
-                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: ( Text("Please Select Distributor Region")),duration: Duration(seconds: 1)));
-                   }
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: (Text("Please Select Distributor Region")),
+                          duration: Duration(seconds: 1)));
+                    }
                   },
                   child: const Center(
                       child: Text(

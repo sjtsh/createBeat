@@ -30,13 +30,16 @@ class _FutureDistributorRegionState extends State<FutureDistributorRegion> {
           builder: (context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
               List<String> myRegions = [];
+              List<String> myRegionsToDisplay=[];
               List<Beat> beats = snapshot.data;
               beats.forEach((element) {
                 if (!myRegions.contains(element.region)) {
                   myRegions.add(element.region);
                 }
               });
-              return DistributorRegion(myRegions, beats, refresh);
+              myRegionsToDisplay =myRegions;
+
+              return DistributorRegion(myRegionsToDisplay,myRegions, beats, refresh);
             }
             return Center(
               child: Image.asset(

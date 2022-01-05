@@ -65,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
             target: LatLng((polyline?.points[0].latitude) ?? value.latitude,
                 (polyline?.points[0].longitude) ?? value.longitude),
             zoom: 17,
-            tilt: 50,
+            tilt: 0,
           ),
         ),
       );
