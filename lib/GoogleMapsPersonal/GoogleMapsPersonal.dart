@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:nearestbeats/Components/colors.dart';
+import 'package:nearestbeats/data.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class GoogleMapsPersonal extends StatefulWidget {
@@ -32,13 +34,13 @@ class GoogleMapsPersonal extends StatefulWidget {
 }
 
 class _GoogleMapsPersonalState extends State<GoogleMapsPersonal> {
+  bool isChanged = false;
 
   @override
   void initState() {
     // TODO: implement initState
-   // widget._panelController.open();
+    // widget._panelController.open();
     super.initState();
-
   }
 
   @override
@@ -61,7 +63,6 @@ class _GoogleMapsPersonalState extends State<GoogleMapsPersonal> {
               // target: LatLng(myLat, myLng),
               zoom: 17,
               tilt: 0,
-
             ),
             onMapCreated: (GoogleMapController _controller) {
               widget._onMapCreated(_controller);
@@ -74,8 +75,36 @@ class _GoogleMapsPersonalState extends State<GoogleMapsPersonal> {
             polylines: widget.polylines,
           ),
         ),
-
-
+        Positioned(
+            top: 100,
+            right: 12,
+            child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  isChanged = !isChanged;
+                  Recieve.isChanged = isChanged;
+                });
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                          offset: Offset(0, 2),
+                          blurRadius: 3,
+                          color: Colors.black.withOpacity(0.1))
+                    ]),
+                child: Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Icon(
+                    Icons.pin_drop_outlined,
+                    size: 24,
+                    color: isChanged ? Colors.green : BeatsColors.headingColor,
+                  ),
+                ),
+              ),
+            ))
       ],
     );
   }

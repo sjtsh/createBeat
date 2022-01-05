@@ -41,7 +41,6 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print("building on coonfirmation screen");
     List<Outlet?> toListOutlets =
         List.generate(outletsForBeat.toSet().length, (index) {
       for (var element in allOutlets) {
@@ -59,7 +58,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
           children: [
             Expanded(
               child: ListView.builder(
-                itemCount: toListOutlets.length,
+                itemCount: toListOutlets.length+1,
                 itemBuilder: (context, index) {
                   if (index == 0) {
                     return Column(
@@ -156,7 +155,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                                   }
                                 },
                                 enableSuggestions: true,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 14,
                                 ),
@@ -215,7 +214,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                     padding:
                         const EdgeInsets.only(left: 12, right: 12, bottom: 8),
                     child: Container(
-                      height: 100,
+                      height: 120,
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(6),
@@ -228,7 +227,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                       child: Row(
                         children: [
                           Image.network(
-                            (toListOutlets[index]?.img) ?? "",
+                            (toListOutlets[index-1]?.img) ?? "",
                             errorBuilder: (BuildContext context,
                                 Object exception,
                                 StackTrace? stackTrace) {
@@ -244,81 +243,82 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
 
                           ),
 
-                          Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
 
-                                  toListOutlets[index - 1]!.outletsName,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: BeatsColors.headingColor),
-                                ),
-                                const SizedBox(
-                                  height: 3,
-                                ),
-                                Text(
-                                  (toListOutlets[index - 1]!
-                                      .ownersNumber
-                                      .toString()),
-                                  style: const TextStyle(
-                                      color: BeatsColors.headingColor),
-                                ),
-                                const SizedBox(
-                                  height: 8,
-                                ),
-                                Container(
-                                  width: 110,
-                                  height: 26,
-                                  clipBehavior: Clip.hardEdge,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
+                                    toListOutlets[index - 1]!.outletsName,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: BeatsColors.headingColor),
                                   ),
-                                  child: Material(
-                                    color: Colors.white,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(12),
-                                        border: Border.all(
-                                            color: BeatsColors.checkColor),
-                                      ),
-                                      child: InkWell(
-                                        onTap: () {
-                                          if (toListOutlets[index] != null) {
-                                            launch(
-                                                'https://www.google.com/maps/search/?api=1&query=${toListOutlets[index]?.lat},${toListOutlets[index]?.lng}');
-                                          }
-                                        },
-                                        child: Container(
-                                          margin: const EdgeInsets.only(
-                                              top: 3,
-                                              bottom: 3,
-                                              right: 8,
-                                              left: 8),
-                                          child: Builder(builder: (context) {
-                                            return const Center(
-                                              child: Text(
-                                                "VIEW ON MAPS",
-                                                style: TextStyle(
-                                                    color:
-                                                        BeatsColors.checkColor,
-                                                    fontSize: 12),
-                                              ),
-                                            );
-                                          }),
+                                  const SizedBox(
+                                    height: 3,
+                                  ),
+                                  Text(
+                                    (toListOutlets[index - 1]!
+                                        .ownersNumber
+                                        .toString()),
+                                    style: const TextStyle(
+                                        color: BeatsColors.headingColor),
+                                  ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  Container(
+                                    width: 110,
+                                    height: 26,
+                                    clipBehavior: Clip.hardEdge,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Material(
+                                      color: Colors.white,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(12),
+                                          border: Border.all(
+                                              color: BeatsColors.checkColor),
+                                        ),
+                                        child: InkWell(
+                                          onTap: () {
+                                            if (toListOutlets[index-1] != null) {
+                                              launch(
+                                                  'https://www.google.com/maps/search/?api=1&query=${toListOutlets[index]?.lat},${toListOutlets[index]?.lng}');
+                                            }
+                                          },
+                                          child: Container(
+                                            margin: const EdgeInsets.only(
+                                                top: 3,
+                                                bottom: 3,
+                                                right: 8,
+                                                left: 8),
+                                            child: Builder(builder: (context) {
+                                              return const Center(
+                                                child: Text(
+                                                  "VIEW ON MAPS",
+                                                  style: TextStyle(
+                                                      color:
+                                                          BeatsColors.checkColor,
+                                                      fontSize: 12),
+                                                ),
+                                              );
+                                            }),
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
-                          Expanded(child: Container()),
                           Padding(
                             padding: const EdgeInsets.only(right: 16),
                             child: Container(
@@ -331,8 +331,8 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                                 child: GestureDetector(
                                   onTap: () {
                                     setState(() {
-                                      outletsForBeat.remove(toListOutlets[index]?.id);
-                                       widget.setMarkerRed((toListOutlets[index]?.id) ?? 0);
+                                      outletsForBeat.remove(toListOutlets[index-1]?.id);
+                                       widget.setMarkerRed((toListOutlets[index-1]?.id) ?? 0);
                                     });
                                   },
                                   child: const Icon(

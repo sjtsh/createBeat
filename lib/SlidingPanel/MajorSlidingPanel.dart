@@ -54,10 +54,9 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
   double greenRadius = 20;
   final PanelController _panelController = PanelController();
   Outlet? outlet;
-
   /// for panel
 
-  bool isPanelOpen= false;
+  bool isPanelOpen = false;
 
   setMarkerGreen(markerID) {
     for (int i = 0; i < markers.length; i++) {
@@ -70,6 +69,7 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
         setState(() {
           markers.remove(markers[i]);
           markers.add(marker);
+
           if (!outletsForBeat.contains(markerID)) {
             outletsForBeat.add(markerID);
           }
@@ -112,7 +112,7 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
     setState(
       () {
         outlet = newOutlet;
-       // isPanelOpen =!isPanelOpen;
+        // isPanelOpen =!isPanelOpen;
       },
     );
     _panelController.open();
@@ -132,16 +132,16 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
   void changeRadius(newRadius) {
     setState(() {
       radius = newRadius;
-      markers =
-          loadMarkerOutlets(radius, greenRadius, changeOutlet, widget.polyline);
+      markers = loadMarkerOutlets(radius, greenRadius, changeOutlet,
+          widget.polyline, setMarkerRed, setMarkerGreen);
     });
   }
 
   void changeGreenRadius(newRadius) {
     setState(() {
       greenRadius = newRadius;
-      markers =
-          loadMarkerOutlets(radius, greenRadius, changeOutlet, widget.polyline);
+      markers = loadMarkerOutlets(radius, greenRadius, changeOutlet,
+          widget.polyline, setMarkerRed, setMarkerGreen);
     });
   }
 
@@ -149,20 +149,19 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
   void initState() {
     // TODO: implement initState
 
-    markers =
-        loadMarkerOutlets(radius, greenRadius, changeOutlet, widget.polyline);
+    markers = loadMarkerOutlets(radius, greenRadius, changeOutlet,
+        widget.polyline, setMarkerRed, setMarkerGreen);
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-
     return SlidingUpPanel(
       controller: _panelController,
       maxHeight: 350,
       minHeight: 30,
-      isDraggable:true,
+      isDraggable: true,
       panelSnapping: true,
       parallaxEnabled: true,
       color: Colors.transparent,
@@ -198,8 +197,7 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
           _panelController,
           setMarkerRed,
           setMarkerGreen,
-          isPanelOpen
-      ),
+          isPanelOpen),
       body: Stack(
         alignment: Alignment.center,
         children: [
@@ -216,10 +214,9 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
               widget.distributorName,
               widget.beatName,
               setMarkerRed,
-              changeRadius),
+              changeRadius,),
           Positioned(
               top: 12,
-
               child: Header(
                 radius,
                 changeRadius,
@@ -234,7 +231,6 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
                 setMarkerRed,
                 context,
                 widget.multiFileColors,
-
                 googleMapController: widget.googleMapController,
               ))
         ],

@@ -4,8 +4,13 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../Entity/OutletEntity.dart';
 import '../../data.dart';
 
-List<Marker> loadMarkerOutlets(double radius, double greenRadius,
-    Function changeOutlet, Polyline polylineSelected) {
+List<Marker> loadMarkerOutlets(
+    double radius,
+    double greenRadius,
+    Function changeOutlet,
+    Polyline polylineSelected,
+    Function setMarkerRed,
+    Function setMarkerGreen) {
   outletsForBeat = [];
   List<Marker> markers = [];
   for (int i = 0; i < allOutlets.length; i++) {
@@ -30,10 +35,18 @@ List<Marker> loadMarkerOutlets(double radius, double greenRadius,
             ),
             position: LatLng(allOutlets[i].lat, allOutlets[i].lng),
             onTap: () {
-              print("$i has been tapped");
+              if (!Recieve.isChanged) {
+                print("$i has been tapped");
 
-              changeOutlet(
-                  allOutlets[i], LatLng(allOutlets[i].lat, allOutlets[i].lng));
+                changeOutlet(allOutlets[i],
+                    LatLng(allOutlets[i].lat, allOutlets[i].lng));
+              } else {
+                if (outletsForBeat.contains(allOutlets[i].id)) {
+                  setMarkerRed(allOutlets[i].id);
+                } else {
+                  setMarkerGreen(allOutlets[i].id);
+                }
+              }
             },
           ),
         );
@@ -58,10 +71,18 @@ List<Marker> loadMarkerOutlets(double radius, double greenRadius,
               ),
               position: LatLng(allOutlets[i].lat, allOutlets[i].lng),
               onTap: () {
-                print("$i has been tapped");
+                if (!Recieve.isChanged) {
+                  print("$i has been tapped");
 
-                changeOutlet(allOutlets[i],
-                    LatLng(allOutlets[i].lat, allOutlets[i].lng));
+                  changeOutlet(allOutlets[i],
+                      LatLng(allOutlets[i].lat, allOutlets[i].lng));
+                } else {
+                  if (outletsForBeat.contains(allOutlets[i].id)) {
+                    setMarkerRed(allOutlets[i].id);
+                  } else {
+                    setMarkerGreen(allOutlets[i].id);
+                  }
+                }
               },
             ),
           );
@@ -75,16 +96,22 @@ List<Marker> loadMarkerOutlets(double radius, double greenRadius,
               infoWindow: InfoWindow(
                 title: allOutlets[i].outletsName.split(" ").first,
               ),
-
               icon: BitmapDescriptor.defaultMarkerWithHue(
                 BitmapDescriptor.hueRed,
               ),
               position: LatLng(allOutlets[i].lat, allOutlets[i].lng),
               onTap: () {
-                print("$i has been tapped");
-
-                changeOutlet(allOutlets[i],
-                    LatLng(allOutlets[i].lat, allOutlets[i].lng));
+                if (!Recieve.isChanged) {
+                  print("$i has been tapped");
+                  changeOutlet(allOutlets[i],
+                      LatLng(allOutlets[i].lat, allOutlets[i].lng));
+                } else {
+                  if (outletsForBeat.contains(allOutlets[i].id)) {
+                    setMarkerRed(allOutlets[i].id);
+                  } else {
+                    setMarkerGreen(allOutlets[i].id);
+                  }
+                }
               },
             ),
           );
