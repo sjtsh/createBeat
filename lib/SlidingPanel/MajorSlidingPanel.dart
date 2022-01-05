@@ -121,6 +121,7 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
         CameraPosition(
           target: position,
           zoom: 17,
+          tilt: 0,
         ),
       ),
     );
@@ -160,8 +161,8 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
     return SlidingUpPanel(
       controller: _panelController,
       maxHeight: 350,
-      minHeight: 35,
-      isDraggable:false,
+      minHeight: 30,
+      isDraggable:true,
       panelSnapping: true,
       parallaxEnabled: true,
       color: Colors.transparent,
@@ -176,7 +177,7 @@ class _MajorSlidingPanelState extends State<MajorSlidingPanel> {
                 "beatsERPID",
                 "distributor",
                 "outletERPID",
-                "outletsName",
+                "Please Press Markers",
                 27.650136,
                 85.337996,
                 "ownersName",

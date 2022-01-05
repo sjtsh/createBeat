@@ -13,6 +13,7 @@ class GoogleMapsSkeleton extends StatelessWidget {
       initialCameraPosition: CameraPosition(
         target: LatLng(27.672107, 85.428232),
         zoom: 17,
+        tilt: 0
 
       ),
       markers: {},

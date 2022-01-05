@@ -58,30 +58,30 @@ class _SlidingPanelState extends State<SlidingPanel> {
                       color: Colors.black.withOpacity(0.1)),
                 ),
                 Expanded(child: Container()),
-                GestureDetector(
-                  onTap: () {
-                    widget._panelController.close();
-                    setState(() {
-                      widget.isPanelOpen = true;
-                    });
-                  },
-                  child: widget.isPanelOpen == false
-                      ? Container()
-                      : Container(
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: BeatsColors.headingColor,
-                          ),
-                          child: const Padding(
-                            padding: EdgeInsets.all(3.0),
-                            child: Icon(
-                              Icons.close,
-                              color: Colors.white,
-                              size: 12,
-                            ),
-                          ),
-                        ),
-                ),
+                // GestureDetector(
+                //   onTap: () {
+                //     widget._panelController.close();
+                //     setState(() {
+                //       widget.isPanelOpen = true;
+                //     });
+                //   },
+                //   child: widget.isPanelOpen == false
+                //       ? Container()
+                //       : Container(
+                //           decoration: const BoxDecoration(
+                //             shape: BoxShape.circle,
+                //             color: BeatsColors.headingColor,
+                //           ),
+                //           child: const Padding(
+                //             padding: EdgeInsets.all(3.0),
+                //             child: Icon(
+                //               Icons.close,
+                //               color: Colors.white,
+                //               size: 12,
+                //             ),
+                //           ),
+                //         ),
+                // ),
               ],
             ),
             const SizedBox(

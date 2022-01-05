@@ -1,26 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:nearestbeats/ActivationScreen/ActivationScreen.dart';
-import 'package:nearestbeats/ConfirmationScreen/confirmationScreen.dart';
-import 'package:nearestbeats/GpxFileRead/GpxFileRead.dart';
-import 'package:nearestbeats/NewUI/DistributorRegion.dart';
 import 'package:nearestbeats/NewUI/futureDistributorRegion.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'package:sqflite/sqflite.dart';
-
-import 'ActivationScreen.dart';
 import 'Backend/Service/Auth.dart';
-import 'HomePage.dart';
-import 'Backend/Entity/OutletEntity.dart';
 
-import 'SelectionScreen/ChooseScreen.dart';
-import 'data.dart';
 
 void main() {
-  // getDatabasesPath().then((value) => print(value));
   runApp(MyApp());
 }
 

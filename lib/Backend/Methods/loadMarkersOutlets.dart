@@ -23,8 +23,7 @@ List<Marker> loadMarkerOutlets(double radius, double greenRadius,
           Marker(
             markerId: MarkerId("${allOutlets[i].id}"),
             infoWindow: InfoWindow(
-              title: allOutlets[i].outletsName,
-              snippet: allOutlets[i].newBeat,
+              title: allOutlets[i].outletsName.split(" ").first,
             ),
             icon: BitmapDescriptor.defaultMarkerWithHue(
               BitmapDescriptor.hueBlue,
@@ -52,8 +51,7 @@ List<Marker> loadMarkerOutlets(double radius, double greenRadius,
             Marker(
               markerId: MarkerId("${allOutlets[i].id}"),
               infoWindow: InfoWindow(
-                title: "${allOutlets[i].outletsName}",
-                snippet: allOutlets[i].beatsName,
+                title: allOutlets[i].outletsName.split(" ").first,
               ),
               icon: BitmapDescriptor.defaultMarkerWithHue(
                 BitmapDescriptor.hueGreen,
@@ -75,9 +73,9 @@ List<Marker> loadMarkerOutlets(double radius, double greenRadius,
             Marker(
               markerId: MarkerId("${allOutlets[i].id}"),
               infoWindow: InfoWindow(
-                title: allOutlets[i].outletsName,
-                snippet: allOutlets[i].beatsName,
+                title: allOutlets[i].outletsName.split(" ").first,
               ),
+
               icon: BitmapDescriptor.defaultMarkerWithHue(
                 BitmapDescriptor.hueRed,
               ),

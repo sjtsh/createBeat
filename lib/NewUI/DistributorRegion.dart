@@ -260,7 +260,7 @@ class _DistributorRegionState extends State<DistributorRegion> {
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 4,
-                                mainAxisSpacing: 16,
+                                mainAxisSpacing: 20,
                               ),
                               itemCount: widget.regionsToDisplay.length,
                               itemBuilder: (context, index) {
@@ -322,7 +322,7 @@ class _DistributorRegionState extends State<DistributorRegion> {
                                         widget.regionsToDisplay[index],
                                         style: const TextStyle(
                                             color: BeatsColors.headingColor,
-                                            fontWeight: FontWeight.w500),
+                                            fontWeight: FontWeight.w500,fontSize: 12),
                                       ),
                                     ),
                                   ],
