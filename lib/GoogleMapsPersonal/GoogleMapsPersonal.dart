@@ -87,7 +87,7 @@ class _GoogleMapsPersonalState extends State<GoogleMapsPersonal> {
               },
               child: Container(
                 decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: isChanged ? Colors.green:Colors.white,
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
@@ -100,7 +100,7 @@ class _GoogleMapsPersonalState extends State<GoogleMapsPersonal> {
                   child: Icon(
                     Icons.pin_drop_outlined,
                     size: 24,
-                    color: isChanged ? Colors.green : BeatsColors.headingColor,
+                    color: isChanged ? Colors.white : BeatsColors.headingColor,
                   ),
                 ),
               ),
@@ -108,4 +108,7 @@ class _GoogleMapsPersonalState extends State<GoogleMapsPersonal> {
       ],
     );
   }
+
 }
+
+

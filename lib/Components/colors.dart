@@ -11,6 +11,8 @@ class BeatsColors {
 
   static const headingColor= Color(0xff676767);
   static const closeColor = Color(0xffF06161);
+  static const redish =Color(0xffEA3535);
+
 
 
 

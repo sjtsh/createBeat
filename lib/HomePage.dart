@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:nearestbeats/Components/colors.dart';
 import 'package:nearestbeats/GoogleMapsPersonal/GoogleMapsPersonal.dart';
 import 'package:nearestbeats/GoogleMapsPersonal/GoogleMapsSkeleton.dart';
 import 'package:nearestbeats/Header.dart';
@@ -23,8 +25,12 @@ class MyHomePage extends StatefulWidget {
   final String distributorName;
   final List<String> multiFileColor;
 
-  MyHomePage(this.dropdownFiles, this.polylines, this.distributorName,
-      this.multiFileColor,);
+  MyHomePage(
+    this.dropdownFiles,
+    this.polylines,
+    this.distributorName,
+    this.multiFileColor,
+  );
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -36,6 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
   bool isHeader = true;
 
   Polyline? polyline;
+  int backCounter = 0;
 
   setHeader(bool newValue) {
     setState(() {
@@ -96,14 +103,85 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  int pressed = 0;
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return SafeArea(
-      child: Scaffold(
-        body: Builder(
-          builder: (context) {
-            return MajorSlidingPanel(
+      child: WillPopScope(
+        onWillPop: () {
+          showDialog(
+              context: context,
+              builder: (context) {
+                return Dialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Container(
+                    height: 150,
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        const Text(
+                          "Do you want to discard changes?",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const Text(
+                          "Your progress will be reset.",
+                          style: TextStyle(color: BeatsColors.headingColor),
+                        ),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        const Divider(
+                          height: 2,
+                          thickness: 1,
+                        ),
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).pop(true);
+                                    Navigator.of(context).pop(true);
+                                  },
+                                  child: const Text(
+                                    "Go back",
+                                    style: TextStyle(color: BeatsColors.redish),
+                                  )),
+                              const VerticalDivider(
+                                width: 10,
+                                thickness: 1,
+                              ),
+                              GestureDetector(
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text(
+                                    "Cancel ",
+                                  )),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              });
+
+          return Future.value(false);
+        },
+        child: Scaffold(
+          body: Builder(
+            builder: (context) {
+              return MajorSlidingPanel(
                 isAdded,
                 setAdded,
                 polyline!,
@@ -117,8 +195,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 changePolyline,
                 widget.distributorName,
                 (polyline?.polylineId.value) ?? "ananymous",
-                widget.multiFileColor,);
-          },
+                widget.multiFileColor,
+              );
+            },
+          ),
         ),
       ),
     );
